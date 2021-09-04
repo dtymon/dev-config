@@ -1,0 +1,17 @@
+startStage "Setting up Linux specifics"
+
+# System specific env vars
+export TZ=Australia/Melbourne
+
+# Additional system-specific paths
+export IDPROG=/usr/bin/id
+export PRINTER=lp
+
+# Set the erase char appropriately
+#stty erase '^?'
+stty erase '^H'
+
+_path_add -v LD_LIBRARY_PATH /usr/local/lib .
+export LD_LIBRARY_PATH
+
+endStage

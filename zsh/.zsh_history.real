@@ -1,0 +1,3485 @@
+git clone git@bitbucket.org:sinefa/comms.git sf72
+git checkout feature/nav
+egrep -r address bin/navd
+cd nav
+git clone git@bitbucket.org:sinefa/appliance.git
+cd appliance
+git checkout -b feature/nav -f -t remotes/origin/feature/nav
+git submodule init
+git submodule update
+vi conf/local.conf
+ls -la sources
+rm -rf sources
+ln -s /work/dtymon/appliance/build/sources .
+cd../../..
+npm -version
+egrep -r gstrcmp /usr/include/glib-2.0
+egrep -r strcmp /usr/include/glib-2.0
+egrep -r g_strcmp0 /usr/include/glib-2.0
+less /usr/include/glib-2.0/glib/gtestutils.h
+man install
+cd Downloads/node-ubuntu
+dpkg-source -x nodejs_0.6.19~dfsg1-2ubuntu3.dsc
+cd nodejs-0.6.19\~dfsg1
+md davidt
+cp nodejs_0.6.19~dfsg1-2ubuntu3.dsc davidt/nodejs_0.6.19.dsc
+cp ~/Downloads/node-v0.6.20.tar.gz .
+mv nodejs_0.6.19.dsc nodejs_0.6.20.dsc
+md5sum node-v0.6.20.tar.gz
+sha1sum node-v0.6.20.tar.gz
+debuild -S
+cp ../nodejs_0.6.19\~dfsg1-2ubuntu3.debian.tar.gz .
+mv nodejs_0.6.19~dfsg1-2ubuntu3.debian.tar.gz nodejs_0.6.20.debian.tar.gz
+tar ztvf nodejs_0.6.20.debian.tar.gz
+md l
+cd l
+tar zxvf ../../nodejs_0.6.19\~dfsg1.orig.tar.gz
+cd node-v0.6.19\~dfsg1
+rm -rf l
+tar zxvf node-v0.6.20.tar.gz
+mv node-v0.6.20 node-v0.6.20~sinefa
+tar zcvf node-v0.6.20~sinefa.tar.gz node-v0.6.20\~sinefa
+rm -rf node-v0.6.20~sinefa.tar.gz
+rm -rf node-v0.6.20~sinefa/
+mv node-v0.6.20.tar.gz node_v0.6.20.orig.tar.gz
+mv node_v0.6.20.orig.tar.gz nodejs_v0.6.20.orig.tar.gz
+egrep -r 19 .
+less nodejs.install
+rd k
+tar zxvf nodejs_v0.6.20.orig.tar.gz
+tar zxvf ../nodejs_0.6.20.debian.tar.gz
+rm -rf node-v0.6.20/
+mv nodejs_v0.6.20.orig.tar.gz nodejs_0.6.20.orig.tar.gz
+cd patches
+less 1001_align_fast_buffers_8byte_boundary.patch
+less 1002_upstream_forgot_to_build_doc.patch
+rm 1002_upstream_forgot_to_build_doc.patch
+egrep -r align_fast_buffers_8byte ..
+less 2002_build_without_libv8_debug.patch
+less 2001_FHS_paths_for_nodejs.patch
+less 2005_expected_failing_tests.patch
+less 2006_use_system_libeio.patch
+rm 2006_use_system_libeio.patch
+less 2007_fix_use_shared_zlib.patch
+rm 2007_fix_use_shared_zlib.patch
+less 2008_fix_use_shared_cares.patch
+less 2009_fix_shared_ev.patch
+cp 2009_fix_shared_ev.patch 2009_fix_shared_ev.patch.orig
+cp 2009_fix_shared_ev.patch.orig 2009_fix_shared_ev.patch
+vi 2009_fix_shared_ev.patch
+rm 2009_fix_shared_ev.patch.orig
+less 2011_enable_mipsel_build.patch
+less 2020_increase_test_timeout.patch
+less series
+ls -1 >> series
+vi series
+rm -rf node-v0.6.20/ node-v0.6.20.orig/
+vi debian/patches/2008_fix_use_shared_cares.patch
+egrep -r dfsg1 debian
+vi debian/nodejs-dev/DEBIAN/control
+vi debian/nodejs-dbg/DEBIAN/control
+vi debian/nodejs/DEBIAN/control
+cd debian
+ls -la nodejs-dbg/
+rm -rf nodejs-dbg/
+du -sk *
+rm -rf nodejs/
+rm -rf nodejs-dev/
+tar zcvf nodejs_0.6.20.debian.tar.gz debian
+rm -rf node-v0.6.20/ nodejs-0.6.20/ nodejs_0.6.19~dfsg1-2ubuntu3_amd64.changes
+cd nodejs-0.6.20
+dpkg-buildpackage -rfakeroot -b
+rm -f *.deb *.changes
+rm -rf nodejs-0.6.20/
+dpkg-source -x nodejs_0.6.20.dsc
+( cd nodejs-0.6.20; dpkg-buildpackage -rfakeroot -b )
+cd /work/dtymon/comms/portal-pkgs/npm
+rm -rf npm-1.1.45/ npm_1.1.45-1chl1~precise1_all.deb npm_1.1.45-1chl1~precise1_amd64.changes
+( cd npm-1.1.45; dpkg-buildpackage -rfakeroot -b )
+npm --version
+cd node-mkdirp
+dpkg-source -x npm_1.1.45.dsc
+mv node-mkdirp_0.3.3.orig.tar.gz node-mkdirp_0.3.3-1.orig.tar.gz
+mv node-mkdirp_0.3.3-1.orig.tar.gz node-mkdirp_0.3.3.orig.tar.gz
+dpkg -c node-mkdirp_0.3.1-2_all.deb
+vi jim.js
+nodejs ./jim.js
+NODE_DEBUG=module nodejs ./jim.js
+rm -rf jim.js node-mkdirp-0.3.3/
+rm -f node-mkdirp_0.3.1-2_all.deb node-mkdirp_0.3.1-2_amd64.changes
+tar zxvf node-mkdirp_0.3.3-1.debian.tar.gz
+tar zcvf node-mkdirp_0.3.3-1.debian.tar.gz debian/
+( cd node-mkdirp-0.3.3; dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x node-mkdirp_0.3.3-1.dsc
+dpkg-buildpackage --help
+rm node-comb-0.1.1/debian/install
+set | grep '^LC'
+set | grep -a '^LC'
+LC_CTYPE=C
+LC_MESSAGES=C
+LANG=C
+( cd node-express; dpkg-buildpackage -rfakeroot -b )
+( cd node-express; VERBOSE=1 dpkg-buildpackage -rfakeroot -b )
+( cd node-express; DH_VERBOSE=1 dpkg-buildpackage -rfakeroot -b )
+( cd node-express-2.5.9; DH_VERBOSE=1 dpkg-buildpackage -rfakeroot -b )
+ls -la node-express-2.5.9/
+man dpkg-source
+m -rf node-express-2.5.9/
+DH_VERBOSE=1 dpkg-source -x node-express_2.5.9-1.dsc
+DH_VERBOSE=1 dpkg-source -x --verbose node-express_2.5.9-1.dsc
+rm -rf node-express-2.5.9/
+dpkg-source -x node-express_2.5.9-1.dsc
+( cd node-express-2.5.9; dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x node-generic-pool_1.0.12-1.dsc
+( cd node-generic-pool-1.0.12; dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x node-nconf_0.6.0-1.dsc
+( cd node-nconf-0.6.0; dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x node-uuid_1.3.3-1.dsc
+( cd node-uuid-1.3.3; dpkg-buildpackage -rfakeroot -b )
+rm -rf ~/.npm
+cp debian/rules node-dbus-0.0.5/debian
+less node-dbus-0.0.5/root/node_modules/dbus/src/dbus.cc
+rm -rf node-dbus-0.0.5
+( cd node-dbus-0.0.5; dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x node-deflate_1.0.3-1.dsc
+( cd node-deflate-1.0.3; dpkg-buildpackage -rfakeroot -b )
+rm -rf node-mysql-2.0.0-alpha3
+dpkg-source -x node-mysql_2.0.0-alpha3-1.dsc
+( cd node-mysql-2.0.0-alpha3; dpkg-buildpackage -rfakeroot -b )
+rm -rf node-syslog-0.1.1
+( cd node-syslog; dpkg-buildpackage -rfakeroot -b )
+rm -rf node-syslog-0.1.1 root syslog
+dpkg-source -x node-syslog_0.1.1-1.dsc
+( cd node-syslog-0.1.1; dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x node-websocket_1.0.6-1.dsc
+( cd node-websocket-1.0.6; dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x node-socket.io_0.9.6-1.dsc
+( cd node-socket.io-0.9.6; dpkg-buildpackage -rfakeroot -b )
+rm -rf node-socket.io-client-0.9.6
+dpkg-source -x node-socket.io-client_0.9.6-1.dsc
+( cd node-socket.io-client-0.9.6; dpkg-buildpackage -rfakeroot -b )
+cd ../../sinefa-portal/etc
+ls ../node-websocket/node-websocket_1.0.6-1.dsc
+dpkg-source -x node-comb_0.1.1-1.dsc
+( cd node-comb-0.1.1; dpkg-buildpackage -rfakeroot -b )
+find .. -name \*~ | xargs rm -f
+rm ../../appliance/meta-sinefa/recipes-core/node-packages/node-deflate.bb
+rm ../../appliance/meta-sinefa/recipes-core/node-packages/files/deflate-build.patch
+ls /work/dtymon/appliance/build/tmp-eglibc-eglibc/sysroots/std64/usr/bin/crossscripts
+ls /work/dtymon/appliance/build/tmp-eglibc-eglibc/sysroots/x86_64-linux/usr/sbin
+file /work/dtymon/appliance/build/tmp-eglibc-eglibc/sysroots/x86_64-linux/usr/sbin/addpart
+ls /work/dtymon/appliance/build/tmp-eglibc-eglibc/sysroots/x86_64-linux/usr/bin
+dpkg-source -x nodejs_0.8.6.dsc
+rm -rf node-v0.8.6/ node-v0.8.6.orig/ nodejs-0.8.6/
+dpkg-source -x nodejs_0.8.7-1chl1\~precise1.dsc
+( cd nodejs-0.8.7; dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x npm_1.1.49-1chl1\~precise1.dsc
+( cd npm-1.1.49; dpkg-buildpackage -rfakeroot -b )
+cd ../node-comb
+dpkg-source -x node-comb_0.1.2-1.dsc
+( cd node-comb-0.1.2 && dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x node-express_3.0.0rc2-1.dsc
+( cd node-express-3.0.0rc2 && dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x node-generic-pool_2.0.0-1.dsc
+( cd node-generic-pool-2.0.0 && dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x node-nconf_0.6.4-1.dsc
+( cd node-nconf-0.6.4 && dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x node-socket.io_0.9.10-1.dsc
+( cd node-socket.io-0.9.10 && dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x node-socket.io-client_0.9.10-1.dsc
+( cd node-socket.io-client-0.9.10 && dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x node-websocket_1.0.7-1.dsc
+( cd node-websocket-1.0.7 && dpkg-buildpackage -rfakeroot -b )
+rm -rf build/*
+ls build/*.deb
+scp -i ~/certs/sinefa-app-server.pem build/*.deb ubuntu@portal.sinefa.com:portal-pkgs/.
+scp -i ~/certs/sinefa-app-server.pem build/*.deb ubuntu@portal-latest.sinefa.com:portal-pkgs/.
+scp -i ~/certs/latestsinefacom.pem build/*.deb ubuntu@portal-latest.sinefa.com:portal-pkgs/.
+dpkg-source -x node-comb_0.1.6-1.dsc
+( cd node-comb-0.1.6 && dpkg-buildpackage -rfakeroot -b )
+dpkg-source -x node-dbus_0.0.5-1.dsc
+( cd node-dbus-0.0.5 && dpkg-buildpackage -rfakeroot -b )
+su -
+less /etc/schroot/schroot.conf
+schroot -c build
+cd Downloads/node-ubuntu/davidt
+cp -a node-v0.6.20/ node-v0.6.20.orig
+patch -p1 < ../debian/patches/1001_align_fast_buffers_8byte_boundary.patch
+patch -p1 --dry-run < ../debian/patches/1002_upstream_forgot_to_build_doc.patch
+patch -p1 --dry-run < ../debian/patches/2002_build_without_libv8_debug.patch
+patch -p1 --dry-run < ../debian/patches/2005_expected_failing_tests.patch
+patch -p1 --dry-run < ../debian/patches/2006_use_system_libeio.patch
+patch -p1 --dry-run < ../debian/patches/2007_fix_use_shared_zlib.patch
+patch -p1 < ../debian/patches/2008_fix_use_shared_cares.patch
+find . -name ev.h
+patch -p1 --dry-run < ../debian/patches/2009_fix_shared_ev.patch
+patch -p1 < ../debian/patches/2009_fix_shared_ev.patch
+patch -p1 --dry-run < ../debian/patches/2011_enable_mipsel_build.patch
+patch -p1 < ../debian/patches/2011_enable_mipsel_build.patch
+patch -p1 --dry-run < ../debian/patches/2020_increase_test_timeout.patch
+patch -p1 < ../debian/patches/2020_increase_test_timeout.patch
+cd davidt
+sh1sum nodejs_0.6.20.debian.tar.gz; sha256sum nodejs_0.6.20.debian.tar.gz; md5sum nodejs_0.6.20.debian.tar.gz
+cd nodejs-0.6.20/
+rm -rf node-v0.6.20/ nodejs-0.6.20/
+tar zxvf nodejs_0.6.20.orig.tar.gz
+cd node-v0.6.20
+patch -p1 < ../debian/patches/2001_FHS_paths_for_nodejs.patch
+patch -p1 < ../debian/patches/2002_build_without_libv8_debug.patch
+patch -p1 < ../debian/patches/2005_expected_failing_tests.patch
+patch -p1 --dry-run < ../debian/patches/2008_fix_use_shared_cares.patch
+cp wscript wscript.orig
+vi wscript
+diff -purN wscript.orig wscript
+ls *.deb
+rm -f *.deb
+mv debian debian.good
+rm -rf nodejs-0.6.20/ nodejs-dbg_0.6.19*
+rm -rf *.deb
+rm -rf nodejs_0.6.19~dfsg1-2ubuntu3_amd64.changes
+mv debian.good debian
+egrep 0.6.19 debian
+egrep -r 0.6.19 debian
+tar zcvf nodejs_0.6.20.debian.tar.gz debian/
+ls -la nodejs_0.6.20.debian.tar.gz
+sha1sum nodejs_0.6.20.debian.tar.gz; sha256sum nodejs_0.6.20.debian.tar.gz; md5sum nodejs_0.6.20.debian.tar.gz
+ls /usr/lib/node_modules/mkdirp
+dpkg -c nodejs-dev_0.6.20_amd64.deb | less
+cd /work/dtymon/comms/portal-pkgs/node-comb
+cp debian/install node-comb-0.1.1/debian
+vi node-comb-0.1.1/debian/install
+cp node-comb-0.1.1/debian/install debian
+rm -rf debian node-comb-0.1.1/
+rm -rf node-comb-0.1.1/ node-comb_0.1.1-1_all.deb node-comb_0.1.1-1_amd64.changes
+mv express-2.5.9.tgz node-express_2.5.9.orig.tar.gz
+cp ../node-comb/node-comb_0.1.1-1.debian.tar.gz node-express_2.5.9-1.debian.tar.gz
+vi node-express-2.5.9/debian/changelog
+egrep -r EST node-express-2.5.9
+cp node-express-2.5.9/debian/changelog debian
+tar zcvf node-express_2.5.9-1.debian.tar.gz debian/
+rm -rf node-express-2.5.9
+ls node-express-2.5.9/debian/node-express.debhelper.log
+less node-express-2.5.9/debian/node-express.debhelper.log
+tar ztvf node-express_2.5.9.orig.tar.gz
+mv node-express_2.5.9.orig.tar.gz express-2.5.9.tgz
+tar zcvf node-express_2.5.9.orig.tar.gz express-2.5.9.tgz
+typeset file=node-express_2.5.9.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+cp node-express-2.5.9/debian/install debian
+cp node-express-2.5.9/debian/rules debian
+tar zcvf debian node-express_2.5.9-1.debian.tar.gz
+dpkg -c node-express_2.5.9-1_all.deb
+dpkg -c node-express_2.5.9-1_all.deb | less
+xxdiff -r /usr/lib/nodejs/express node-express-2.5.9/debian/node-express/usr/lib/nodejs/express
+vi debian/rules
+tar zcvf node-express_2.5.9-1.debian.tar.gz debian
+typeset file=node-express_2.5.9-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+rm -f express-2.5.9.tgz node-express_2.5.9-1_all.deb node-express_2.5.9-1_amd64.changes
+rm -rf debian/ node-express-2.5.9/
+typeset file=node-generic-pool_1.0.12.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+rm generic-pool-1.0.12.tgz
+cp ../node-express/node-express_2.5.9-1.dsc node-generic-pool_1.0.12-1.dsc
+cp ../node-express/node-express_2.5.9-1.debian.tar.gz node-generic-pool_1.0.12-1.debian.tar.gz
+find debian -type f | xargs vi
+rmdir debian/node-express
+tar zcvf node-generic-pool_1.0.12-1.debian.tar.gz debian
+typeset file=node-generic-pool_1.0.12-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+dpkg -c node-generic-pool_1.0.12-1_all.deb
+rm -rf debian/ node-generic-pool-1.0.12/ node-generic-pool_1.0.12-1_all.deb node-generic-pool_1.0.12-1_amd64.changes
+typeset file=node-nconf_0.6.0.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+tar zcvf node-nconf_0.6.0-1.debian.tar.gz debian/
+typeset file=node-nconf_0.6.0-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+dpkg -c node-nconf_0.6.0-1_all.deb
+rm -rf debian/ node-nconf-0.6.0/ node-nconf_0.6.0-1_all.deb node-nconf_0.6.0-1_amd64.changes
+vi ~/.vimrc
+gvim
+cat debian/patches/2020_increase_test_timeout.patch
+md node-uuid
+cd node-uuid
+cp ../node-nconf/node-nconf_0.6.0-1.d* .
+typeset file=node-uuid_1.3.3.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+mv node-nconf_0.6.0-1.dsc node-uuid_1.3.3-1.dsc
+rm node-nconf_0.6.0-1.debian.tar.gz
+tar zcvf node-uuid_1.3.3-1.debian.tar.gz debian
+typeset file=node-uuid_1.3.3-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+dpkg -c node-uuid_1.3.3-1_all.deb
+rm -rf debian/ node-uuid-1.3.3/ node-uuid-1.3.3.tgz node-uuid_1.3.3-1_all.deb node-uuid_1.3.3-1_amd64.changes
+cd ../node-dbus
+typeset file=node-dbus_0.0.5.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+tar zxvf node-dbus_0.0.5-1.debian.tar.gz
+md debian/patches
+cp /work/dtymon/appliance/meta-sinefa/recipes-core/node-packages/files/node-dbus-array.patch debian/patches/01_node-dbus-array.patch
+tar ztvf node-dbus_0.0.5.orig.tar.gz
+tar zxvf node-dbus_0.0.5.orig.tar.gz
+tar ztvf dbus-0.0.5.tgz
+cd node-dbus-0.0.5
+patch -p0 --dry-run < debian/patches/01_node-dbus-array.patch
+dpkg -c node-dbus_0.0.5-1_amd64.deb | less
+rm debian/rules~
+tar zcvf node-dbus_0.0.5-1.debian.tar.gz debian
+typeset file=node-dbus_0.0.5-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+rm -rf dbus-0.0.5.tgz node-dbus-0.0.5/ node-dbus_0.0.5-1_amd64.changes node-dbus_0.0.5-1_amd64.deb
+md ../node-deflate
+cp * ../node-deflate
+cd ../node-deflate
+mv node-dbus_0.0.5-1.dsc node-deflate_1.0.3-1.dsc
+mv node-dbus_0.0.5-1.debian.tar.gz node-deflate_1.0.3-1.debian.tar.gz
+tar zcvf node-deflate_1.0.3.orig.tar.gz deflate-1.0.3.tgz
+typeset file=node-deflate_1.0.3.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+tar zxvf node-deflate_1.0.3-1.debian.tar.gz
+rm node-dbus_0.0.5.orig.tar.gz
+cp /work/dtymon/appliance/meta-sinefa/recipes-core/node-packages/files/deflate-build.patch debian/patches/01_deflate-build.patch
+tar zcvf node-deflate_1.0.3-1.debian.tar.gz debian
+typeset file=node-deflate_1.0.3-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+dpkg -c node-deflate_1.0.3-1_amd64.deb
+rm -rf debian/ deflate-1.0.3.tgz node-deflate-1.0.3/ node-deflate_1.0.3-1.dsc~ node-deflate_1.0.3-1_amd64.changes node-deflate_1.0.3-1_amd64.deb
+cd ../node-mysql
+tar zcvf node-mysql_2.0.0-alpha3-1.orig.tar.gz mysql-2.0.0-alpha3.tgz
+cp ../node-uuid/node-uuid_1.3.3-1.d* .
+mv node-uuid_1.3.3-1.dsc node-mysql_2.0.0-alpha3-1.dsc
+mv node-uuid_1.3.3-1.debian.tar.gz node-mysql_2.0.0-alpha3-1.debian.tar.gz
+typeset file=node-mysql_2.0.0-alpha3-1.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+mv node-mysql_2.0.0-alpha3-1.orig.tar.gz node-mysql_2.0.0-alpha3.orig.tar.gz
+typeset file=node-mysql_2.0.0-alpha3.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+tar zxvf node-mysql_2.0.0-alpha3-1.debian.tar.gz
+tar zcvf node-mysql_2.0.0-alpha3-1.debian.tar.gz debain
+tar zcvf node-mysql_2.0.0-alpha3-1.debian.tar.gz debian
+typeset file=node-mysql_2.0.0-alpha3-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+dpkg -c node-mysql_2.0.0-alpha3-1_all.deb
+rm -rf debian/ mysql-2.0.0-alpha3.tgz node-mysql-2.0.0-alpha3/ node-mysql_2.0.0-alpha3-1.dsc~ node-mysql_2.0.0-alpha3-1_all.deb node-mysql_2.0.0-alpha3-1_amd64.changes
+cd ../node-syslog
+tar zcvf node-syslog_0.1.1.orig.tar.gz
+tar zcvf node-syslog_0.1.1.orig.tar.gz syslog-0.1.1.tgz
+typeset file=node-syslog_0.1.1.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+cp ../node-dbus/node-dbus_0.0.5-1.debian.tar.gz node-syslog_0.1.1-1.debian.tar.gz
+tar zxvf node-syslog_0.1.1-1.debian.tar.gz
+rm debian/patches/01_node-dbus-array.patch
+cp /work/dtymon/appliance/meta-sinefa/recipes-core/node-packages/files/syslog-faculty.patch debian/patches/01_syslog-faculty.patch
+rm -rf debian/node-syslog*
+vi debian/control
+tar zcvf node-syslog_0.1.1-1.debian.tar.gz debian
+typeset file=node-syslog_0.1.1-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+ls -la ..
+rm -f ../node-syslog_0.1.1-1_amd64.*
+dpkg -c node-syslog_0.1.1-1_all.deb
+rm -rf debian/ node-syslog-0.1.1/ node-syslog_0.1.1-1_all.deb node-syslog_0.1.1-1_amd64.changes syslog-0.1.1.tgz
+tar zcvf node-websocket_1.0.6.orig.tar.gz websocket-1.0.6.tgz
+cp ../node-uuid/node-uuid_1.3.3-1.dsc node-websocket_1.0.6-1.dsc
+typeset file=node-websocket_1.0.6.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+cp ../node-uuid/node-uuid_1.3.3-1.debian.tar.gz node-websocket_1.0.6-1.debian.tar.gz
+tar zxvfnode-websocket_1.0.6-1.debian.tar.gz
+tar zxvf websocket-1.0.6.tgz
+rm -rf package
+tar zcvf node-websocket_1.0.6-1.debian.tar.gz debian/
+typeset file=node-websocket_1.0.6-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+dpkg -c node-websocket_1.0.6-1_amd64.deb
+rm -rf debian/ node-websocket-1.0.6/ node-websocket_1.0.6-1.dsc~ node-websocket_1.0.6-1_amd64.changes node-websocket_1.0.6-1_amd64.deb websocket-1.0.6.tgz
+tar zcvf node-socket.io_0.9.6.orig.tar.gz socket.io-0.9.6.tgz
+cp ../node-uuid/node-uuid_1.3.3-1.dsc node-socket.io_0.9.6-1.dsc
+cp ../node-uuid/node-uuid_1.3.3-1.debian.tar.gz node-socket.io_0.9.6-1.debian.tar.gz
+rm node-socket.io_0.9.6-1.dsc~
+tar zcvf node-socket.io_0.9.6-1.debian.tar.gz debian
+typeset file=node-socket.io_0.9.6-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+l s-la
+dpkg -c node-socket.io_0.9.6-1_amd64.deb | less
+rm -rf debian/ node-socket.io-0.9.6/ node-socket.io_0.9.6-1_amd64.changes node-socket.io_0.9.6-1_amd64.deb socket.io-0.9.6.tgz
+tar zcvf node-socket.io_0.9.6.orig.tar.gz socket.io-client-0.9.6.tgz
+cp ../node-socket.io/node-socket.io_0.9.6-1.d* .
+mv node-socket.io_0.9.6-1.dsc node-socket.io-client_0.9.6-1.dsc
+mv node-socket.io_0.9.6-1.debian.tar.gz node-socket.io-client_0.9.6-1.debian.tar.gz
+typeset file=node-socket.io_0.9.6.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+rm node-socket.io_0.9.6.orig.tar.gz
+tar zcvf node-socket.io-client_0.9.6.orig.tar.gz socket.io-client-0.9.6.tgz
+typeset file=node-socket.io-client_0.9.6.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+egrep -r node-socket-client.io debian
+vi debian/changelog
+tar zcvf node-socket.io-client_0.9.6-1.debian.tar.gz debian
+typeset file=node-socket.io-client_0.9.6-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+dpkg -c node-socket.io-client_0.9.6-1_amd64.deb
+rm -rf debian/ node-socket.io-client-0.9.6/ node-socket.io-client_0.9.6-1.dsc~ node-socket.io-client_0.9.6-1_amd64.changes node-socket.io-client_0.9.6-1_amd64.deb socket.io-client-0.9.6.tgz
+cd sinefa-portal/etc
+cp /etc/init.d/skeleton portal-init.d
+md sinefa-common
+rd sinefa-common
+ls -1 | wc -l
+/bin/ls -1
+chmod +x build.sh
+ls nodejs
+/bin/ls -1 **/*.dsc
+/bin/ls -1 **/*.dsc | perl -pe 's%.*/([^_]+)_(.*)\.dsc% and print "$1_$2\n"'
+/bin/ls -1 **/*.dsc | perl -pe 'm%.*/([^_]+)_(.*)\.dsc% and print "$1_$2\n"'
+/bin/ls -1 **/*.dsc | perl -ne 'm%.*/([^_]+)_(.*)\.dsc% and print "$1_$2\n"'
+./build.sh
+typeset file=node-comb_0.1.1.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+cp ../node-uuid/debian/install debian
+rm debian/docs
+tar zcvf node-comb_0.1.1-1.debian.tar.gz debian
+typeset file=node-comb_0.1.1-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+dpkg -c node-comb_0.1.1-1_all.deb
+rm -rf comb-0.1.1.tgz debian node-comb-0.1.1/ node-comb_0.1.1-1_all.deb node-comb_0.1.1-1_amd64.changes
+NODE_DEBUG=module sinefa-portal/bin/sinefa-portal
+rm -rf portal-pkgs/nodejs/debian
+rm -rf portal-pkgs/nodejs/node-v0.6.20
+cd sinefa-portal/lib
+cd wantrue
+git mv Module.js WANtrue.js
+md nav
+cp wantrue/WANtrue.js nav/NAV.js
+scp -r -i ~/certs/sinefa-app-server.pem sinefa-common sinefa-router sinefa-portal ubuntu@portal.sinefa.com:portal-pkgs/.
+mv ~/merge-packagelist.pl ~/merge-packagelist
+cd portal-pkgs
+vi ../sinefa-portal/etc/sinefa-portal.conf
+less /usr/lib/nodejs/mysql/node_modules/require-all/package.json
+less /usr/lib/nodejs/mysql/node_modules/require-all/Readme.md
+ll
+xxdiff /tmp/dt.1 /tmp/dt.2
+rm /tmp/dt.1 /tmp/dt.2
+less ../../appliance/oe-core/meta/classes/native.bbclass
+less ../../appliance/oe-core/meta/recipes-devtools/dpkg/dpkg.inc
+less ../../appliance/oe-core/meta/recipes-devtools/dpkg/dpkg_1.15.8.7.bb
+less ../../appliance/oe-core/meta/recipes-devtools/perl/perl_5.14.2.bb
+less ../../appliance/oe-core/meta/recipes-devtools/perl/perl-rdepends_5.14.2.inc
+less ../../appliance/oe-core/meta/recipes-devtools/bison/bison_2.5.bb
+../../appliance/build/tmp-eglibc-eglibc/work/x86_64-oe-linux/nodejs-0.6.20-r1/image/usr/bin/node --version
+git difftool meta-sinefa/recipes-core/sinefa/sinefa-router_git.bb
+git difftool meta-sinefa/recipes-core/sinefa/sinefa-common_git.bb
+git difftool meta-sinefa/recipes-core/sinefa/sinefa-portal_git.bb
+git difftool meta-sinefa/classes/npm.bbclass
+egrep -r PREFERRED_VERSION meta-openembedded
+egrep -r PREFERRED_VERSION oe-core
+egrep -r PREFERRED meta-sinefa
+egrep -r -i merge /usr/lib/nodejs/comb/
+less /usr/lib/nodejs/comb/lib/base/object.js
+rm -rf node-deflate
+tar ztvf nodejs_0.6.20.orig.tar.gz
+cp ~/Downloads/node-v0.8.6.tar.gz nodejs_0.8.6.orig.tar.gz
+cp nodejs_0.6.20.dsc nodejs_0.8.6.dsc
+tar zxvf nodejs_0.6.20.debian.tar.gz
+rm debian/NEWS
+cd ../node-uuid
+tar zxvf node-uuid_1.3.3-1.debian.tar.gz
+ls deb
+cd nodejs
+ls debian
+ls -la debian
+tar zcvf nodejs_0.8.6.debian.tar.gz debian
+typeset file=nodejs_0.8.6.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+typeset file=nodejs_0.8.6.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+egrep -r patch debian
+tar zxvf nodejs_0.8.6.orig.tar.gz
+cp -a node-v0.8.6 node-v0.8.6.orig
+less debian/patches/1001_align_fast_buffers_8byte_boundary.patch
+cd node-v0.8.6
+patch -p1 --dry-run < ../debian/patches/1001_align_fast_buffers_8byte_boundary.patch
+rm ../debian/patches/1001_align_fast_buffers_8byte_boundary.patch
+patch -p1 --dry-run < ../debian/patches/2001_FHS_paths_for_nodejs.patch
+cp ~/Downloads/nodejs_0.8.7-1chl1\~precise1.debian.tar.gz .
+cp ~/Downloads/nodejs_0.8.7-1chl1\~precise1.dsc .
+cp ~/Downloads/nodejs_0.8.7.orig.tar.gz .
+rm -rf debian *0.8.6*
+cp ~/Downloads/npm*1.1.49* .
+tar zxvf node-express_2.5.9.orig.tar.gz
+tar zxvf express-2.5.9.tgz
+less package/package.json
+rm -rf express-2.5.9.tgz package
+vi build.sh
+HOME=$PWD npm cache add comb@0.1.2
+mv .npm/comb/0.1.2/package.tgz comb-0.1.2.tgz
+tar ztvf node-comb_0.1.1.orig.tar.gz
+tar zcvf node-comb_0.1.2.orig.tar.gz comb-0.1.2.tgz
+rm comb-0.1.2.tgz
+typeset file=node-comb_0.1.2.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+cp node-comb_0.1.1-1.dsc node-comb_0.1.2-1.dsc
+tar zxvf node-comb_0.1.1-1.debian.tar.gz
+tar zcvf node-comb_0.1.2-1.debian.tar.gz debian
+typeset file=node-comb_0.1.2-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+dpkg -c node-comb_0.1.2-1_all.deb
+rm -rf debian/ node-comb-0.1.2/ node-comb_0.1.1-1.debian.tar.gz node-comb_0.1.1-1.dsc node-comb_0.1.1.orig.tar.gz node-comb_0.1.2-1_all.deb node-comb_0.1.2-1_amd64.changes tmp/
+cd ../node-express
+HOME=$PWD npm cache add express@3.0.0rc2
+mv .npm/express/3.0.0rc2/package.tgz express-3.0.0rc2.tgz
+rm -rf .npm
+rm -rf tmp
+tar zcvf node-express_3.0.0rc2.orig.tar.gz express-3.0.0rc2.tgz
+cp node-express_2.5.9-1.dsc node-express_3.0.0rc2-1.dsc
+tar zxvf node-express_2.5.9-1.debian.tar.gz
+rm debian/node-express.debhelper.log
+tar zcvf node-express_3.0.0rc2-1.debian.tar.gz debian
+ls -la 
+typeset file=node-express_3.0.0rc2-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+typeset file=node-express_3.0.0rc2.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+rm -rf express-3.0.0rc2.tgz node-express-3.0.0rc2/ node-express_2.5.9-1.debian.tar.gz node-express_2.5.9-1.dsc node-express_2.5.9.orig.tar.gz node-express_3.0.0rc2-1_all.deb node-express_3.0.0rc2-1_amd64.changes
+cd ../node-generic-pool
+HOME=$PWD npm cache add generic-pool@2.0.0
+rm -rf tmp .npm
+wget https://registry.npmjs.org/generic-pool/-/generic-pool-2.0.0.tgz
+wget --no-check-certificate https://registry.npmjs.org/generic-pool/-/generic-pool-2.0.0.tgz
+tar zcvf node-generic-pool_2.0.0.orig.tar.gz generic-pool-2.0.0.tgz
+rm generic-pool-2.0.0.tgz
+cp node-generic-pool_1.0.12-1.dsc node-generic-pool_2.0.0-1.dsc
+tar zxvf node-generic-pool_1.0.12-1.debian.tar.gz
+tar zcvf node-generic-pool_2.0.0-1.debian.tar.gz debian
+typeset file=node-generic-pool_2.0.0.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+typeset file=node-generic-pool_2.0.0-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+rm -rf debian/ node-generic-pool-2.0.0/ node-generic-pool_1.0.12-1.debian.tar.gz node-generic-pool_1.0.12-1.dsc node-generic-pool_1.0.12.orig.tar.gz node-generic-pool_2.0.0-1_all.deb node-generic-pool_2.0.0-1_amd64.changes
+cd ../node-nconf
+tar zcvf nconf-0.6.4.tgz node-nconf_0.6.4.orig.tar.gz
+wget --no-check-certificate https://registry.npmjs.org/nconf/-/nconf-0.6.4.tgz
+mv nconf-0.6.4.tgz.1 nconf-0.6.4.tgz
+tar ztvf nconf-0.6.4.tgz
+tar zcvf node-nconf_0.6.4.orig.tar.gz nconf-0.6.4.tgz
+cp node-nconf_0.6.0-1.dsc node-nconf_0.6.4-1.dsc
+tar zxvf node-nconf_0.6.0-1.debian.tar.gz
+tar zcvf node-nconf_0.6.4-1.debian.tar.gz debian
+typeset file=node-nconf_0.6.4.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+typeset file=node-nconf_0.6.4-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+rm -rf debian/ nconf-0.6.4.tgz node-nconf-0.6.4/ node-nconf_0.6.0-1.debian.tar.gz node-nconf_0.6.0-1.dsc node-nconf_0.6.0.orig.tar.gz node-nconf_0.6.4-1.dsc~ node-nconf_0.6.4-1_all.deb node-nconf_0.6.4-1_amd64.changes
+cd ../node-socket.io
+cp node-socket.io_0.9.6-1.dsc node-socket.io_0.9.10-1.dsc
+mv node-socket.io_0.9.6-1.dsc node-socket.io_0.9.10-1.dsc
+wget --no-check-certificate https://registry.npmjs.org/socket.io/-/socket.io-0.9.10.tgz
+tar zcvf node-socket.io_0.9.10.orig.tar.gz socket.io-0.9.10.tgz
+rm socket.io-0.9.10.tgz
+tar zxvf node-socket.io_0.9.6-1.debian.tar.gz
+tar zcvf node-socket.io_0.9.10-1.debian.tar.gz debian
+typeset file=node-socket.io_0.9.10.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+typeset file=node-socket.io_0.9.10-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+rm -rf debian/ node-socket.io-0.9.10/ node-socket.io_0.9.10-1.dsc~ node-socket.io_0.9.10-1_amd64.changes node-socket.io_0.9.10-1_amd64.deb node-socket.io_0.9.6-1.debian.tar.gz node-socket.io_0.9.6.orig.tar.gz
+cd ../node-socket.io-client
+wget --no-check-certificate https://registry.npmjs.org/socket.io-client/-/socket.io-client-0.9.10.tgz
+tar zcvf node-socket.io-client_0.9.10.orig.tar.gz socket.io-client-0.9.10.tgz
+mv node-socket.io-client_0.9.6-1.dsc node-socket.io-client_0.9.10-1.dsc
+tar zxvf node-socket.io-client_0.9.6-1.debian.tar.gz
+tar zcvf node-socket.io-client_0.9.10-1.debian.tar.gz debian
+typeset file=node-socket.io-client_0.9.10.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+typeset file=node-socket.io-client_0.9.10-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+rm -rf debian/ node-socket.io-client-0.9.10/ node-socket.io-client_0.9.10-1.dsc~ node-socket.io-client_0.9.10-1_amd64.changes node-socket.io-client_0.9.10-1_amd64.deb node-socket.io-client_0.9.6-1.debian.tar.gz node-socket.io-client_0.9.6.orig.tar.gz socket.io-client-0.9.10.tgz
+cd ../node-websocket
+wget --no-check-certificate https://registry.npmjs.org/websocket/-/websocket-1.0.7.tgz
+tar zcvf node-websocket_1.0.7.orig.tar.gz websocket-1.0.7.tgz
+rm websocket-1.0.7.tgz
+mv node-websocket_1.0.6-1.dsc node-websocket_1.0.7-1.dsc
+tar zxvf node-websocket_1.0.6-1.debian.tar.gz
+tar zcvf node-websocket_1.0.7-1.debian.tar.gz debian
+typeset file=node-websocket_1.0.7.orig.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+typeset file=node-websocket_1.0.7-1.debian.tar.gz; fsize=$(ls -1l $file | cut -d ' ' -f 5,5); s1=$(sha1sum $file | cut -d ' ' -f 1,1); s256=$(sha256sum $file | cut -d ' ' -f 1,1); md5=$(md5sum $file | cut -d ' ' -f 1,1); echo " $s1 $fsize $file\n $s256 $fsize $file\n $md5 $fsize $file"
+rm -rf debian/ node-websocket-1.0.7/ node-websocket_1.0.6-1.debian.tar.gz node-websocket_1.0.6.orig.tar.gz node-websocket_1.0.7-1.dsc~ node-websocket_1.0.7-1_amd64.changes node-websocket_1.0.7-1_amd64.deb
+cd ../nodejs
+rm -rf nodejs-0.8.7/
+cd ../npm
+rm -rf npm-1.1.49/
+rm -rf node-uuid/debian
+egrep -r __sync /usr/include
+find ../../appliance/meta-openembedded -name sqlite\*
+find ../../appliance/oe-core -name sqlite\*
+cp ../../appliance/oe-core/meta/recipes-support/sqlite/sqlite3.inc ../../appliance/meta-sinefa/recipes-support/sqlite
+cd node-comb
+wget --no-check-certificate https://registry.npmjs.org/comb/-/comb-0.1.6.tgz
+tar zcvf node-comb_0.1.6.orig.tar.gz comb-0.1.6.tgz
+md5sum node-comb_0.1.6.orig.tar.gz
+tar zxvf node-comb_0.1.2-1.debian.tar.gz
+find debian -type f | xargs gvim
+tar zcvf node-comb_0.1.6-1.debian.tar.gz debian
+md5sum node-comb_0.1.6-1.debian.tar.gz
+rm comb-0.1.6.tgz
+rm -rf debian
+mv node-comb_0.1.2-1.dsc node-comb_0.1.6-1.dsc
+rm -rf node-comb-0.1.6/ node-comb_0.1.2-1.debian.tar.gz node-comb_0.1.2.orig.tar.gz
+man 2 accept
+ls build
+ls node-comb
+scp -r -i ~/certs/latestsinefacom.pem node-comb/node-comb_0.1.6-1_all.deb ubuntu@portal-latest.sinefa.com:portal-pkgs/.
+md ubuntu
+cp comms/portal-pkgs/build/*.dpkg ubuntu
+cp comms/portal-pkgs/build/*.deb ubuntu
+ks ubuntu
+ls ubuntu
+rm ubuntu/node-comb_0.1.2-1_all.deb
+cp comms/portal-pkgs/node-comb/node-comb_0.1.6-1_all.deb ubuntu
+ls -la ubuntu
+cd ubuntu
+rm -f npm_1.1.45-1chl1~precise1_all.deb nodejs-dev_0.6.20_amd64.deb nodejs-dbg_0.6.20_amd64.deb node-syslog_0.1.1-1_all.deb node-mysql_2.0.0-alpha3-1_all.deb
+rm -f node-generic-pool_2.0.0-1_all.deb
+cd ../comms/portal-pkgs
+cp node-dbus/node-dbus_0.0.5-1_amd64.deb ../../ubuntu
+ls -la ../../ubuntu
+cp build/npm_1.1.45-1chl1\~precise1_all.deb ../../ubuntu
+cp build/nodejs-d* ../../ubuntu
+less install.txt
+rm ../../ubuntu/nodejs-dbg_0.6.20_amd64.deb
+ls *~
+tar jtvf wantrue.tar.bz2
+less server1.js
+startx
+xemacs &
+../comms/sinefa-portal/bin/sinefa-portal --conf davids-portal.conf 2>&1 | tee log/error.log
+nodejs ~/serial.js
+egrep -r 'Utils\.' sinefa-portal/lib
+egrep -r 'intToHexString' sinefa-portal/lib
+egrep -r './Utils' sinefa-portal/lib
+egrep -r '\.Utils' sinefa-portal/lib
+rm sinefa-portal/lib/Utils.js*
+git difftool sinefa-portal/lib/nav/NAVDB.js
+less log/wantrue.log
+cat poo
+less /usr/lib/nodejs/mysql/Changes.md
+less /usr/lib/nodejs/mysql/lib/protocol/constants/client.js
+egrep -r -i transaction /usr/lib/nodejs/mysql
+less /usr/lib/nodejs/mysql/lib/Config.js
+wireshark &
+nodejs ~/l.js
+rm ~/l.js*
+git difftool sinefa-portal/lib/wantrue/WANtrue.js
+ssh -i ~/certs/latestsinefacom.pem ubuntu@controller-latest.sinefa.com
+ssh -t -Y root@192.168.102.11
+rpm -qf /usr/libexec/tracker-extract
+rpm -qi tracker
+rpm -q --what-requires tracker
+rpm -q --whatrequires tracker
+npm search bus
+npm docs servicebus
+ps -ef | egrep vino
+lsof -p 1963
+lsof -p 1963 | egrep -i tcp
+netstat -an | grep 590
+mysql -usinefa -hcontroller-latest.sinefa.com -pc2luZWZhCg== sinefa_17
+mysql -A -usinefa -hcontroller-latest.sinefa.com -pc2luZWZhCg== sinefa_17
+echo 'SHOW TABLES' | mysql -N -A -usinefa -hcontroller-latest.sinefa.com -pc2luZWZhCg== sinefa_14 | egrep '^nav_'
+echo 'SHOW TABLES' | mysql -N -A -usinefa -hcontroller-latest.sinefa.com -pc2luZWZhCg== sinefa_14 | egrep '^nav_' | while read i;do echo "UPDATE $i SET source = 1 WHERE source = 0";done
+echo 'SHOW TABLES' | mysql -N -A -usinefa -hcontroller-latest.sinefa.com -pc2luZWZhCg== sinefa_14 | egrep '^nav_' | while read i;do echo "UPDATE $i SET source = 1 WHERE source = 0;";done | mysql -N -A -usinefa -hcontroller-latest.sinefa.com -pc2luZWZhCg== sinefa_14
+less cfg-cmds.txt
+cat ~/foo.uuid
+rm ~/foo.uuid
+git difftool sinefa-common/lib/Utils.js
+git show sinefa-common/lib/Utils.js:c05aa5488822122aa87ff90ab8bbe5c32a2b0489
+git show c05aa5488822122aa87ff90ab8bbe5c32a2b0489:sinefa-common/lib/Utils.js
+sh ~/nav-msg.json
+git difftool sinefa-portal/lib/nav/NAV.js
+less ~/nav-msg.json
+less sinefa-portal/lib/nav/NAVDB.js
+xrdb -merge ~/.Xdefaults
+emacs &
+urxvt -e /bin/zsh -i -l &
+timet 1347621000 1348020900
+calc 'int(1347621000/(24*3600))*24*3600'
+timet 1347580800
+less /usr/lib/nodejs/zmq/test/test.exports.js
+less /usr/lib/nodejs/zmq/docs/index.html
+uuidgen
+nodejs zmq-test.js 4
+npm search amqp
+nodejs ~/amqp-server.js 1
+nodejs ~/amqp-router.js
+ssh root@172.26.0.218
+ps -ef | egrep screen
+hping3 --udp --destport 9200 124.168.103.253
+man hping3
+git show 1f83da229c67ce5b459482be0dccb578d4a2c31b
+which g++
+egrep -r m64 .
+egrep -r m64 . | less
+which gcc
+exi
+egrep -r close_iface sinefa-router/lib
+egrep -r close_iface sinefa-portal/lib
+scp sinefa-router/lib/Router.js root@202.55.97.110:/usr/lib/node/sinefa-router/lib/.
+git add meta-sinefa/recipes-core/sinefa/sinefa-node-module.inc
+git revert f7b02b1c30d3661188d50cf4a31ce10d28ce9426
+git rebase -i 1df4f3ea4b4de3efe68de866c448bd7efa0af6a9
+git rebase -i d2618bda6f2c70bea34d3baa46df53c935caa7bc
+xxdiff -r . /usr/lib/nodejs/sqlite3/
+exitr
+less binding.gyp
+egrep -r pthread .
+egrep -r pthread . | less
+/usr/libexec/vino-server --display=:0
+which npm
+npm -v
+cd temp
+cd git
+less CMakeLists.txt
+calc '265116-254363-4'
+hex 0x4a49d
+scp root@150.101.216.226:/var/log/sinefa/router/router.log .
+shh root@150.101.216.226
+egrep -r do_install.*PN meta-* oe-core | less
+egrep -r do_install meta-* oe-core | less
+git show ee76d49dafde0a94206f2cfb8b40fc8b6a2ca768
+egrep -r 'String.*apply.*Code' sinefa*/lib
+egrep -r 'String.*Code' sinefa*/lib
+egrep -r 'String.*Code.*apply' sinefa*/lib
+cd ../code-latest
+scp /work/dtymon/appliance/build/tmp-eglibc-eglibc/deploy/ipk/x86_64/node-sqlite3_2.1.5-2_x86_64.ipk root@202.55.97.110:.
+vi /work/dtymon/appliance/meta-sinefa/recipes-devtools/nodejs/nodejs_0.8.9.bb
+date '+%d %b %Y %H:%M:%S'
+perldoc -q ceil
+perl -le 'use POSIX; print ceil(log(513)/log(2))'
+perl -le 'use POSIX; $x=ceil(log(513)/log(2)); print 2**$x'
+perl -le 'use POSIX; $x=ceil(log(513)/log(1.6)); print 1.6**$x'
+perl -le 'use POSIX; $x=ceil(log(720)/log(1.6)); print 1.6**$x'
+perl -le 'use POSIX; $x=ceil(log(721)/log(1.6)); print 1.6**$x'
+perl -le 'use POSIX; $x=ceil(log(721)/log(1.5)); print 1.5**$x'
+calc '(1+sqrt(5))/2'
+calc '(512*3)/2+1'
+calc '(769*3)/2+1'
+calc '(1154*3)/2+1'
+calc '269716-273280'
+calc '279748-273280'
+pwd
+cd /work/dtymon/code-latest/std64/bin/navd
+cp navd /work/dtymon/navd-no-send
+vi k.js
+vi y.js
+nodejs y.js
+rm y.js
+scp sinefa-comms/lib/InternalCommsUtils.js root@150.101.216.226:/usr/lib/node/sinefa-comms/lib/.
+egrep -r InternalComms sinefa*/lib
+scp sinefa-router/lib/MsgBroker.js root@150.101.216.226:/usr/lib/node/sinefa-router/lib/.
+cd ../code/std64/bin/navd
+scp navd root@150.101.216.226:/usr/sbin
+cd /work/dtymon/code/std64/bin/navd
+scp navd root@150.101.216.226:.
+scp root@150.101.216.226:dtymon.pcap .
+wireshark dtymon.pcap
+ssh 124.168.103.253
+traceroute 124.168.103.253
+ping 124.168.103.253
+ssh root@124.168.103.253
+telnet 124.168.103.253 9200
+cd /work/dtymon/code/bin/wantrued-v2
+egrep -r PATHRATE_SET_DST .
+egrep -r send_ctrl_msg .
+egrep -r CommandDataBasic .
+egrep -r ECHO_RES .
+cd ../../std64/bin/wantrued-v1/
+echo N6Common7AVLImplISsEE | c++filt
+scp wantrued root@192.168.101.196:.
+cd /work/dtymon/comms-latest
+cd ../appliance
+egrep -r -i charcode /work/dtymon/comms/sinefa-router/lib
+egrep -r -i charcode /work/dtymon/comms/sinefa-*/lib
+scp /work/dtymon/comms/sinefa-router/lib/MsgBroker.js root@192.168.101.95:/usr/lib/node/sinefa-router/lib
+egrep -r response_cb ../../../lib
+egrep -r response_cb ../../../bin
+egrep -r response_cb ../../lib
+egrep -r response_cb ../../bin
+egrep -r response_cb/work/dtymon/code/ /work/dtymon/code/
+egrep -r response_cb /work/dtymon/code/ /work/dtymon/code/
+egrep -r response_cb /work/dtymon/code/
+egrep -r complete_cb /work/dtymon/code/
+man strftime
+vi ~/plot-mem
+inkscape ~/mem1.svg
+cd ../../appliance
+egrep -r '\.write\(' sinefa* | less
+egrep -r '\.write\(' sinefa* | egrep -i utf
+egrep -r '\.write\(' sinefa* | egrep -i utf | less
+vi meta-sinefa/recipes-core/sinefa/sinefa-node-module.inc
+HOME=$PWD npm cache add sqlite3
+cd .npm/sqlite3/2.1.5
+tar zxvf package.tgz
+less /work/dtymon/appliance/meta-sinefa/recipes-core/node-packages/files/syslog-faculty.patch
+mv package sqlite3
+cd sqlite3
+cp binding.gyp binding.gyp.orig
+vi binding.gyp
+diff -purN sqlite3/binding.gyp.orig  sqlite3/binding.gyp.orig
+diff -purN sqlite3/binding.gyp.orig  sqlite3/binding.gyp
+diff -purN sqlite3/binding.gyp.orig  sqlite3/binding.gyp > /work/dtymon/appliance/meta-sinefa/recipes-core/node-packages/files/sqlite3-v8.patch
+vi /work/dtymon/appliance/meta-sinefa/recipes-core/node-packages/node-syslog.bb
+vi /work/dtymon/appliance/meta-sinefa/recipes-core/node-packages/node-sqlite3.bb
+egrep -r CFLAGS /usr/lib/nodejs/node-gyp
+g++ -o poo.cpp -o poo
+g++ -o poo poo.cpp
+./poo
+rm -f poo*
+git clone git@bitbucket.org:sinefa/code.git code-latest
+cd code-latest
+./setup-env.sh
+mv bin/navd bin/navd.new
+git checkout bin/navd
+git checkout -f bin/navd
+egrep -r binomial_heap ..
+egrep -r mismatch ../bin/navd
+less ../bin/wantrued-v1/CommsMessages.cpp
+cd ../std64
+scp navd root@202.55.97.110:/usr/sbin/navd
+rm ../../../bin/navd/summary/Accumulator.cpp~
+egrep -r std::list ../../../bin/navd
+egrep -r std::vector ../../../bin/navd
+egrep -r 'new Flow' ../../../bin/navd
+egrep -r 'libsfa' ../../../bin/navd
+mv FlowFactory.* store
+egrep -r 'WARN' ../../../bin/navd
+egrep -r 'WARN' ../../../lib/lib*
+egrep -r 'netflow_collector_alloc' ../../../bin/navd
+cd ../../../bin
+cp -a navd navd.withFlowFactory
+scp /work/dtymon/comms/sinefa-comms/lib/local/*.js root@202.55.97.110:/usr/lib/node/sinefa-comms/lib/local/.
+scp /work/dtymon/comms/sinefa-router/lib/MsgBroker.js root@202.55.97.110:/usr/lib/node/sinefa-router/lib/MsgBroker.js.new
+rm navd.bz2
+dig build
+mv ~/Downloads/sinefa-cdrom-image-std64.iso ~/.
+xxdiff lib/libsfa-comms/SendContext.hpp
+xxdiff lib/libsfa-comms/SendContext.hpp /work/dtymon/code/lib/libsfa-comms/SendContext.hpp
+xxdiff lib/libsfa-comms/SendContext.cpp /work/dtymon/code/lib/libsfa-comms/SendContext.cpp
+xxdiff lib/libsfa-comms/CommsInterface.hpp /work/dtymon/code/lib/libsfa-comms/CommsInterface.hpp
+xxdiff lib/libsfa-comms/CommsInterface.cpp /work/dtymon/code/lib/libsfa-comms/CommsInterface.cpp
+ssh root@172.26.0.211
+ssh root@172.26.0.206
+ssh root@172.26.0.156
+ssh root@172.26.0.172
+ssh root@172.26.0.198
+ssh root@172.26.0.100
+ssh root@172.26.0.143
+ssh root@172.26.0.51
+ssh root@172.26.0.89
+ssh root@172.26.0.60
+ssh root@172.26.0.61
+ssh root@172.26.0.212
+wireshark 251.pcap
+ssh root@$1n3f@r0ck$!
+ssh root@172.26.0.246
+ssh root@172.26.0.251
+man tshark
+md snooper
+cd snooper
+typeset -i addr=250;while ((addr<255));do if ping -c 5 172.26.0.$addr;then echo $addr alive;fi;addr=addr+1;done
+ssh root@172.26.0.251 tcpdump -i eth0 -w - host portal-latest.sinefa.com > 251.pcap
+typeset -i addr=200;while ((addr<250));do if ping -q -c 5 172.26.0.$addr;then echo $addr alive;fi;addr=addr+1;done
+typeset -i addr=150;while ((addr<200));do if ping -q -c 5 172.26.0.$addr;then echo $addr alive;fi;addr=addr+1;done
+typeset -i addr=100;while ((addr<150));do if ping -q -c 5 172.26.0.$addr;then echo $addr alive;fi;addr=addr+1;done
+typeset -i addr=50;while ((addr<100));do if ping -q -c 5 172.26.0.$addr;then echo $addr alive;fi;addr=addr+1;done
+rm 251.pcap
+rd snooper
+ls -la node*deb
+scp -i ~/certs/latestsinefacom.pem nodejs-dbg_0.8.11-1chl1~precise1_amd64.deb nodejs-dev_0.8.11-1chl1~precise1_amd64.deb nodejs_0.8.11-1chl1~precise1_amd64.deb npm_1.1.62-1chl1\~precise1_all.deb ubuntu@portal-staging.sinefa.com:portal-pkgs/.
+nagios
+rpm -ql nagios
+less /etc/httpd/conf.d/nagios.conf
+less /etc/nagios/passwd
+less /etc/nagios/nagios.cfg
+rpm -ql nagios | less
+rpm -ql innotop
+man innotop
+man perl
+man perlintro
+ssh root@build
+ssh build
+rpm -ql dialog-devel
+dpkg -c Downloads/nodejs-dbg_0.8.11-1chl1~precise1_amd64.deb | less
+man screen
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst router --dst-ep local --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{ "id": 66,                       \
+  "contents": {               \
+    "account" : 17,                                   \
+    "regex" : ".*"                                    \
+  }               \
+}                \
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst router --dst-ep local --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 66 },\
+  "account" : 17,\
+  "regex" : ".*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst router --dst-ep local --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 84 },\
+  "account" : 17,\
+  "regex" : ".*"\
+}\
+EOF
+cal 2012
+netstat -rn
+telnet 172.26.0.1 80
+telnet 172.26.0.1 43
+telnet 172.26.0.1 443
+calc '4**0.5'
+calc '(5/10)**0.5'
+calc 'sqrt(0.5)'
+/usr/sbin/rabbitmq-server
+ps -ef | grep rabbit
+rpm -ql qpid-cpp-server | less
+rpm -qi rabbitmq
+rpm -qa | grep rabbit
+/etc/init.d/qpidd start
+qpid-printevents
+npm search ampq
+rehash
+amqp-publish
+man amqp-publish
+amqp-publish -e 'com.sinefa'
+rm core.27248
+rpm -qf /usr/bin/amqp-publish
+ls /usr/bin/*amq*
+ls /usr/bin/*qpid*
+man qpid-tool
+qpid-tool
+qpid-tool --help
+qpid-tool guest@localhost:5672
+npm search amq
+yum search qpid
+rpm -ql qpid-cpp-server
+ps -ef | egrep qpid
+less /etc/qpidd.conf
+man rpmbuild
+man npm-install
+man npm-rebuild
+rm -rf node-v0.8.9/
+tar zxvf node-v0.8.9.tar.gz
+egrep -r m64 node-v0.8.9/
+vi node-v0.8.9/deps/npm/node_modules/node-gyp/legacy/common.gypi
+vi node-v0.8.9/deps/uv/common.gypi
+vi node-v0.8.9/deps/openssl/openssl/config
+egrep -r 'm(64|32)' node-v0.8.9/
+egrep -r 'm(64)' node-v0.8.9/
+vi node-v0.8.9/deps/v8/SConstruct
+diff -purN node-v0.8.9.orig -purN node-v0.8.9
+diff -purN node-v0.8.9.orig -purN node-v0.8.9 > /work/dtymon/appliance/meta-sinefa/recipes-devtools/nodejs/nodejs-0.8.9/remove-m64.patch
+npm help
+scp root@150.101.216.226:davidt.pcap .
+wireshark davidt.pcap
+rm davidt.pcap
+ssh root@172.26.0.253
+mysql --help
+ssh root@172.26.0.135
+calc 228631-180220
+fc --help
+man zshall
+man ping
+ping 150.101.158.76
+ssh root@172.26.0.241
+dig -x 81.171.244.180
+calc 8*(1024**2)
+dig -x 150.101.158.76
+vi sinefa_1.db
+mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_1 < sinefa_1.db
+mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_13 < sinefa_13.db
+mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_14 < sinefa_14.db
+mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_15 < sinefa_15.db
+mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_16 < sinefa_16.db
+mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_17 < sinefa_17.db
+mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_18 < sinefa_18.db
+mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_46 < sinefa_46.db
+for i in 65 66 67 68;do echo Doing $i;mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_$i < sinefa_$i.db;done
+timet 1348717617
+timet 1348717918
+timet 1348797240
+timet 1348805030
+timet 1348806235000
+timet 1349731274
+timet 1349731274;
+timet 1349706044
+rm -rf latest_db
+md latest_db
+cd latest_db
+mysqldump -usinefa -hcontroller-latest.sinefa.com -pc2luZWZhCg== sinefa > latest.db
+vi latest.db
+mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== sinefa
+mysqldump -R -usinefa -hcontroller-latest.sinefa.com -pc2luZWZhCg== sinefa > latest.db
+mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest < latest.db
+cp latest.db routine.db
+vi routine.db
+mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest < routine.db
+for i in 1 13 14 15 16 17 18 46 65 66 67 68;do echo Doing $i; mysqldump -usinefa -hcontroller-latest.sinefa.com -pc2luZWZhCg== sinefa_$i account_defaults applications instance_config instance_ip_addresses instance_tags instances links nav_apps_by_hosts_template nav_apps_template nav_apps_unknown_template nav_hosts_by_apps_template nav_hosts_by_peers_template nav_hosts_template nav_sources_template sensors sources tags wantrue > sinefa_$i.db;done
+less /work/dtymon/web/server/sql/globalDB.sql
+ssh root@172.26.0.234
+calc '32115362/1024'
+calc '32115362/1024**2'
+timet 1348030740
+timet 1348031520
+timet 1348031340
+timet 1348031640
+calc '56747799-56532875'
+hex 0xc9
+hex 0x96 0x65 0x99 0x5B
+hex 0x96 0x65 0xD8 0xE1
+hex 0xAC 0x13 0x01 0x76
+hex 0xAC 0x12 0xFF 0xFD
+hex 0xAC 0x1A 0x00 0xD3
+telnet 150.101.216.226 9200
+quit
+hex 0xAC 0x10 0x01 0xf0
+hex 0xD5 0x30 0x84 0xCB
+hex 0xC1 0x10 0x01 0x03
+ssh root@172.26.0.1
+telnet 172.26.0.1
+ping 172.26.0.1
+telnet 50.18.213.255 444
+dig portal-latest.sinefa.com
+dig 23.22.100.63
+dig -x 23.22.100.63
+dig -x 184.72.64.249
+dig -x 174.129.96.234
+less .zsh_history
+mysql -usinefa -h na01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -p y4UAFKhZYWnWA6tb sinefa
+mysql -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -p y4UAFKhZYWnWA6tb sinefa
+mysql -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+man mysql
+man dpkg
+dig -x 202.168.25.25
+dig -x 12.249.139.114
+dig me.com mx
+dig nn.com.au mx
+xxdiff ~/local/bin/mortgage*
+mortgageNew --principle=138500 --rates=5.9 --repayment=950 --fortnightly
+less ~/local/bin/mortgageNew
+mortgageNew --principle=138500 --rates=5.9 --repayment=1050 --fortnightly
+mortgageNew --principle=138500 --rates=5.9 --repayment=1200 --fortnightly
+mortgageNew --principle=138500 --rates=5.9 --repayment=1500 --fortnightly
+vi
+git checkout server/comms.js
+less server/sql/globalDB.sql
+less server/sql/newAccount.sql
+cd server/sql
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew
+echo 'SELECT id FROM accounts' | mysql -A -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew
+echo 'SELECT id FROM accounts' | mysql -A -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | wc -l
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "CREATE DATABASE sinnew_$i";done
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "CREATE DATABASE sinnew_$i;";done | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew_$i newAccount.sql;done
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew_$i < newAccount.sql;done
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew_$i < newAccount.sql;done
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo 'INSERT INTO applications SELECT * FROM latest_68.applications' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew_$i;done
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "INSERT INTO sinnew_$i.instance_ip_addresses SELECT * FROM sinefa_$i.instance_ip_addresses;"; done
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "INSERT INTO sinnew_$i.instance_ip_addresses SELECT * FROM sinefa_$i.instance_ip_addresses;"; done  | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "INSERT INTO sinnew_$i.instances SELECT * FROM sinefa_$i.instances;"; done  | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "INSERT INTO sinnew_$i.tags SELECT * FROM sinefa_$i.tags;"; done  | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "INSERT INTO sinnew_$i.instance_tags SELECT * FROM sinefa_$i.instance_tags;"; done  | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "INSERT INTO sinnew_$i.instance_ip_addresses SELECT * FROM sinefa_$i.instance_ip_addresses;"; done  | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "INSERT INTO sinnew_$i.sensors SELECT * FROM sinefa_$i.sensors;"; done  | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "INSERT INTO sinnew_$i.links SELECT * FROM sinefa_$i.links;"; done  | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "INSERT INTO sinnew_$i.sources SELECT id,UUID(),source_key,ip_address,instance,name FROM sinefa_$i.sources;"; done  | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew
+less globalDB.sql
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "CALL MergeInherited('sinnew_$i', $i, 'sinnew.system_defaults', 2, 1);"; done
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "CALL MergeInherited('sinnew_$i', $i, 'sinnew.system_defaults', 2, 1);"; done | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "RENAME DATABASE sinefa_$i TO sinold_$i; RENAME DATABASE sinnew_$* TO sinefa_$i;";done | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "RENAME DATABASE sinefa_$i TO sinold_$i; RENAME DATABASE sinnew_$* TO sinefa_$i;";done
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "RENAME DATABASE sinefa_$i TO sinold_$i;";done
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "RENAME DATABASE sinefa_$i TO sinold_$i;";done | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "CREATE DATABASE sinold_$i;";done | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "SELECT CONCAT('RENAME TABLE ',table_schema,'.',table_name, ' TO ','sinold_$i.',table_name,';') FROM information_schema.TABLES WHERE table_schema LIKE 'sinefa_$i';" | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa;done
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "SELECT CONCAT('RENAME TABLE ',table_schema,'.',table_name, ' TO ','sinold_$i.',table_name,';') FROM information_schema.TABLES WHERE table_schema LIKE 'sinefa_$i';" | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa;done | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "SELECT CONCAT('RENAME TABLE ',table_schema,'.',table_name, ' TO ','sinefa_$i.',table_name,';') FROM information_schema.TABLES WHERE table_schema LIKE 'sinnew_$i';" | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa;done | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinnew | while read i;do echo "SELECT HEX(uuid),instance FROM sinefa_$i.instances WHERE uuid NOT IN (SELECT uuid FROM sinefa.instances WHERE account = $i)";done
+#echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | while read i;do echo "SELECT HEX(uuid),instance,account FROM sinefa_$i.instances WHERE uuid NOT IN (SELECT uuid FROM sinefa.instances WHERE account = $i)";done | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo "SELECT CONCAT('RENAME TABLE ',table_schema,'.',table_name, ' TO ','sinold.',table_name,';') FROM information_schema.TABLES WHERE table_schema LIKE 'sinefa';"
+echo "SELECT CONCAT('RENAME TABLE ',table_schema,'.',table_name, ' TO ','sinold.',table_name,';') FROM information_schema.TABLES WHERE table_schema LIKE 'sinefa';" |  | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa;done | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo "SELECT CONCAT('RENAME TABLE ',table_schema,'.',table_name, ' TO ','sinold.',table_name,';') FROM information_schema.TABLES WHERE table_schema LIKE 'sinefa';" | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo "SELECT CONCAT('RENAME TABLE ',table_schema,'.',table_name, ' TO ','sinold.',table_name,';') FROM information_schema.TABLES WHERE table_schema LIKE 'sinefa';" | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo "SELECT CONCAT('RENAME TABLE ',table_schema,'.',table_name, ' TO ','sinefa.',table_name,';') FROM information_schema.TABLES WHERE table_schema LIKE 'sinnew';" | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | mysql --force -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | while read i;do echo "SELECT HEX(uuid),instance,account FROM sinefa_$i.instances WHERE uuid NOT IN (SELECT uuid FROM sinefa.instances WHERE account = $i)";done | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | while read i;do echo "SELECT HEX(uuid),instance,account FROM sinefa_$i.instances WHERE uuid NOT IN (SELECT uuid FROM sinefa.instances WHERE account = $i);";done | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | while read i;do echo "SELECT id,HEX(uuid),$i FROM sinefa_$i.instances WHERE uuid NOT IN (SELECT uuid FROM sinefa.instances WHERE account = $i);";done | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | while read i;do echo "use sinnew_$i;show tables;";done | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | while read i;do echo "use sinold_$i;show tables;";done | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | while read i;do echo "use sinnew_$i;show tables;";done | mysql --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | while read i;do echo "DROP DATABASE sinnew_$i;";done
+echo 'SELECT id FROM accounts' | mysql -N --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | while read i;do echo "DROP DATABASE sinnew_$i;";done  | mysql --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+echo 'SELECT email FROM users' | mysql --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | while read i;do echo Doing $i; echo $i | perl -pe 's%.*\@%%g';done
+echo 'SELECT email FROM users' | mysql --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | while read i;do echo Doing $i; echo $i | perl -pe 's%.*\@%%g' | xargs -idomain dig $domain mx;done
+echo 'SELECT email FROM users' | mysql --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | while read i;do echo Doing $i; echo $i | perl -pe 's%.*\@%%g';done | sort > domains.lst
+less domains.lst
+echo 'SELECT email FROM users' | mysql --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa | while read i;do echo $i | perl -pe 's%.*\@%%g';done | sort | uniq > domains.lst
+timet 1345482150
+less dtymon-london.log
+less dtymon-sanfran.log
+ssh admin@202.55.97.110
+calc '1014316-994888'
+calc '847656-842556'
+calc '994888-929352'
+calc '842556-782780'
+calc '994888/1024'
+calc '929352-929716'
+man ps
+rpm -ql graphviz
+rpm -ql graphviz | less
+man dot
+cut -f 9,10 navd-mem.out| less
+cut -d ' ' -f 9,10 navd-mem.out| less
+man cut
+perl -ne '@a=split(/\s+/); printf("%d %d\n", $a[8], $a[9])' navd-mem.out| less
+perl -ne '@a=split(/\s+/); printf("%d %d\n", $a[8], $a[9])' navd-mem.out < navd-mem-sizes.out
+perl -ne '@a=split(/\s+/); printf("%d %d\n", $a[8], $a[9])' navd-mem.out > navd-mem-sizes.out
+perl -ne '@a=split(/\s+/); printf("%02d/10/2012 %s %d %d\n", $a[3], $a[8], $a[9])' navd-mem.out > navd-mem-sizes.out
+which gnuplot
+gnuplot plot-mem
+stty sane
+man gnuplot
+gnuplot -h | less
+gnuplot plot-mem > mem.png
+eog mem.png
+eog mem.svg
+which inkscape
+gnuplot plot-mem > mem.svg
+display mem.svg
+mv navd-mem.out navd-mem-run1.out
+perl -ne '@a=split(/\s+/); printf("%02d/10/2012 %s %d %d\n", $a[2], $a[3], $a[8], $a[9])' navd-mem.out > navd-mem-sizes.out
+less navd-mem-sizes.out
+scp root@202.55.97.110:/tmp/navd-mem.out .
+perl -ne '@a=split(/\s+/); printf("%02d %s 2012 %s %d %d\n", $a[2], $a[1], $a[3], $a[8], $a[9])' navd-mem.out > navd-mem-sizes.out
+gnuplot plot-mem > mem1.svg
+mv mem1.svg mem-before-prealloc.svg
+scp /work/dtymon/comms/sinefa-comms/lib/InternalCommsUtils.js root@202.55.97.110:/usr/lib/node/sinefa-comms/lib
+mv navd-mem-shared-ptr.out navd-mem-longrun.out
+./plot-mem > mem1.svg
+scp root@202.55.97.110:/tmp/navd-mem.out navd-mem-shared-ptr.out
+ls -la navd-mem-shared-ptr.out
+ls -lah navd-mem-shared-ptr.out
+vi plot-mem
+inkscape mem1.svg
+less navd-mem.out
+scp root@202.55.97.110:/tmp/navd-mem.out navd-mem.out
+less plot-mem
+cp navd-mem.out navd-mem.out.full
+vi navd-mem.out
+./plot-mem > /work/dtymon/mem1.svg
+inkscape /work/dtymon/mem1.svg
+ssh root@202.55.97.110
+rpm -qa | egrep '^boost' | sort
+md boost-1.50
+cd boost-1.50
+for i in boost boost-chrono boost-date-time boost-devel boost-filesystem boost-graph boost-iostreams boost-math boost-program-options boost-python boost-random boost-regex boost-serialization boost-signals boost-system boost-test boost-thread boost-wave;do [ -f "$HOME/redhat/RPMS/x86_64/$i-1.50.0-2.fc16.x86_64.rpm" ] || echo $i;done
+for i in boost boost-chrono boost-date-time boost-devel boost-filesystem boost-graph boost-iostreams boost-math boost-program-options boost-python boost-random boost-regex boost-serialization boost-signals boost-system boost-test boost-thread boost-wave;do [ -f "$HOME/redhat/RPMS/x86_64/$i-1.50.0-2.fc16.x86_64.rpm" ] && rpm2cpio "$HOME/redhat/RPMS/x86_64/$i-1.50.0-2.fc16.x86_64.rpm" | cpio -ivudm;done
+cd usr/include
+egrep -r validation_error .
+less ./boost/program_options/errors.hpp
+for i in boost-static;do [ -f "$HOME/redhat/RPMS/x86_64/$i-1.50.0-2.fc16.x86_64.rpm" ] && rpm2cpio "$HOME/redhat/RPMS/x86_64/$i-1.50.0-2.fc16.x86_64.rpm" | cpio -ivudm;done
+cd usr/lib64
+nm -C -A libboost_program_options.a | less
+ls include/boost/functional/hash.hpp
+find . -name list_inserter.hpp
+vi /work/dtymon/boost-1.50/usr/include/boost/heap/binomial_heap.hpp
+rpm -ql /usr/libexec/tracker-miner-fs
+rpm -qf /usr/libexec/tracker-miner-fs
+ls -la /usr/libexec/tracker-miner-fs
+ls -la /usr/libexec/tracker-store
+ps -ef | egrep 1975
+kill 2279 2295 2310
+ps -ef | egrep tracker
+which nxagent
+rpm -qf /usr/bin/nxagent
+scp -r sinefa-c* sinefa-router root@192.168.101.196:/usr/lib/node/
+egrep -r EAGAIN /usr/include
+scp -r ../code/std64/bin/wantrued-v1/wantrued root@192.168.101.196:.
+llpritnf 467673980929572864
+llprintf 467673980929572864
+            data->status = PSI_STATUS_IDLE;
+ssh root@192.168.101.56
+ssh root@192.168.101.92
+vi ~/.ssh/known_hosts
+ssh root@192.168.101.196
+ssh root@192.168.101.95
+date
+ssh root@192.168.103.165
+vi /home/dtymon/.ssh/known_hosts
+ssh root@192.168.102.11
+ssh root@192.168.102.10
+virt-manager
+ssh root@172.7.0.1
+scp /work/dtymon/appliance/build/tmp-eglibc-eglibc/work/x86_64-oe-linux/boost-1.49.0-r3.0/image/usr/lib/libboost_date_time.so.1.49.0 root@10.7.6.1:.
+scp /work/dtymon/appliance/build/tmp-eglibc-eglibc/work/x86_64-oe-linux/boost-1.49.0-r3.0/image/usr/lib/libboost_date_time.so.1.49.0 root@10.7.0.1:.
+scp root@10.7.6.1:dtymon-london.log .
+scp root@10.7.6.1:dtymon-sanfran.log .
+scp root@10.7.0.1:dtymon-sanfran.log .
+mv Downloads/dispersion.pdf Documents
+mv Downloads/3_Pathrate.pdf Documents
+unzip -l dpc525a_linux_.0.0.tar.zip
+rm -rf dpc525a_linux_.0.0.tar.zip
+unzip dpc525a_linux_.0.0.tar.zip
+cd C525A_LinuxE
+rpm -qpl Fuji_Xerox-DocuPrint_C525_A_AP-1.0-1.i386.rpm
+ls /usr/share/ppd
+rpm -qa | egrep Fuj
+sudo rpm -e Fuji_Xerox-DocuPrint_C525_A_AP-1.0-1.i386
+sudo rm /usr/share/ppd/FX_DocuPrint_C525_A_AP.ppd
+sudo yum install cups-libs.i686
+sudo rpm -Uvh Fuji_Xerox-DocuPrint_C525_A_AP-1.0-1.i386.rpm
+sudo cp /usr/share/cups/model/FujiXerox/en/FX_DocuPrint_C525_A_AP.ppd /usr/share/ppd
+service cups restart
+sudo service cups restart
+evince Documents/PacketTwins_\ A\ Novel\ Method\ for\ Capacity\ Estimation\ of\ a\ Heavy-Loaded\ Path.pdf
+evince ~/Documents/PacketTwins_\ A\ Novel\ Method\ for\ Capacity\ Estimation\ of\ a\ Heavy-Loaded\ Path.pdf
+ls -latr ..
+rm -rf C525A_LinuxE
+mv 721603.pdf ~/Documents
+evince ~/Documents/721603.pdf
+evince ~/Documents/3_Pathrate.pdf
+evince ~/Documents/dispersion.pdf
+scp /work/dtymon/code/std64/bin/wantrued-v1/wantrued root@10.7.6.1:.
+scp /work/dtymon/code/std64/bin/wantrued-v1/wantrued root@10.7.0.1:.
+TZ=UTC date
+ssh root@10.7.6.1
+ssh root@10.7.0.1
+ls redhat/SRPMS
+rpm -ivh redhat/SRPMS/nodejs-0.8.7-1.fc16.src.rpm
+cp Downloads/node-v0.8.9.tar.gz ~/redhat/SOURCES
+rpmbuild -ba --clean ~/redhat/SPECS/nodejs.spec
+find Downloads -name nodejs-compat\*
+find redhat -name nodejs-compat\*
+rpm -qpl redhat/RPMS/noarch/nodejs-compat-symlinks-1-2.fc16.noarch.rpm
+find redhat -name npm\*
+rpmbuild --rebuild --clean redhat/SRPMS/npm-1.1.48-1.fc16.src.rpm
+rpm -ivh redhat/SRPMS/npm-1.1.48-1.fc16.src.rpm
+tar ztvf npm-1.1.59.tgz
+cp npm-1.1.59.tgz ~/redhat/SOURCES
+cd ~/redhat/SPECS
+rpmbuild -bb npm.spec
+tar ztvf ../SOURCES/npm-1.1.59.tgz| less
+ls -laR ~/redhat/BUILDROOT/npm-1.1.59-1.fc16.x86_64 | less
+npm search gyp
+ls /usr/lib/nodejs.old
+xxdiff -r /usr/lib/nodejs.old/comb /usr/lib/nodejs/comb
+npm docs cluster
+less /usr/lib/nodejs/zmq/LICENSE
+rpm -qi zeromq
+rpm -ql rabbitmq-server-2.6.1-1.fc16.noarch | less
+less /usr/lib/rabbitmq/lib/rabbitmq_server-2.6.1/ebin/bpqueue.beam
+less /etc/tmpfiles.d/rabbitmq-server.conf
+less /etc/rc.d/init.d/rabbitmq-server
+rpm -qa | egrep rabbit
+rpm -ql librabbitmq
+netstat -an | egrep 5672
+man amqp-delete-queue
+rabbitmqctl
+man rabbitmqctl
+rpmbuild --rebuild --clean qpid-cpp-0.18-1.fc17.src.rpm
+rpmbuild --rebuild --clean qpid-cpp-0.18-1.1.fc16.src.rpm
+rpmbuild --rebuild --clean python-qpid-0.18-1.fc16.src.rpm
+md amqp
+mv amqp* amqp/.
+cd amqp
+unzip -l amqp0-10.zip
+unzip amqp0-9-1.zip
+evince amqp0-9-1.pdf
+unzip amqp0-10.zip
+evince amqp.0-10.pdf
+npm search ipv6
+npm docs ipv6
+man npm
+npm help install
+rpmbuild --rebuild ~/redhat/SRPMS/npm-1.1.59-1.fc16.src.rpm
+cd ~/redhat/BUILDROOT
+cd ../SPECS
+rpm -ivh ../SRPMS/npm-1.1.59-1.fc16.src.rpm
+rpmbuild -bi npm.spec
+ls -laR ../BUILDROOT/npm-1.1.59-1.fc16.x86_64
+ls -laR ../BUILDROOT/npm-1.1.59-1.fc16.x86_64 | grep cli
+ls ../BUILD/npm/doc
+ls ../BUILD/npm/doc/cli
+rpm -qpl /home/dtymon/redhat/RPMS/noarch/npm-1.1.59-1.fc16.noarch.rpm | less
+rpmbuild -ba --clean npm.spec
+npm docs express
+npm docs socket.io
+npm docs generic-pool
+npm docs nconf
+npm docs syslog
+cd ~/Downloads
+unzip -l json_spirit_v4_05.zip
+unzip json_spirit_v4_05.zip
+ls -lat
+tar ztvf mysql_performance_monitor-latest.tar.gz
+rm mysql_performance_monitor-latest.tar.gz
+less json_spirit_v4.05/json_map_demo/json_map_demo.cpp
+rm sstate-sinefa-router-i586-oe-linux-0.1-r19-i586-2-09b17f9610fdcaffec19f80a5e1d381f_populate-lic.tgz
+file systemd-193.tar.xz
+xz --help
+tar ztvf systemd-193.tar.xz
+xz -d systemd-193.tar.xz
+tar tvf systemd-193.tar
+tar xvf systemd-193.tar
+cd systemd-193
+egrep -r -i restart .
+less man/systemd.directives.xml
+egrep -r -i restart . | less
+less man/systemd.directives.5
+less man/systemd.service.5
+cd ../json_spirit_v4.05
+make install
+sudo make install
+find .. -name json_spirit_writer_options.h:
+find .. -name json_spirit_writer_options.h
+sudo cp ../json_spirit/json_spirit_writer_options.h /usr/local/include/
+tar ztvf libfixbuf-1.2.0.tar.gz
+tar zxvf libfixbuf-1.2.0.tar.gz
+cd libfixbuf-1.2.0
+egrep -r mismatch .
+vi src/fbnetflow.c
+rpmbuild --rebuild --clean boost-1.50.0-2.fc18.src.rpm
+rpmbuild --rebuild --clean --without python3 boost-1.50.0-2.fc18.src.rpm
+man systemctl
+scp -i ~/certs/latestsinefacom.pem nodejs-dev_0.8.11-1chl1~precise1_amd64.deb nodejs_0.8.11-1chl1~precise1_amd64.deb npm_1.1.62-1chl1~precise1_all.deb ubuntu@portal-latest.sinefa.com:portal-pkgs/.
+scp -i ~/certs/latestsinefacom.pem nodejs-dbg_0.8.11-1chl1\~precise1_amd64.deb ubuntu@portal-latest.sinefa.com:portal-pkgs/.
+ssh root@172.26.0.145
+ssh root@172.26.0.214
+npm docs websocket
+ssh root@10.7.3.1
+npm docs mysql
+rpmbuild --rebuild --clean valgrind-3.8.1-4.fc19.src.rpm
+rpm -ivh libfixbuf-1.1.0-1.rf.src.rpm
+mv libfixbuf-1.2.0\ \(1\).tar.gz ~/redhat/SOURCES/libfixbuf-1.2.0.tar.gz
+rpmbuild -ba --clean ~/redhat/SPECS/libfixbuf.spec
+tar jxvf valkyrie-2.0.0.tar.bz2
+cd valkyrie-2.0.0
+less INSTALL
+qmake-qt4
+rpm -qa | egrep tracker
+which tracker-preferences
+ls -latr ../
+ps -ef | egrep cups
+scp -r -i ~/certs/latestsinefacom.pem ubuntu@portal-latest.sinefa.com:/var/log/sinefa/portal/nav.log .
+../sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'DESCRIBE nav_apps_5min'
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'DESCRIBE nav_apps_5min'
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'ALTER TABLE nav_apps_5min ADD COLUMN percentile_throughput_sent     BIGINT(20)    UNSIGNED NOT NULL, percentile_throughput_received BIGINT(20)    UNSIGNED NOT NULL'
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'ALTER TABLE nav_apps_5min ADD COLUMN percentile_throughput_sent     BIGINT(20)    UNSIGNED NOT NULL, ADD COLUMN percentile_throughput_received BIGINT(20)    UNSIGNED NOT NULL'
+for table in nav_apps_15min nav_apps_2012_09 nav_apps_unknown_5min nav_apps_unknown_15min nav_apps_unknown_2012_09 nav_hosts_ext_5min nav_hosts_ext_15min nav_hosts_ext_2012_09 nav_hosts_int_5min nav_hosts_int_15min nav_hosts_int_2012_09;do echo Doing $table; ../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query "ALTER TABLE $table ADD COLUMN percentile_throughput_sent     BIGINT(20)    UNSIGNED NOT NULL, ADD COLUMN percentile_throughput_received BIGINT(20)    UNSIGNED NOT NULL";done
+for table in nav_apps_15min nav_apps_2012_09 nav_apps_unknown_5min nav_apps_unknown_15min nav_apps_unknown_2012_09 nav_hosts_ext_5min nav_hosts_ext_15min nav_hosts_ext_2012_09 nav_hosts_int_5min nav_hosts_int_15min nav_hosts_int_2012_09;do echo Doing $table; ../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --force-all --query "ALTER TABLE $table ADD COLUMN percentile_throughput_sent     BIGINT(20)    UNSIGNED NOT NULL, ADD COLUMN percentile_throughput_received BIGINT(20)    UNSIGNED NOT NULL";done
+ls -altr ~
+less /work/dtymon/web/server/sql/newAccount.sql
+cat <<EOF | perl -pe 'chomp; print; END { print "\n"}'
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'CREATE TABLE nav_sources_5min LIKE sinefa_14.nav_sources_5min'
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'CREATE TABLE nav_sources_5min LIKE sinefa_14.nav_sources_5min' --force-all
+cat <<EOF | perl -pe 'chomp; print; END { print "\n"}'\
+CREATE TABLE nav_sources_5min (\
+  source INT(10)                 UNSIGNED               NOT NULL,\
+  timestamp INT(10)              UNSIGNED               NOT NULL,\
+  connections                    INT(10)       UNSIGNED NOT NULL,\
+  bytes_sent                     BIGINT(20)    UNSIGNED NOT NULL,\
+  bytes_received                 BIGINT(20)    UNSIGNED NOT NULL,\
+  packets_sent                   BIGINT(20)    UNSIGNED NOT NULL,\
+  packets_received               BIGINT(20)    UNSIGNED NOT NULL,\
+  peak_throughput_sent           BIGINT(20)    UNSIGNED NOT NULL,\
+  peak_throughput_received       BIGINT(20)    UNSIGNED NOT NULL,\
+  percentile_throughput_sent     BIGINT(20)    UNSIGNED NOT NULL,\
+  percentile_throughput_received BIGINT(20)    UNSIGNED NOT NULL,\
+\
+  PRIMARY KEY (source, timestamp),\
+  KEY timestamp (timestamp),\
+  KEY source (source)\
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;\
+EOF
+cat <<EOF | perl -pe 'chomp; print; END { print "\n"}'\
+CREATE TABLE sources (\
+  id                INT(10)      UNSIGNED NOT NULL AUTO_INCREMENT,\
+  ip_address        VARBINARY(16)         NOT NULL,\
+  instance          INT(10)      UNSIGNED NOT NULL,\
+  name              VARCHAR(255)          NOT NULL,\
+\
+  PRIMARY KEY (id),\
+  UNIQUE KEY name (name),\
+  UNIQUE KEY instance_ip_address (instance, ip_address),\
+\
+  CONSTRAINT sources_instance_fk FOREIGN KEY (instance)\
+    REFERENCES instances (id)\
+    ON DELETE CASCADE ON UPDATE CASCADE\
+) ENGINE=InnoDB DEFAULT CHARSET=utf8\
+EOF
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'CREATE TABLE sources LIKE sinefa_14.sources' --force-all
+for table in nav_apps_template nav_apps_by_hosts_template nav_apps_unknown_template nav_hosts_template nav_hosts_by_apps_template nav_hosts_by_peer_template nav_sources_template; do echo Doing $table; ../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query "CREATE TABLE $table LIKE sinefa_17.$table" --force-all;done
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'RENAME TABLE nav_hosts_by_peer_template TO nav_hosts_by_peers_template' --force-all
+cal
+cal 1970
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'DROP TABLE nav_apps_unknown_template' --force-all
+for table in nav_apps_unknown_template ; do echo Doing $table; ../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query "CREATE TABLE $table LIKE sinefa_14.$table" --force-all;done
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'ALTER TABLE sources CHANGE address ip_address varbinary(16)' --force-all
+man mkfs.ext4
+man fstab
+sudo /bin/bash
+man errno
+egrep EPERM /usr/include
+egrep -r EPERM /usr/include
+ls -la /var
+man su
+calc '50236*177'
+calc '8929280/1024'
+calc '86736896/1024**2'
+calc '122519552/1024**2'
+calc '156123136/1024**2'
+egrep -r express ../comms/sinefa-router
+less /usr/include/asm-generic/errno-base.h
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'CREATE TABLE sources_new LIKE sinefa_14.sources_new' --force-all
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'SELECT COUNT(*) FROM sources' --force-all
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'RENAME TABLE sources TO sources_old' --force-all ; ../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'RENAME TABLE sources_new TO sources' --force-all
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'DROP TABLE sources_old' --force-all
+dig -x 150.101.153.91
+timet 1348449480
+timet 1348467900
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'alter table sources drop foreign key sources_instance_fkey' --force-all
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'alter table sources drop foreign key sources_instance_fk' --force-all
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'alter table sources drop key instance_ip_address' --force-all
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'alter table sources add constraint sources_instance_fk FOREIGN KEY (instance) REFERENCES instances (id) ON DELETE CASCADE ON UPDATE CASCADE' --force-all
+man myslqdump
+mysqldump --help
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'CREATE TABLE applications LIKE sinefa_14.applications' --force-all
+for i in 1 13 14 15 16 17 18 46 65 66 67 68;do echo Doing $i; echo "CREATE DATABASE latest_$i;";done
+for i in 1 13 14 15 16 17 18 46 65 66 67 68;do echo "CREATE DATABASE latest_$i;";done | mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest
+for i in 1 13 14 15 16 17 18 46 65 66 67 68;do echo "CREATE DATABASE latest_$i;" | mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest;done
+mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_1
+vi ../testing/davids-portal.conf
+../comms/sinefa-portal/bin/sinefa-all-customers --conf ../testing/davids-portal.conf --query 'CREATE TABLE wantrue_template LIKE wantrue'
+less ../comms/portal-pkgs/install.txt
+tar zcvf sinefa.tar.gz sinefa-common/ sinefa-comms/ sinefa-portal/ sinefa-router/ sinefa.tar.gz
+man apt-cache
+man apt-get
+tar zcvf sinefa.tar.gz sinefa-common/ sinefa-comms/ sinefa-portal/ sinefa-router/
+scp -i ~/certs/latestsinefacom.pem sinefa.tar.gz ubuntu@portal-latest.sinefa.com:portal-pkgs/.
+scp -i ~/certs/latestsinefacom.pem ubuntu@portal-latest.sinefa.com:/tmp/foo.pcap .
+wireshark /tmp/foo.pcap
+echo "SHOW TABLES LIKE 'nav_%'" | mysql -A -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_14
+echo "SHOW TABLES LIKE 'nav_%'" | mysql -A -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_14 | sort | grep '_01m_'
+echo "SHOW TABLES LIKE 'nav_%'" | mysql -A -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_14 | sort | grep '_01m_' | wc -l
+echo "SHOW TABLES LIKE 'nav_%'" | mysql -A -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_14 | sort | grep '_01m_' | perl -ne 'm%.*_(\d{8})% and print "$1\n"'
+echo "SHOW TABLES LIKE 'nav_%'" | mysql -A -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_14 | sort | grep '_01m_' | perl -ne 'm%.*_(\d{8})% or next; ($1 ge "20121007") or print "$1\n";'
+echo "SHOW TABLES LIKE 'nav_%'" | mysql -A -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_14 | sort | grep '_01m_' | perl -ne 'm%.*_(\d{8})% or next; ($1 ge "20121007") or print "DROP TABLE $_;\n";'
+echo "SHOW TABLES LIKE 'nav_%'" | mysql -A -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_14 | sort | grep '_01m_' | perl -ne 'chomp; m%.*_(\d{8})% or next; ($1 ge "20121007") or print "DROP TABLE $_;\n";'
+echo "SHOW TABLES LIKE 'nav_%'" | mysql -A -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_14 | sort | grep '_01m_' | perl -ne 'chomp; m%.*_(\d{8})% or next; ($1 ge "20121007") or print "DROP TABLE $_;\n";' | mysql -A -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_14
+echo "SHOW TABLES LIKE 'nav_%'" | mysql -A -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest_14 | wc -l
+rm *~
+ssh root@150.101.216.226
+man ssh
+ssh -R 2055:150.101.216.226:2055 root@150.101.216.226
+ssh -R 127.0.0.1:2055:127.0.0.1:2055 root@150.101.216.226
+ssh -R 127.0.0.1:12345:127.0.0.1:12345 root@150.101.216.226
+cd /work/dtymon
+rm navd-no-send
+git clone git@bitbucket.org:sinefa/code.git code-native
+cd code-native
+md native
+cd native
+which cmake
+rpm -qf /usr/bin/cmake
+rpm -ql cmake-2.8.8-4.fc16.x86_64
+rpm -ql cmake-2.8.8-4.fc16.x86_64 | less
+cmake Boost_DIR=/work/dtymon/boost-1.50/usr ..
+cmake -DBoost_DIR=/work/dtymon/boost-1.50/usr ..
+vi ../CMakeLists.txt
+vi ../lib/libsfa-config/CMakeLists.txt
+vi ../lib/libsfa-config/tool/CMakeLists.txt
+vi ../lib/libsfa-common/CMakeLists.txt
+egrep -r Boost_INCLUDE_DIRS .
+egrep -r BOOST .
+egrep -r -i boost .
+egrep -r boost ../lib/libsfa-common
+make VERBOSE=1
+bin/navd/navd
+ls -lah bin/navd/navd
+valgrind --leak-check=yes bin/navd/navd
+valgrind --help
+valgrind --leak-check=yes --xml=yes --xml-file=navd-val.xml bin/navd/navd
+less navd-val.xml
+~/Downloads/valkyrie-2.0.0/bin/valkyrie
+egrep -r init ../bin/navd
+egrep -r init ../bin/navd | egrep -i config
+egrep -r init ../bin/navd | egrep -i config | less
+rm navd-val.xml
+egrep -r -i port ../bin/navd/*.cpp
+egrep -r -i port ../bin/navd/*.hpp
+scp root@150.101.216.226:foo.pcap .
+wireshark foo.pcap
+bin/navd/navd -T '*=100'
+bin/navd/navd --help
+bin/navd/navd -T '*=100' -p 2055
+less /work/dtymon/web
+cd /work/dtymon/web/server/sql
+git log newAccount.sql
+telnet localhost 2055
+llprintf 4294967295
+timet 1351828890
+timet 1350783311 1350837061 1351182876 1351247441
+timet 1352077912
+timet 1352065104
+timet 1352078212
+timet 1352077311
+calc '(5358914+6474563)/1024**2'
+nc -l -p 2055 | nc -u 2055
+nc -l -p 2055 | nc -u -p 2055
+nc -l -p 2055
+netstat -an | grep 2055
+netstat -an | less
+ls -la /proc/6631/fd
+less /etc/services
+lsof -p 6631 | less
+nc -l 2055 | nc -u 2055
+netstat -an | egrep 2055
+nc -l 2055 | nc -u -l 2055
+nc -l 2055 | nc -u -p 2055
+nc -l 2055 | nc -u 127.0.0.1 2055
+nc -l 2055
+nc -l -k 2055
+nc -l -k 12345
+mkfifo /tmp/dt.fifo
+nc -l -k 12345 < /tmp/dt.fifo | nc -u 127.0.0.1 2055 > /tmp/dt.fifo
+rm /tmp/dt.fifo
+man tcpdump
+ssh root@172.26.0.37
+ssh -i ~/certs/sinefa-app-server.pem ubuntu@portal.sinefa.com
+mysql --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb staging
+ssh -i ~/certs/latestsinefacom.pem ubuntu@portal-staging.sinefa.com
+mysql -h portal-latest.sinfa.com -u sinefa -p c2luZWZhCg== sinefa
+mysql -hportal-latest.sinfa.com -usinefa -pc2luZWZhCg== sinefa
+mysql -hcontroller-latest.sinfa.com -usinefa -pc2luZWZhCg== sinefa
+mysql -usinefa -hcontroller-latest.sinefa.com -pc2luZWZhCg== sinefa
+mysql -A -usinefa -hcontroller-latest.sinefa.com -pc2luZWZhCg== sinefa
+mysql -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest
+mysql -A -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest
+mysql -A -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== staging
+mysql -A -ustaging -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== staging
+#mysql --ssl -A -ustaging -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== staging < /work/dtymon/web/server/sql/globalDB.sql
+mysql --ssl -A -ustaging -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== staging < /work/dtymon/web/server/sql/globalDB.sql
+mysql --ssl -A -ustaging -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== staging_1
+mysql --ssl -A -ustaging -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== staging
+mysql --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb sinefa
+mysql --ssl -A -ulatest -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -pc2luZWZhCg== latest
+mysql --ssl -A -usinefa -hna01db.cic3w9gnb64z.us-west-1.rds.amazonaws.com -py4UAFKhZYWnWA6tb latest
+ssh -i ~/certs/latestsinefacom.pem ubuntu@portal-latest.sinefa.com
+. ./init-build-env
+_path_add -r .
+md5sum ~/Downloads/node-v0.8.9.tar.gz
+sha256sum ~/Downloads/node-v0.8.9.tar.gz
+egrep -r 'PREFERRED.*node' ../meta-sinefa
+less /work/dtymon/appliance/build/tmp-eglibc-eglibc/work/x86_64-oe-linux/nodejs-0.8.9-r1/temp/log.do_compile.18595
+find ../meta-* ../oe* -name zmq\*
+find ../meta-* ../oe* -name z\*bb
+find ../meta-* ../oe* -name zero\*
+md ../meta-sinefa/recipes-support/zeromq
+mv ../meta-sinefa/recipes-support/zeromq/zeromq_2.1.6.bb ../meta-sinefa/recipes-support/zeromq/zeromq_2.1.11.bb
+md ../meta-sinefa/recipes-support/util-linux-ng
+md ../meta-sinefa/recipes-support/util-linux-ng/util-linux-ng_2.1.18
+mv ../meta-sinefa/recipes-support/util-linux-ng/util-linux-ng.inc.txt ../meta-sinefa/recipes-support/util-linux-ng/util-linux-ng.inc
+mv ../meta-sinefa/recipes-support/util-linux-ng/util-linux-ng_2.1.18 ../meta-sinefa/recipes-support/util-linux-ng/util-linux-ng_2.18
+mv ../meta-sinefa/recipes-support/util-linux-ng/util-linux-ng_2.1.18.bb ../meta-sinefa/recipes-support/util-linux-ng/util-linux-ng_2.18.bb
+md ../meta-sinefa/recipes-support/util-linux-ng/files
+ls ../meta-sinefa/recipes-support/util-linux-ng/util-linux-ng_2.18
+mv ../meta-sinefa/recipes-support/util-linux-ng/util-linux-ng_2.18 ../meta-sinefa/recipes-support/util-linux-ng/util-linux-ng-2.18
+bitbake util-linux-ng
+bitbake -c cleansstate util-linux-ng
+bitbake -c cleansstate util-linux
+bitbake util-linux
+dpkg -c tmp-eglibc-eglibc/deploy/ipk/x86_64/util-linux-dev_2.21-r6_x86_64.ipk| less
+find tmp-eglibc-eglibc/deploy/ipk -name zero\*
+find tmp-eglibc-eglibc -name zero\*
+find tmp-eglibc-eglibc -name zeromq\*
+bitbake -c cleansstate zeromq
+bitbake zeromq
+find tmp-eglibc-eglibc/deploy -name zero\*
+mv ../meta-sinefa/recipes-core/node-packages/node-zmq.bb ../meta-sinefa/recipes-core/node-packages/node-zeromq.bb
+bitbake node-zeromq
+LD='g++' bitbake nodejs
+bitbake node-ipv6
+mv ../meta-sinefa/recipes-core/sinefa/sinefa-router_git.bb ../meta-sinefa/recipes-core/sinefa/sinefa-router_git.bb.bak
+git checkout ../meta-sinefa/recipes-core/sinefa/sinefa-router_git.bb
+bitbake -c cleansstate sinefa-router sinefa-comms sinefa-common
+bitbake -c cleansstate sinefa-router sinefa-comms sinefa-common sinefa-portal
+less /work/dtymon/appliance/build/tmp-eglibc-eglibc/work/x86_64-linux/nodejs-native-0.8.9-r1/temp/log.do_compile.23963
+bitbake -c cleansstate nodejs
+bitbake -f -v nodejs
+bitbake -c configure nodejs-native
+bitbake -c devshell nodejs-native
+ls -lah tmp-eglibc-eglibc/deploy/ipk/x86_64/sinefa-router_0.1-r19_x86_64.ipk
+dpkg -c tmp-eglibc-eglibc/deploy/ipk/x86_64/sinefa-router_0.1-r19_x86_64.ipk| less
+bitbake lsof
+rm ../meta-sinefa/recipes-core/sinefa/sinefa-portal_git.bb~
+bitbake -c cleansstate sinefa-router sinefa-common sinefa-comms sinefa-cfgmgr
+bitbake sinefa-router sinefa-common sinefa-comms sinefa-cfgmgr
+scp tmp-eglibc-eglibc/work/x86_64-oe-linux/boost-1.49.0-r3.0/image/usr/lib/libboost_date_time.so.1.49.0 root@192.168.101.95:.
+bitbake -c cleansstate sinefa-navd
+bitbake sinefa-navd
+scp tmp-eglibc-eglibc/work/x86_64-oe-linux/boost-1.49.0-r3.0/image/usr/lib/libboost_date_time.so.1.49.0 root@202.55.97.110:.
+egrep -r fixbuf ../meta-sinefa/
+bitbake -c cleansstate sinefa-navd sinefa-wantrued
+bitbake -c cleansstate sinefa-router sinefa-cfgmgr sinefa-comms sinefa-common
+scp tmp-eglibc-eglibc/work/x86_64-oe-linux/boost-1.49.0-r3.0/image/usr/lib/libboost_date_time.so.1.49.0 root@192.168.102.11:.
+bitbake -c cleansstate sinefa-router sinefa-cfgmgr sinefa-comms sinefa-common sinefa-wantrued sinefa-nav
+egrep -r 0.6.20 ../meta-sinefa
+vi ../meta-sinefa/conf/distro/include/sinefa-versions.inc
+rm -rf ../meta-sinefa/recipes-core/dbus
+find ../meta-sinefa -name \*dbus\*
+find ../meta-sinefa -name \*dbus\* | xargs rm
+egrep -r -i dbus ../meta-sinefa
+bitbake -c cleansstate sinefa-router sinefa-cfgmgr sinefa-comms sinefa-common sinefa-wantrued sinefa-navd
+bitbake node-gyp
+dpkg -c tmp-eglibc-eglibc/deploy/ipk/x86_64/node-gyp_0.7.0-r0_x86_64.ipk
+dpkg -c tmp-eglibc-eglibc/deploy/ipk/x86_64/node-gyp_0.7.0-r0_x86_64.ipk | less
+scp tmp-eglibc-eglibc/deploy/ipk/x86_64/sinefa-router_0.2-r2_x86_64.ipk root@150.101.216.226:.
+bitbake -e node-sqlite3
+bitbake -e node-sqlite3 | less
+bitbake -c cleansstate sinefa-router nodejs nodejs-native
+bitbake nodejs
+bitbake -c cleansstate nodejs-native
+bitbake nodejs-native
+rm -rf bitbake.lock pseudodone sstate-cache tmp-eglibc-eglibc
+find ../meta-sinefa -name npm\*
+less ../meta-sinefa/classes/npm.bbclass
+bitbake -c devshell node-sqlite3
+vi ../meta-sinefa/classes/npm.bbclass
+bitbake -f -v node-sqlite3
+ls -al /work/dtymon/appliance/build/tmp-eglibc-eglibc/sysroots/x86_64-linux/usr/bin/npm
+less ../lib/node_modules/npm/bin/npm-cli.js
+ls -al /work/dtymon/appliance/build/tmp-eglibc-eglibc/sysroots/x86_64-linux/usr/lib/node_modules/npm/bin/npm-cli.js
+less /work/dtymon/appliance/build/tmp-eglibc-eglibc/sysroots/x86_64-linux/usr/lib/node_modules/npm/bin/npm-cli.js
+bitbake -e cleansstate node-sqlite3 | grep /work/dtymon/appliance/build/tmp-eglibc-eglibc/sysroots/x86_64-linux/usr/bin
+bitbake -e cleansstate node-sqlite3 | grep /usr/bin
+bitbake -e node-sqlite3 | grep /work/dtymon/appliance/build/tmp-eglibc-eglibc/sysroots/x86_64-linux/usr/bin
+ls /work/dtymon/appliance/build/tmp-eglibc-eglibc/sysroots/x86_64-linux/usr/bin/x86_64-oe-linux
+find tmp-eglibc-eglibc -name crossscripts
+egrep -r _fetch ../meta-* | egrep native
+egrep -r _fetch ../oe-core | egrep native
+rm bitbake.lock
+less ../oe-core/meta/classes/base.bbclass
+egrep -r do_fetch ../meta-*
+bitbake -c cleansstate node-sqlite3
+bitbake node-sqlite3
+bitbake -f -v sinefa-router > foo.out 2>&1
+bitbake -c devshell sinefa-router
+bitbake -f -v sinefa-router
+dpkg -c tmp-eglibc-eglibc/deploy/ipk/x86_64/sinefa-router_0.2-r6_x86_64.ipk| less
+git diff > router.patch
+rm router.patch
+rm -rf ../bogus
+rm -rf ../meta-sinefa/recipes-support/zeromq
+rm -rf ../meta-sinefa/recipes-core/node-packages/node-zeromq.bb
+rm -rf ../meta-sinefa/recipes-devtools/nodejs/nodejs_0.8.6.bb
+bitbake -c cleansstate sinefa-common
+bitbake sinefa-common
+dpkg -c tmp-eglibc-eglibc/deploy/ipk/x86_64/sinefa-common_0.2-r7_x86_64.ipk|less
+dpkg -c tmp-eglibc-eglibc/deploy/ipk/x86_64/sinefa-comms_0.2-r7_x86_64.ipk| less
+bitbake sinefa-router >foo.out 2>&1
+rm foo.out
+bitbake -c cleansstate sinefa-router
+bitbake sinefa-router
+dpkg -c tmp-eglibc-eglibc/deploy/ipk/x86_64/sinefa-router_0.2-r7_x86_64.ipk| less
+dpkg -c tmp-eglibc-eglibc/deploy/ipk/x86_64/sinefa-portal_0.2-r7_x86_64.ipk| less
+bitbake -c cleansstate sinefa-portal
+bitbake sinefa-portal
+scp tmp-eglibc-eglibc/work/x86_64-oe-linux/boost-1.49.0-r3.0/image/usr/lib/libboost_date_time.so.1.49.0 root@192.168.101.92:.
+find ../meta-sinefa -name \*~
+find ../meta-sinefa -name \*~ | xargs rm
+rm ../meta-sinefa/recipes-core/sinefa/sinefa-router_git.bb.bak
+scp tmp-eglibc-eglibc/deploy/ipk/x86_64/Packages root@202.55.97.110:.
+scp tmp-eglibc-eglibc/deploy/ipk/x86_64/node-websocket_1.0.7-r1_x86_64.ipk root@202.55.97.110:.
+find tmp-eglibc-eglibc -name node-websocket
+ls tmp-eglibc-eglibc/work/x86_64-oe-linux/node-websocket-1.0.7-r1
+scp -r tmp-eglibc-eglibc/work/x86_64-oe-linux/node-websocket-1.0.7-r1/image/usr/lib/node/websocket root@202.55.97.110:.
+find tmp-eglibc-eglibc -name xor.node
+bitbake -c cleansstate node-websocket
+bitbake -f -v node-websocket 2>&1 | tee foo.out
+less foo.out
+bitbake node-websocket
+git show 0b158afa5241b6d974d645bc4c84d66fe460ae01
+git revert 0b158afa5241b6d974d645bc4c84d66fe460ae01
+find tmp-eglibc-eglibc -name \*pmacct\*log\*
+find tmp-eglibc-eglibc -name \*pmacct\* | less +F
+find tmp-eglibc-eglibc -name \*pmacct\*do_compile\*
+less tmp-eglibc-eglibc/stamps/x86_64-oe-linux/pmacct-l7-services-1.0-r3.do_compile.sigdata.637d476559ff90da679f058649a1e218
+less tmp-eglibc-eglibc/stamps/x86_64-oe-linux/pmacct-git-r5.do_compile
+less tmp-eglibc-eglibc/stamps/x86_64-oe-linux/pmacct-l7-services-1.0-r3.do_compile
+find tmp-eglibc-eglibc -name \*pmacct\*do_config\*
+less tmp-eglibc-eglibc/stamps/x86_64-oe-linux/pmacct-git-r5.do_configure
+egrep -r logrotate ../oe-*
+egrep -r logrotate ../meta-*
+less ../oe-core/meta/recipes-extended/tasks/task-core-basic.bb
+find ../meta-sinefa -name task\*
+bitbake -c cleansstate task-sinefa-base
+bitbake task-sinefa-base
+bitbake -c cleansstate sinefa-wantrued
+bitbake sinefa-wantrued
+dpkg -c tmp-eglibc-eglibc/deploy/ipk/x86_64/sinefa-wantrued_0.3-r22_x86_64.ipk | less
+git show 535adb26f51e72bafc794fbdd1463df819cde71f
+git diff ../meta-sinefa/recipes-core/sinefa/sinefa-router_git.bb
+bitbake -c cleansstate sinefa-comms
+bitbake sinefa-comms
+dpkg -c tmp-eglibc-eglibc/deploy/ipk/x86_64/sinefa-comms_0.2-r18_x86_64.ipk| less
+git reset HEAD ../meta-sinefa/recipes-core/sinefa/sinefa-node-module.inc
+git reset HEAD~1
+git pull --abort
+rm meta-sinefa/recipes-core/sinefa/sinefa-node-module.inc
+git checkout ../meta-sinefa/recipes-core/sinefa/sinefa-node-module.inc
+git diff meta-sinefa/recipes-core/sinefa/sinefa-node-module.inc
+git checkout meta-sinefa/recipes-core/sinefa/sinefa-node-module.inc
+git reset HEAD meta-sinefa/recipes-core/sinefa/sinefa-node-module.inc
+git reset --hard HEAD^
+git pull -rebase
+rm meta-sinefa/recipes-core/sinefa/files/sinefa-wantrued.logrotate~
+find ../meta-* ../oe* -name \*valg\*
+bitbake valgrind
+bitbake -c cleansstate valgrind
+md ../meta-sinefa/recipes-devtools/valgrind
+md ../meta-sinefa/recipes-devtools/valgrind/valgrind
+rd ../meta-sinefa/recipes-devtools/valgrind/valgrind
+md ../meta-sinefa/recipes-devtools/valgrind/valgrind-3.8.1
+scp tmp-eglibc-eglibc/work/x86_64-oe-linux/boost-1.49.0-r3.0/image/usr/lib/libboost_date_time.so.1.49.0 root@192.168.101.109:.
+scp tmp-eglibc-eglibc/work/x86_64-oe-linux/boost-1.49.0-r3.0/image/usr/lib/libboost_date_time.so.1.49.0 root@192.168.102.10:.
+scp tmp-eglibc-eglibc/work/x86_64-oe-linux/boost-1.49.0-r3.0/image/usr/lib/libboost_date_time.so.1.49.0 root@192.168.103.165:.
+git pull --rebsae
+rm -rf bitbake.lock pseudodone sstate-cache tmp-eglibc-eglibc; bitbake -k sinefa-cdrom-image
+bitbake -k sinefa-cdrom-image
+cd /work/dtymon/code
+egrep -r include **/CMakeLists.txt
+bitbake -c cleansstate sinefa-image task-sinefa-base sinefa-cdrom-image sinefa-wantrued sinefa-navd sinefa-common sinefa-comms sinefa-router sinefa-cfgmgr
+less CommsHandler.
+less ../../lib/libsfa-comms/ProtocolDefs.hpp
+egrep -r -i msg .
+less CommsHandler.hpp
+egrep -r -i msg . | egrep -i id
+egrep -r -i msg . | egrep -i id | less
+egrep -r -i config . | less
+cd ../../lib/libsfa-config/
+less ConfigDefs.hpp
+less Config.hpp
+cd ../../std64/
+rm -rf std*
+./setup-env.sh ../appliance
+cd std64
+cd bin/wantrued-v1
+egrep -r Response ../../../bin/wantrued-v1
+cp bin/navd/netflow/NetflowCollector.cpp bin/navd/netflow/NetflowCollector.cpp.mine
+git reset HEAD bin/navd/netflow/NetflowCollector.cpp
+mv bin/navd/netflow/NetflowCollector.cpp.mine bin/navd/netflow/NetflowCollector.cpp
+rm -f bin/navd/test/pcap/*.log
+egrep -r PATHRATE bin/wantrued-v1
+egrep -r PSI_STATUS_PATHRATE bin/wantrued-v1
+cd std64/bin/wantrued-v1
+scp wantrued root@192.168.103.165:.
+egrep -r Bandwith ../../../bin/wantrued-v1
+less server/config/default.json
+cp server/config/default.json server/config/dtymon.json
+vi server/config/dtymon.json
+egrep -r -i nqs server
+less server/calc.js
+egrep -r Component.UI server
+egrep -r server/comms.js
+less server/comms.js
+find . -name ip\*
+less ./server/node_modules/ipv6/package.json
+egrep -r ipv6 server
+less server/utils.js
+less server/node_modules/ipv6/examples/node/simple.js
+screen
+cd /work/dtymon/comms
+egrep -i -r 'both\(' sinefa-*
+git difftool sinefa-portal/lib/nav/TableMgr.js
+egrep -r start_tx sinefa-portal
+rm -rf sinefa-router/lib/messages
+mv sinefa-portal/lib/nav/NAV.js sinefa-portal/lib/nav/NAV.js.mine
+mv sinefa-portal/lib/nav/NAVDB.js sinefa-portal/lib/nav/NAVDB.js.mine
+git checkout sinefa-portal/lib/nav/NAV.js
+git checkout sinefa-portal/lib/nav/NAVDB.js
+mv sinefa-portal/lib/nav/NAV.js.mine sinefa-portal/lib/nav/NAV.js
+mv sinefa-portal/lib/nav/NAVDB.js.mine sinefa-portal/lib/nav/NAVDB.js
+got log
+git rebase --abort
+git rebase -i b3429e606414a0078ad8f6bb81c16a1d73eb7174
+git show db621330725bc92028ebe9e9229ae63fb078b5b6
+find sinefa-* -name \*bak\*
+find sinefa-* -name \*bak\* | xargs rm
+git push --dry-run origin :feature/dbus-byebye
+git push --dry-run --force
+egrep -r '= require\(' sinefa-router
+egrep -r '= require\(' sinefa-router | perl -pe 'm%^.*require\((.*)\)% and print "$1\n"'
+egrep -r '= require\(' sinefa-router | perl -ne 'm%^.*require\((.*)\)% and print "$1\n"'
+egrep -r '= require\(' sinefa-router | perl -ne 'm%^.*require\((.*)\)% and print "$1\n"' | sort | uniq -d
+egrep -r uuid-js sinefa-router
+du -sk sinefa-router/node_modules
+find . -name \*.log
+find . -name npm\*
+egrep -r '= require\(' sinefa-router | grep -v /node_modules/ | perl -ne 'm%^.*require\((.*)\)% and print "$1\n"' | sort | uniq -d
+egrep -r '= require\(' sinefa-router | grep -v /node_modules/ | perl -ne 'm%^.*require\((.*)\)% and print "$1\n"' | sort
+rm -rf sinefa-router/node_modules
+cp -a /usr/lib/nodejs/sinefa-router/node_modules sinefa-router
+mv sinefa-router/node_modules sinefa-router/node_modules.bak
+mv sinefa-router/node_modules.bak sinefa-router/node_modules
+rm -rf sinefa-router/node_modules/express
+cp -a /usr/lib/nodejs/sinefa-router/node_modules/express sinefa-router/node_modules
+cp -a /usr/lib/nodejs/sinefa-router/node_modules/websocket sinefa-router/node_modules
+rm -f sinefa-router/node_modules/websocket/build/Release/xor.node
+rm -f sinefa-router/node_modules/websocket/build/Release/validation.node
+egrep -r '= require\(' sinefa-router | grep -v /node_modules/ | perl -ne 'm%^.*require\((.*)\)% and print "$1\n"' | sort | uniq
+cp -a /usr/lib/nodejs/sinefa-router/node_modules/socket.io* sinefa-router/node_modules
+less newAccount.sql
+rm newAccount.sql
+rm newAccount.sql.orig
+du -sh sinefa-router
+egrep -r '= require\(' sinefa-common | grep -v /node_modules/ | perl -ne 'm%^.*require\((.*)\)% and print "$1\n"' | sort | uniq
+md sinefa-common/node_modules
+npm install node-uuid@1.3.3
+npm install nconf@0.6.4
+npm install mkdirp@0.3.4
+cd ../../sinefa-comms
+md node_modules
+egrep -r '= require\(' sinefa-comms | grep -v /node_modules/ | perl -ne 'm%^.*require\((.*)\)% and print "$1\n"' | sort | uniq
+npm install comb@0.1.8
+egrep -r '= require\(' sinefa-portal | grep -v /node_modules/ | perl -ne 'm%^.*require\((.*)\)% and print "$1\n"' | sort | uniq
+md sinefa-portal/node_modules
+( cd sinefa-portal/node_modules; npm install comb@0.1.8 )
+( cd sinefa-portal/node_modules; npm install generic-pool@2.0.1 )
+( cd sinefa-portal/node_modules; npm install mkdirp@0.3.4 )
+( cd sinefa-portal/node_modules; npm install mysql@2.0.0-alpha3 )
+( cd sinefa-portal/node_modules; npm install nconf@0.6.4 )
+( cd sinefa-portal/node_modules; npm install syslog )
+egrep -r faculty sinefa-portal/node_modules/syslog
+egrep -r fac sinefa-portal/node_modules/syslog
+xxdiff -r sinefa-portal/node_modules/syslog /usr/lib/nodejs/syslog
+ls sinefa-portal/node_modules
+egrep -r m64 /work/dtymon/appliance/build/tmp-eglibc-eglibc/work/x86_64-linux/nodejs-native-0.8.9-r1/node-v0.8.9
+find /usr/lib/nodejs/sinefa-router -name websocket
+find /usr/lib/nodejs/sinefa-router -name Release
+find /usr/lib/nodejs/sinefa-router -name Debug
+find /usr/lib/nodejs/sinefa-router -name build
+npm rebuild sinefa-router
+npm rebuild sinefa-router/node_modules/websocket
+ls -1
+egrep -r Enabled sinefa-router
+egrep -r isDebugEnabled sinefa-router
+egrep -r isDebugEnabled sinefa-*
+egrep -r isDebugEnabled /usr/lib/nodejs/comb
+egrep -r isDebug /usr/lib/nodejs/comb
+less /usr/lib/nodejs/comb/lib/logging/index.js
+scp -r -i ~/certs/latestsinefacom.pem sinefa-common/lib/Logger.js ubuntu@portal-latest.sinefa.com:portal-pkgs/.
+cp ../comms/sinefa-common/lib/Logger.js sinefa-common/lib
+git revert fcac3c769b30db408f8a102e8afe910a732f3eb5
+find sinefa-router/node_modules -name \*.o
+find sinefa-router/node_modules -name \*.o | xargs rm
+find sinefa-* \*~
+find sinefa-* -name \*~ | xargs rm
+less .git/config
+git push --dry-run origin feature/dbus-byebye -f
+git push origin feature/dbus-byebye -f
+ls sinefa-cfgmgr/
+ls sinefa-comms/
+md sinefa-cfgmgr/node_modules
+cp -a sinefa-common/node_modules/comb sinefa-cfgmgr/node_modules
+cp -a sinefa-common/node_modules/mkdirp sinefa-cfgmgr/node_modules
+cp -a sinefa-common/node_modules/nconf sinefa-cfgmgr/node_modules
+less /usr/lib/nodejs/sqlite3/package.json
+cd sinefa-cfgmgr/node_modules
+npm install sqlite@2.1.5
+npm docs sqlite
+npm install sqlite3@2.1.5
+rm -rf sqlite3
+find /work/dtymon/appliance/build/tmp-eglibc-eglibc -name v8\*
+find /work/dtymon/appliance/build/tmp-eglibc-eglibc -name v8,h
+find /work/dtymon/appliance/build/tmp-eglibc-eglibc -name v8.h
+egrep -r do_populate_sysroot /work/dtymon/appliance/meta-*
+egrep -r appendVarFlag /work/dtymon/appliance/meta-*
+egrep -r appendVarFlag /work/dtymon/appliance/oe-core
+egrep -r appendVarFlag /work/dtymon/appliance/bitbake
+less /work/dtymon/appliance/bitbake/lib/bb/data_smart.py
+cd ../../
+md modules
+ls -laR root | less
+ls -la /work/dtymon/comms/build/sinefa-router/fakeroot/usr/bin/router-snoop
+less /work/dtymon/comms/build/sinefa-router/fakeroot/usr/bin/router-snoop
+less sinefa-router/fakeroot/usr/sbin/sinefa-router
+ls -la sinefa-router/fakeroot/usr/sbin/sinefa-router
+ls -la sinefa-router/fakeroot/usr/bin/router-pipe
+less sinefa-router/fakeroot/usr/bin/router-pipe
+ls ../sinefa-portal
+ls ../sinefa-portal/bin
+less sinefa-portal/fakeroot/usr/sbin/sinefa-portal
+rm -rf build
+cd sinefa-router
+cd build
+ls -la /work/dtymon/comms/sinefa-router/build/fakeroot/usr/sbin/sinefa-router
+ls -la /work/dtymon/comms/sinefa-router/build/fakeroot/usr/bin/sinefa-router
+find . -name sinefa-router
+ls -la fakeroot/usr/sbin
+ls -laR build | less
+ls -laR fakeroot | less
+md build
+rd build
+DESTDIR=$PWD/root make install
+VERBOSE=1 make DESTDIR=/foo install
+VERBOSE=1 DESTDIR=/foo make install
+VERBOSE=1 make HOME=/a/b install
+ls -la bin
+ssh root@10.7.1.1
+less /etc/logrotate.d/vsftpd
+less /etc/logrotate.d/syslog
+git show baf3bbf7f2eab07d1e91cab5f4bc6c0927e03639
+egrep -r delay sinefa-router/lib
+git clone git@bitbucket.org:sinefa/comms.git comms-dtymon
+cd code
+ls sinefa-comms/lib
+ls sinefa-comms/lib/local
+rd sinefa-comms/lib/local
+md node-v0.8.9
+ls src
+egrep -r '[-]m' .
+ls-la
+cp -a node-v0.8.9 node-v0.8.9.orig
+diff -purN node-v0.8.9.orig node-v0.8.9
+less /work/dtymon/appliance/meta-sinefa/recipes-devtools/nodejs/nodejs-0.8.9/configure-remove-m64.patch
+vi node-v0.8.9/common.gypi
+diff -purN node-v0.8.9.orig node-v0.8.9 > /work/dtymon/appliance/meta-sinefa/recipes-devtools/nodejs/nodejs-0.8.9/configure-remove-m64.patch
+cd node-v0.8.9/tools
+cd gyp
+egrep -r ld . | less
+egrep -r 'g\+\+' .
+egrep -r 'LD' .
+egrep -r -i verbose .
+egrep -r -i verbose . | less
+egrep -r -i verbose tools | less
+less Makefile
+rm /work/dtymon/appliance/meta-sinefa/recipes-devtools/nodejs/nodejs-0.8.9/configure-remove-m64.patch
+less /usr/lib/nodejs/mkdirp/package.json
+less /usr/lib/nodejs/nconf/package.json
+man uniq
+less /usr/lib/nodejs/comb/package.json
+less /usr/lib/nodejs/express/package.json
+less /usr/lib/nodejs/generic-pool/package.json
+less /usr/lib/nodejs/mysql/package.json
+less /usr/lib/nodejs/syslog/package.json
+md k
+cd k
+HOME=$PWD npm cache add node-gyp@1.0.7
+HOME=$PWD npm cache add node-gyp
+md5sum .npm/node-gyp/0.7.0/package.tgz
+ping build
+less /work/dtymon/comms/sinefa-router/CMakeLists.txt
+less /work/dtymon/appliance/build/tmp-eglibc-eglibc/work/x86_64-oe-linux/sinefa-router-0.2-r6/git/sinefa-router/git
+tar zxvf ../node-v0.8.9.tar.gz
+egrep -r node_modules .
+egrep -r node_modules . | less
+egrep -r /node/ .
+egrep -r /node/ . | less
+cd node-v0.8.9
+./configure --help
+egrep -r OUTPUTMSG /work/dtymon/code/bin/wantrued-v1
+egrep -r OUTPUTMSG /work/dtymon/code/lib
+egrep -r -i hup /work/dtymon/code/bin/wantrued-v1
+egrep -r -i wantrued.log /work/dtymon/code/bin/wantrued-v1
+man logrotate.conf
+egrep -r -i 'OUTPUT.*PING' /work/dtymon/code/bin/wantrued-v1
+md5sum /usr/lib/nodejs/zmq/LICENSE
+md5sum Downloads/zeromq-2.1.11.tar.gz
+sha256sum Downloads/zeromq-2.1.11.tar.gz
+tar ztvf zeromq-2.1.11.tar.gz
+tar zxvf zeromq-2.1.11.tar.gz
+md5sum zeromq-2.1.11/COPYING.LESSER
+rm -rf zeromq-2.1.11
+wget http://kernel.org/pub/linux/utils/util-linux/v2.1.18/util-linux-ng-2.1.18.tar.bz2
+wget http://kernel.org/pub/linux/utils/util-linux/v2.18/util-linux-ng-2.18.tar.bz2
+tar jxvf util-linux-ng-2.18.tar.bz2
+less util-linux-ng-2.18/README
+less util-linux-ng-2.18/README.licensing
+less util-linux-ng-2.18/COPYING
+md5sum util-linux-ng-2.18/COPYING
+find /work/dtymon/appliance/meta-* -name util\*
+cd /work/dtymon/appliance
+find meta-sinefa -name util-linux\*
+md bogus
+mv meta-sinefa/recipes-support/util-linux-ng bogus
+find meta-* oe* -name \*uuid\*
+egrep -r uuid meta-openembedded
+egrep -r uuid oe-core
+which uuidgen
+ldd /usr/bin/uuidgen
+rpm -qf /lib64/libuuid.so.1
+md /work/dtymon/appliance/meta-sinefa/recipes-devtools/nodejs/nodejs-0.8.9
+man gcc
+man ld
+less /work/dtymon/appliance/build/tmp-eglibc-eglibc/work/x86_64-oe-linux/nodejs-0.8.9-r1/temp/log.do_compile.11567
+less /work/dtymon/appliance/build/tmp-eglibc-eglibc/work/x86_64-oe-linux/nodejs-0.8.9-r1/temp/log.do_compile.30468
+scp -i ~/certs/latestsinefacom.pem ubuntu@portal-latest.sinefa.com:/usr/lib/nodejs/sinefa-router/lib/interfaces/WebsocketConnection.js .
+scp -i ~/certs/latestsinefacom.pem ubuntu@portal-latest.sinefa.com:/usr/lib/nodejs/sinefa-router/lib/interfaces/CommsInterface.js .
+xxdiff sinefa-router/lib/interfaces/WebsocketConnection.js WebsocketConnection.js
+xxdiff sinefa-router/lib/interfaces/CommsInterface.js CommsInterface.js
+scp -i ~/certs/latestsinefacom.pem sinefa-router/lib/interfaces/CommsInterface.js ubuntu@portal-latest.sinefa.com:portal-pkgs/new/sinefa-router/lib/interfaces/.
+scp -i ~/certs/latestsinefacom.pem sinefa-router/lib/interfaces/WebsocketConnection.js ubuntu@portal-latest.sinefa.com:portal-pkgs/new/sinefa-router/lib/interfaces/.
+rm WebsocketConnection.js
+rm CommsInterface.js
+git show 17c916c2abc18f4e1f6da500e4c26e1f6c281e25
+git show 3cac232d49164ba5f1ecbc5e70baf114659f0d5c
+git show 76459172e02d34e93e47dd10fad687a79eb18416
+git show f5e30248a54ca75d8107785d7c076dd2767a9cc8
+tar zcvf sinefa.tar.gz sinefa-common sinefa-comms sinefa-router sinefa-portal
+scp -i ~/certs/latestsinefacom.pem sinefa.tar.gz ubuntu@portal-latest.sinefa.com:portal-pkgs/
+scp -i ~/certs/latestsinefacom.pem sinefa.tar.gz ubuntu@portal-staging.sinefa.com:portal-pkgs/
+scp -i ~/certs/sinefa-app-server.pem sinefa.tar.gz ubuntu@portal.sinefa.com:portal-pkgs/
+ls ~/Downloads/*deb
+scp -i ~/certs/sinefa-app-server.pem /home/dtymon/Downloads/nodejs-dev_0.8.11-1chl1~precise1_amd64.deb /home/dtymon/Downloads/nodejs_0.8.11-1chl1~precise1_amd64.deb /home/dtymon/Downloads/npm_1.1.62-1chl1~precise1_all.deb ubuntu@portal.sinefa.com:portal-pkgs/
+egrep -r -i rcvbuf /usr/lib/nodejs/zmq
+egrep -r state /usr/lib/nodejs/zmq | less
+nodejs ~/zmq-test.js
+egrep -r req /usr/lib/nodejs/zmq/examples | less
+less /usr/lib/nodejs/zmq/examples/req_rep.js
+less jimmy.log
+rm jimmy.log
+rm -f zmq_17020_*
+rm wt.pcap
+less poo
+rm jimmy.old
+rm -f *~
+ls log
+nodejs ~/zmq-test.js 5
+amqp-delete-queue
+amqp-delete-queue com.sinefa.Router
+amqp-get
+amqp-delete-queue -q com.sinefa.Router
+nodejs ~/amqp-wantrue.js
+egrep -r rollback ../comms/sinefa-portal
+egrep -r both ../comms/sinefa-portal
+egrep -r execute_chain ../comms/sinefa-portal
+egrep -r execute_chain ../comms/sinefa-*
+egrep -r serial_ex ../comms/sinefa-*
+egrep -r batch_ex ../comms/sinefa-*
+find sinefa-* -name \*~
+rm sinefa-router/lib/ZMQAdapter.js~
+scp -r -i ~/certs/latestsinefacom.pem sinefa-common sinefa-portal ubuntu@portal-latest.sinefa.com:portal-pkgs/.
+scp -r -i ~/certs/latestsinefacom.pem sinefa-portal/lib/nav ubuntu@portal-latest.sinefa.com:portal-pkgs/sinefa-portal/lib/nav
+egrep -r IPC sinefa-router
+perldoc pack
+perldoc -f pack
+egrep -r split sinefa-router
+egrep -r 'Array.*prototype' sinefa-router
+egrep -r 'JSON.parse' sinefa-router
+egrep -r SUCCESSFUL sinefa-*
+egrep -r EventE sinefa-router
+egrep -r dbus sinefa-cfgmgr/lib
+egrep -r dbus sinefa-cfgmgr/bin
+egrep -r 'var format' sinefa-router
+egrep -r endpointFromJSON sinefa-router
+egrep -r MSG_ID_REVERSE sinefa-router
+egrep -r 'require.*messages/' sinefa-router
+scp -r -i ~/certs/latestsinefacom.pem sinefa-portal ubuntu@portal-latest.sinefa.com:portal-pkgs/.
+egrep -r have_router sinefa-cfgmgr
+egrep -r have_internal sinefa-cfgmgr
+egrep -r have_portal sinefa-cfgmgr
+egrep -r COMPONENT_ONLINE sinefa-*
+egrep -r emit_signal sinefa-cfgmgr
+egrep -r fromCharCode .
+egrep -r fromCharCode sinefa-*
+egrep -r fromCharCode sinefa-*/*/lib
+egrep -r fromCharCode sinefa-*/lib
+md sinefa-comms/lib/local
+mv sinefa-router/lib/interfaces/LocalClientInterface.js sinefa-comms/lib/local/
+mv sinefa-comms/lib/local/LocalInterface.js sinefa-comms/lib/local/LocalhostInterface.js
+mv sinefa-comms/lib/local/LocalClientInterface.js sinefa-comms/lib/local/LocalhostClient.js
+hex 68
+man ascii
+git mv sinefa-cfgmgr/lib/CommsInterface.js sinefa-comms/lib/local/RouterLocalClient.js
+egrep -r LocalhostClient sinefa-*
+rm sinefa-cfgmgr/lib/DBusIface.js
+egrep -r -i dbus sinefa-cfgmgr
+rm sinefa-router/lib/DBusAdapter.js
+egrep -r -i dbus sinefa-router
+egrep -r -i dbus sinefa-comms
+egrep -r -i dbus sinefa-common
+egrep -r -i dbus sinefa-portal
+egrep -r -i 'in.progress' sinefa-*
+egrep -r -i 'in.progress' sinefa-* | egrep -v /node_modules/
+cd ../code/std64
+cd lib/libsfa-comms
+egrep -r resolver ../../../
+egrep -r resolver ../../../ | less
+egrep -r io_service ../../../ | less
+egrep -r io_service ../../../bin | less
+egrep -r resolver ../../../bin | less
+egrep -r resolver ../../../lib | less
+cd ../../bin/wantrued-v1
+./wantrued
+file wantrued
+egrep -r comb.logging.Logger.getLogger sinefa-* | egrep -v /node_modules/
+egrep -r condition ../../../bin
+egrep -r condition ../../../lib
+egrep -r condition ../../../lib | egrep include
+egrep -r unqiue_lock ../../../lib
+egrep -r unqiue_lock ../../../bin
+egrep -r lock ../../../bin
+egrep -r unqiue_lock ../../../
+egrep -r unique_lock ../../../
+less ../../../lib/libboost-process/boost/process/detail/basic_status_service.hpp
+egrep -r shared_from ../../../
+egrep -r shared_from ../../../bin
+cp ../../../lib/libsfa-comms/CommsInterface.cpp ../../../lib/libsfa-comms/CommsInterfaceOld.cpp
+scp -r -i ~/certs/latestsinefacom.pem sinefa-* ubuntu@portal-latest.sinefa.com:portal-pkgs/.
+rm sinefa.tar.bz2
+git checkout -b feature/dbus-byebye -t -f
+git push --dry-run origin feature/dbus-byebye
+git push origin feature/dbus-byebye
+vi ../../../.git/config
+make clena
+cd-
+bitbake sinefa-cdrom-image
+scp wantrued root@192.168.101.95:.
+find /work/dtymon/code -name \*~
+find /work/dtymon/code -name \*~ | xargs rm
+egrep -r pointer_cast ../bin
+egrep -r pointer_cast ../lib
+egrep -r 'send\(' ../bin/navd
+make -k
+cd bin/navd
+vi ../.gitignore
+find .. -name \*~
+find .. -name \*~ | xargs rm
+egrep -r io_service.run ../lib
+egrep -r io_service.run ../bin
+scp wantrued root@192.168.102.11:.
+scp wantrued root@192.168.102.11:/usr/sbin
+less ../../../bin/navd/Core.cpp
+egrep -r app_msg_id .
+egrep -r 'payload\(\)' lib bin
+cd -5
+cd ../../comms/sinefa-cfgmgr
+egrep -r handle_get_request .
+egrep -r handle_set_request .
+egrep -r handle_get_tree .
+cd -7
+cd ../../../bin/navd
+egrep -r -i default sinefa-portal/lib
+egrep -r -i default_gw sinefa-portal/lib
+egrep -r -i default_gw sinefa-portal/bin
+egrep -r 'get.*portal' sinefa-router/lib
+less sinefa-comms/lib/RouterDefs.js
+egrep -r contents sinefa-*/lib
+git revert dce5efe0bb45e9a5bf89b2dcd7428e557c2102bf
+egrep -r send_response sinefa-*/lib
+cd ../../..
+git checkout lib/libsfa-comms/CommsInterface.cpp
+egrep -r Acknow sinefa-*/lib
+egrep -r mark_unac sinefa-*/lib
+egrep -r mark_acked sinefa-*/lib
+egrep -r 'on\(.*ack' sinefa-*/lib
+egrep -r '(src|dst)_endpoint' sinefa*/lib
+egrep -r PORTAL sinefa-portal/lib
+egrep -r portal-connect sinefa-*/lib
+scp sinefa-c* sinefa-router root@192.168.101.92:/usr/lib/node/.
+scp sinefa-router/lib/interfaces/WebsocketClientConnection.js root@192.168.102.11:/usr/lib/node/sinefa-router/lib/interfaces/
+scp -r sinefa-c* sinefa-router root@192.168.101.92:/usr/lib/node/.
+scp -r wantrued root@192.168.101.92:.
+cd ../navd
+scp navd root@202.55.97.110:.
+bzip2 -9 navd
+scp navd.bz2 root@202.55.97.110:.
+egrep -r PORTAL /work/dtymon/code/
+egrep -r PORTAL /work/dtymon/comms/sinefa*/lib
+egrep -r DEFAULT_GW /work/dtymon/comms/sinefa-portal/lib
+scp -i ~/certs/latestsinefacom.pem sinefa.tar.bz2 ubuntu@portal-staging.sinefa.com:portal-pkgs/.
+scp -r -i ~/certs/latestsinefacom.pem sinefa.tar.bz2 ubuntu@portal-staging.sinefa.com:portal-pkgs/.
+git show 1c75a7474d876bef588d89867e0bb6e666839e7b
+cd ../wantrued-v1
+git show 1e6df5538a171962f17acb65115c930d7a7248cb
+git revert 1e6df5538a171962f17acb65115c930d7a7248cb
+egrep -r arguments sinefa*/lib
+mv sinefa-router/bin/router-pipe2 sinefa-router/bin/router-pipe
+scp wantrued root@192.168.101.92:.
+gi citool
+kill 19786
+kill 20220
+kill 20222
+egrep -r fork sinefa-portal/lib
+git commi
+md sinefa-router/lib/client
+rd sinefa-router/lib/client
+md sinefa-router/lib/internal
+egrep -r set_peer_conn sinefa*/lib
+mv sinefa-router/lib/internal/InternalIfaceBase.js sinefa-router/lib/internal/RouterInternalIface.js
+egrep -r send_msg sinefa-*/lib
+mv sinefa-router/lib/internal/Router* sinefa-comms/lib/local
+egrep -r RouterLocal sinefa-*/lib
+egrep -r have_connectivity sinefa-*/lib
+egrep -r RouterLocal sinefa-*/bin
+egrep -r src_ep sinefa-cfgmgr/lib
+egrep -r src_ep sinefa-comms/lib/local
+md backup
+cp -r sinefa-* backup/.
+xxdiff -r backup sinefa
+xxdiff -r backup/sinefa-comms sinefa-comms
+egrep -r 'new Ackn' sinefa-*/lib
+egrep -r 'new.*Acknow' sinefa-*/lib
+egrep -r 'send_nack' sinefa-*/lib
+xxdiff -r backup/sinefa-router sinefa-router
+egrep -r -i lowercase sinefa-*/lib
+egrep -r serialise sinefa-*/lib
+egrep -r serialise sinefa-*/lib | egrep -v deserialise
+egrep -r CommsHeader sinefa-*/lib
+egrep -r build_hdr sinefa-*/lib
+egrep -r NO_ACK sinefa-*/lib
+egrep -r mark_unacked sinefa-*/lib
+egrep -r send_router_msg sinefa-*/lib
+egrep -r 'new.*CommsHeader' sinefa-*/lib
+egrep -r 'build_hdr' sinefa-*/lib
+egrep -r '__peer_conn' sinefa-*/lib
+egrep -r '__local_ep' sinefa-*/lib
+egrep -r 'mark_acked' sinefa-*/lib
+egrep -r 'hdr.*key' sinefa-*/lib
+egrep -r 'hdr.toString' sinefa-*/lib
+egrep -r 'console\.' sinefa-router/lib
+egrep -r '__portal_online' sinefa-*/lib
+egrep -r '__routes' sinefa-*/lib
+egrep -r '__default_gw' sinefa-*/lib
+egrep -r 'portal_online' sinefa-*/lib
+egrep -r 'set_peer_conn' sinefa-*/lib
+egrep -r '__desc' sinefa-*/lib
+egrep -r 'endpoint *=' sinefa-*/lib
+egrep -r 'peer_addr' sinefa-*/lib
+egrep -r 'is_connected' sinefa-*/lib
+egrep -r 'send_event' sinefa-*/lib
+egrep -r '__conn' sinefa-*/lib
+egrep -r 'handle_close' sinefa-*/lib
+egrep -r 'handle_' sinefa-*/lib
+egrep -r peerAddr sinefa-*/lib
+egrep -r __io sinefa-*/lib
+egrep -r 'secure *=' sinefa-*/lib
+egrep -r 'secure' sinefa-router/lib
+egrep -r '__secure' sinefa-router/lib
+egrep -r 'compute_uri' sinefa-router/lib
+egrep -r 'uri' sinefa-router/lib
+egrep -r '__uri' sinefa-router/lib
+egrep -r '_' sinefa-router/lib/interfaces | less
+egrep -r '__packet_event' sinefa-router/lib
+egrep -r '_' sinefa-router/lib/interfaces | egrep -v 'sinefa_'
+egrep -r '[^A-Z]_[^A-Z]' sinefa-router/lib/interfaces
+egrep -r '[^A-Z]_[^A-Z]' sinefa-router/lib/interfaces | egrep -v '^var sinefa_'
+egrep -r '[^A-Z]_[^A-Z]' sinefa-router/lib/interfaces | egrep -v ':var sinefa_' | egrep -v ':var Logger'
+egrep -r send_app_msg sinefa-*/lib
+egrep -r send_app_msg sinefa-*/bin
+egrep -r '\.apply' sinefa-common
+egrep -r 'emit.*apply' /usr/lib/nodejs
+egrep -r 'process.send' /usr/lib/nodejs
+find /usr/lib/nodejs -name \*process\*
+find /usr/share/doc/nodejs-* -name \*process\*
+egrep -r 'var args = ' /usr/lib/nodejs/comb
+egrep -r pipe_wrap /usr/share/doc/nodejs-devel-0.8.9/lib
+egrep -r Pipe /usr/share/doc/nodejs-devel-0.8.9/lib
+less /usr/share/doc/nodejs-devel-0.8.9/lib/net.js
+egrep -r pipe_wrap ~/Downloads/node-v0.8.9
+less /home/dtymon/Downloads/node-v0.8.9/src/pipe_wrap.cc
+less /usr/share/doc/nodejs-devel-0.8.9/lib/child_process.js
+cd ../comms-latest
+egrep -r disconnect_impl sinefa-router/lib
+egrep -r disconnect sinefa-router/lib/interfaces
+xxdiff sinefa-router/lib/CommsHeader.js ../comms/sinefa-router/lib/CommsHeader.js
+egrep -r create_nack sinefa-*/lib
+egrep -r 'create_ack' sinefa-*/lib
+egrep -r 'new RouterDefs.Ack' sinefa-*/lib
+git diff sinefa-router/lib/Router.js
+egrep -r '\&\&.*RESPONSE' sinefa-*/lib
+egrep -r '\&.*RESPONSE' sinefa-*/lib
+egrep -r 'FLAGS.RESPONSE' sinefa-*/lib
+egrep -r 10000 sinefa-*/lib
+xxdiff -r sinefa-comms/lib/local ../comms/sinefa-comms/lib/local
+egrep -r have_router_conn sinefa-*/lib
+xxdiff -r sinefa-comms/lib/local/RouterLocalClient.js ../comms/sinefa-comms/lib/local/RouterInternalIface.js
+git mv sinefa-comms/lib/local/LocalhostInterface.js sinefa-comms/lib/SocketInterface.js
+git mv sinefa-comms/lib/local/LocalhostClient.js sinefa-comms/lib/SocketClientInterface.js
+egrep -r LocalhostInterface sinefa-*/lib
+egrep -r LocalhostClient sinefa-*/lib
+md sinefa-comms/lib/router
+git mv sinefa-comms/lib/local/RouterLocalClient.js sinefa-comms/lib/router/RouterInternalClient.js
+egrep -r RouterLocalClient sinefa-*/lib
+egrep -r JSON.parse sinefa-*/lib
+egrep -r handle_connection_error sinefa-*/lib
+egrep -r RouterDefs sinefa-*/lib
+git mv sinefa-comms/lib/RouterDefs.js sinefa-comms/lib/router
+egrep -r RouterDefs sinefa-*/lib | egrep require
+egrep -r RouterDefs sinefa-*/lib | egrep sinefa_comms
+ls sinefa-comms/lib/local/
+mv sinefa-comms/lib/local/InternalRouterTransportSocket.js sinefa-comms/lib/router
+rm sinefa-comms/lib/router/InternalRouterTransportSocket.js~
+mv sinefa-comms/lib/router/InternalRouterTransportSocket.js sinefa-comms/lib/router/RouterTransportSocket.js
+rm sinefa-comms/lib/router/RouterTransportSocket.js~
+egrep -r InternalR sinefa-*/lib
+rm sinefa-comms/lib/InternalCommsUtils.js
+egrep -r InternalComms sinefa-*/(lib|bin)
+rm sinefa-comms/lib/SocketServerInterface.js~
+scp -r sinefa-common sinefa-comms sinefa-router sinefa-portal root@150.101.216.226:/usr/lib/node/.
+scp -r sinefa-common sinefa-comms sinefa-router sinefa-cfgmgr root@150.101.216.226:/usr/lib/node/.
+scp -r root@150.101.216.226:/var/log/sinefa/router/router.log .
+less router.log
+egrep -r LocalListener sinefa-*/(lib|bin}
+egrep -r LocalListener sinefa-*/(lib|bin}'
+egrep -r LocalListener sinefa-*/(lib|bin)
+git mv sinefa-router/lib/interfaces/LocalListener.js sinefa-comms/lib/SocketListener.js
+egrep -r SocketServerInterface sinefa-*/(lib|bin)
+egrep -r 'new Attach' sinefa-portal/lib
+egrep -r process.send sinefa-portal/lib
+chmod +x sinefa-portal/bin/sinefa-portal-launcher
+egrep -r __syslog sinefa-*/(lib/bin)
+egrep -r '__syslog' sinefa-*/(lib/bin)
+egrep -r '__syslog' sinefa-*/(lib|bin)
+md sinefa-portal/etc/upstart
+mv sinefa-portal/etc/sinefa-router-upstart.conf sinefa-portal/etc/upstart/sinefa-router.conf
+mv sinefa-portal/etc/sinefa-cfgmgr-upstart.conf sinefa-portal/etc/upstart/sinefa-cfgmgr.conf
+egrep -r file_exists sinefa-*/(lib|bin)
+egrep -r ModuleMain sinefa-portal/lib
+egrep -r Portal sinefa-portal/lib
+git diff sinefa-portal/lib/Portal.js
+rm sinefa-portal/lib/Portal.js
+rm sinefa-portal/lib/ModuleMain.js
+egrep -r Portal sinefa-portal/lib | egrep -v logger
+rm sinefa-portal/bin/sinefa-portal
+less sinefa-portal/etc/sinefa-portal-upstart.conf
+rm sinefa-portal/etc/sinefa-portal-upstart.conf
+scp -i ~/certs/latestsinefacom.pem sinefa-portal/bin/sinefa-all-customers ubuntu@portal-latest.sinefa.com:portal-pkgs/.
+egrep -r seqnum_allocator sinefa-portal/lib
+ls /work/dtymon/web
+egrep -r RouterInternalClient sinefa-*/(lib|bin)
+egrep -r DAVIDT sinefa-*
+less sinefa-portal/etc/upstart/sinefa-wantrue.conf
+chmod 755 sinefa-portal/bin/sinefa-portal
+egrep -r getRouterMainPath sinefa-*
+rm sinefa-portal/lib/Portal.js~ router.log sinefa.tar.gz
+egrep -r 'new Router' sinefa-*/(lib|bin)'
+egrep -r 'new Router' sinefa-*/(lib|bin)
+grep -r __is_portal .
+grep -r __portal_online .
+grep -r set_emitter_fn .
+egrep -r -i subscribe sinefa-cfgmgr/lib
+egrep -r -i connected sinefa-portal/lib
+egrep -r handle_instances_online sinefa-portal/lib
+egrep -r INSTANCES_OFFLINE sinefa-*/(lib|bin)
+egrep -r OnlineNotification sinefa-*/(lib|bin)
+egrep -r OfflineNotification sinefa-*/(lib|bin)
+egrep -r INSTANCES_ONLINE sinefa-*/(lib|bin)
+egrep -r Acknowledgement sinefa-*/(lib|bin)
+egrep -r RESPONSE sinefa-*/(lib|bin)
+xxdiff sinefa-router/lib/CommsPacket.js ../comms/sinefa-router/lib/CommsPacket.js
+egrep -r RESPONSE ../comms/sinefa-*/(lib|bin)
+egrep -r SUCCESSFUL ../comms/sinefa-*/(lib|bin)
+cp -a sinefa-router sinefa-router.bak
+egrep -r LOOPBACK sinefa-router.bak/lib
+git checkout sinefa-comms/lib/router/RouterInternalClient.js
+xxdiff -r sinefa-router.bak sinefa-router
+egrep -r 'GOT ACK' .
+egrep -r 'orig hdr' .
+egrep -r 'ack contents' ../comms/sinefa-*/(lib|bin)
+egrep -r 'console' ../comms/sinefa-*/(lib|bin)
+egrep -r 'console' ../comms/sinefa-*/(lib|bin) | grep ack
+egrep -r 'ack contents' .
+less ../comms/sinefa-router/lib/MsgBroker.js
+git reset sinefa-router/lib/MsgBroker.js
+git citool &
+git add -i sinefa-router/lib/MsgBroker.js
+diff sinefa-router/lib/MsgBroker.js sinefa-router/lib/MsgBroker.js.bak
+cp sinefa-router/lib/MsgBroker.js sinefa-router/lib/MsgBroker.js.bak
+mv sinefa-router/lib/MsgBroker.js sinefa-router/lib/MsgBroker.js.bak
+git checkout sinefa-router/lib/MsgBroker.js
+mv sinefa-router/lib/MsgBroker.js.bak sinefa-router/lib/MsgBroker.js
+git log sinefa-comms/node_modules/nconf/package.json
+egrep -r 'ACK' ../comms/sinefa-*/(lib|bin)
+egrep -r 'ACK' sinefa-*/(lib|bin)
+egrep -r 'ACK' sinefa-*/(lib|bin) | egrep -v 'bak/'
+egrep -r 'MsgIds' sinefa-*/(lib|bin) | egrep -v 'bak/'
+egrep -r '_header' sinefa-*/(lib|bin) | egrep -v 'bak/'
+cd ../code/std64/bin/wantrued-v1
+bg
+egrep -r console sinefa-comms/lib
+egrep -r console sinefa-router/lib
+egrep -r console sinefa-common/lib
+egrep -r console sinefa-cfgmgr/lib
+egrep -r console sinefa-portal/lib
+egrep -r 'new.*EndpointId' sinefa-*/(lib|bin)
+egrep -r 'is_valid' sinefa-*/(lib|bin)
+egrep -r 'default_gw\(' sinefa-*/(lib|bin)
+egrep -r 'loopback\(' sinefa-*/(lib|bin)
+md sinefa-portal/lib/syncer
+git stash show
+man git-stash
+git stash drop
+cd sinefa-router/node_modules/websocket
+npm rebuild websocket
+egrep -r 'DUPLICATE' sinefa-portal/lib
+rm deflate-build.patch
+rm node-dbus-array.patch
+vi sinefa-portal/etc/sinefa-portal.conf
+egrep -r __conn sinefa-router/lib
+egrep -r __peer sinefa-router/lib
+egrep -r __conn sinefa-router/(lib|bin)
+egrep -r __peer sinefa-router/(lib|bin)
+egrep -r peer_addr sinefa-router/(lib|bin)
+egrep -r 'peer_(addr|port)\(\)' sinefa-router/(lib|bin)
+egrep -r '__local_ep' sinefa-router/(lib|bin)
+egrep -r '__local_ep' sinefa-*/(lib|bin)
+git mv sinefa-router/lib/interfaces/IfaceToServer.js sinefa-router/lib/interfaces/CommsClientInterface.js
+git mv sinefa-router/lib/interfaces/IfaceToClient.js sinefa-router/lib/interfaces/CommsServerInterface.js
+egrep -r 'IfaceTo' sinefa-*/(lib|bin)
+egrep -r 'get_name' sinefa-*/(lib|bin)
+egrep -r getProp .
+egrep -r getProperty .
+egrep -r 'MsgIds' sinefa-*/(lib|bin)
+egrep -r 'MsgIds' sinefa-*/(lib|bin) | egrep -v '.bak/'
+egrep -r 'MsgIds' sinefa-*/(lib|bin) | egrep -v '.bak/' | egrep -v 'MsgIds.Router'
+egrep -r 'MsgIds' sinefa-*/(lib|bin) | egrep -v '.bak/' | egrep -v 'MsgIds.(Router|ConfigMgr)'
+rm sinefa-portal/lib/syncer/DBSyncerDB.js
+rm -rf sinefa-router.bak/
+egrep -r 'MsgIds.ConfigMgr' sinefa-*/(lib|bin)
+git checkout sinefa-portal/lib/config/ConfigMgr.js
+egrep -r readSync sinefa-*/lib
+egrep -r -i readsync sinefa-*/(lib|bin)
+rm sinefa-portal/bin/sinefa-iptables.sh~
+rm sinefa-router/etc/sinefa-portal-router.conf~
+cd ../code-native
+egrep -r ReportingDtails bin/navd
+egrep -r ReportingDetails bin/navd
+egrep -r limit bin/navd
+egrep -r limit bin/navd/*.(cpp|hpp)
+egrep -r limit bin/navd/**/*.(cpp|hpp)
+cd std64/bin/navd
+egrep -r limit ../../../bin/navd/**/*.(cpp|hpp)
+egrep -r 'results\(\)' ../../../bin/navd/**/*.(cpp|hpp)
+egrep -r 'children\(\)' ../../../bin/navd/**/*.(cpp|hpp)
+egrep -r 'FlowStore' ../../../bin/navd/**/*.(cpp|hpp)
+egrep -r 'systemInitTimeMilliseconds' ../../../bin/navd/**/*.(cpp|hpp)
+egrep -r 'systemInitTimeMilliseconds' ../../../bin/navd/**/*.(cpp|hpp|c)
+egrep -r 'FlowKey' ../../../bin/navd/**/*.(cpp|hpp|c)
+git difftool ../../../bin/navd/store/FlowStore.cpp
+egrep -r 'set_callback' ../../../bin/navd/**/*.(cpp|hpp|c)
+cd -3
+md sinefa-portal/lib/instance
+egrep -r publish sinefa-portal/lib
+egrep -r 'router_iface.*publish sinefa-*/lib
+egrep -r 'router_iface.*publish' sinefa-*/lib
+egrep -r authenticate_user_and_get_db sinefa-portal/lib
+egrep -r 'router_iface.*subscribe' sinefa-*/lib
+md sinefa-comms/lib/messages
+git mv sinefa-comms/lib/MsgIds.js sinefa-comms/lib/messages/
+git mv sinefa-comms/lib/ConfigMgrDefs.js sinefa-comms/lib/messages/ConfigMgrMsgs.js
+git mv sinefa-comms/lib/router/RouterDefs.js sinefa-comms/lib/messages/RouterMsgs.js
+git mv sinefa-portal/lib/instance/InstanceMgmtMsgs.js sinefa-comms/lib/messages
+git mv sinefa-comms/lib/MessageBase.js sinefa-comms/lib/messages
+git mv sinefa-comms/lib/ResponseBase.js sinefa-comms/lib/messages
+egrep -r 'var MsgsIds' sinefa-*/(lib|bin)
+egrep -r 'var\s+MsgIds' sinefa-*/(lib|bin)
+egrep -r 'var\s+MessageBase' sinefa-*/(lib|bin)
+egrep -r 'var\s+ResponseBase' sinefa-*/(lib|bin)
+egrep -r 'var\s+RouterDefs' sinefa-*/(lib|bin)
+egrep -r 'RouterDefs' sinefa-*/(lib|bin)
+md sinefa-comms/lib/config
+egrep -r 'ConfigMgrDefs' sinefa-*/(lib|bin)
+egrep -r '\.Origin\.' sinefa-*/(lib|bin)
+egrep -r 'ConfigMgrMsgs\.Origin\.' sinefa-*/(lib|bin)
+egrep -r batch_execute .
+egrep -r serial_execute .
+egrep -r discard_keys_with_value .
+less sinefa-common/lib/Utils.js
+mv sinefa-common/lib/IPv6.js sinefa-common/lib/IPAddress.js
+egrep -r 'router:instance-connectivity' sinefa-*/(lib|bin)
+egrep -r 'instances_online' sinefa-*/(lib|bin)
+egrep -r 'instances_offline' sinefa-*/(lib|bin)
+egrep -r '\.commit' sinefa-*/(lib|bin)
+git branch -a
+git stash
+git checkout -b releases/12.10 -t -f remotes/origin/releases/12.10
+vi .git/config
+gitg
+git show 7be732678cdf986c7b36d9fb1c3d627662c53fc1
+git push --dry-run
+git checkout releases/12.10
+rm sinefa-common/lib/IPAddress.js~
+rm sinefa-common/lib/IPv6.js~
+cd sinefa-common/node_modules
+npm install ipv6
+less ipv6/package.json
+md foo
+cd foo
+rm -rf ipv6
+rm -rf foo
+npm install --production ipv6
+du -sh ipv6
+git stash list
+git stash show 'stash@{0}' -p
+git stash pop
+scp -r sinefa-common sinefa-comms sinefa-router sinefa-cfgmgr root@192.168.101.109:/usr/lib/node/
+scp -r sinefa-common sinefa-comms sinefa-router sinefa-cfgmgr root@192.168.102.10:/usr/lib/node/
+egrep -r "'conn' in" sinefa-*/(lib|bin)
+egrep -r 'get_hubs' sinefa-*/(lib|bin)
+egrep -r 'get_instances_of_type' sinefa-*/(lib|bin)
+egrep -r 'get_spokes' sinefa-*/(lib|bin)
+egrep -r 'Maximum train length discovery' bin/wantrued-v1
+egrep -r train_min_spacing_ms bin
+egrep -r max_train_start bin
+egrep -r peer_resp_ts_us bin
+cd /work/dtymon/code/std64/bin/wantrued-v1
+egrep -r udp_ping_reply ../../../bin/wantrued-v
+egrep -r udp_ping_reply ../../../bin/wantrued-v1
+egrep -r send_ping ../../../bin/wantrued-v1
+egrep -r 'Capacity resolution' ../../../bin/wantrued-v1
+egrep -r 'res_success' ../../../bin/wantrued-v1
+egrep -r 'recv_pack' ../../../bin/wantrued-v1
+egrep -r 'PathRateSnd2' ../../../bin/wantrued-v1
+egrep -r 'PathRateSndData' ../../../bin/wantrued-v1
+egrep -r -i 'scdr' ../../../bin/wantrued-v1
+egrep -r -i 'pncm' ../../../bin/wantrued-v1
+egrep -r -i 'adr' ../../../bin/wantrued-v1
+egrep -r -i 'PathRateRcv' ../../../bin/wantrued-v1
+scp wantrued root@192.168.101.109:.
+scp wantrued root@192.168.102.10:.
+git difftool ../comms/sinefa-portal/lib/db/DBInterface.js
+git difftool sinefa-portal/lib/db/DBInterface.js
+less log/portal.log
+../comms/sinefa-portal/bin/sinefa-portal --conf davids-portal.conf
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs ../comms/sinefa-portal/bin/sinefa-portal --conf davids-portal.conf\
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms/sinefa-portal/bin/sinefa-portal --conf davids-portal.conf
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs ../comms/sinefa-portal/bin/sinefa-portal --conf davids-portal.conf
+echo NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-portal/bin/sinefa-portal --conf davids-portal.conf > poo
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-portal/bin/sinefa-portal-launcher --conf davids-portal.conf
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-portal/bin/sinefa-portal-launcher --conf davids-portal.conf --module foo
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-portal/bin/sinefa-portal-launcher --module wantrue
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-portal/bin/sinefa-portal-launcher --conf davids-portal.conf --module wantrue
+less web-server.log
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-router/bin/sinefa-router --conf davids-portal.conf --portal
+less /work/dtymon/comms-latest/sinefa-portal/bin/sinefa-portal-launcher
+less /work/dtymon/comms-latest/sinefa-router/bin/sinefa-router
+/work/dtymon/comms-latest/sinefa-router/bin/sinefa-router --conf davids-portal.conf --portal true
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs /work/dtymon/comms-latest/sinefa-router/bin/sinefa-router --conf davids-portal.conf --portal true
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs /work/dtymon/comms-latest/sinefa-portal/bin/sinefa-portal-launcher --conf davids-portal.conf
+ls -latr log
+less log/cfgmgr.log
+rm -rf log/*
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-portal/bin/sinefa-portal --conf davids-portal.conf --logging:default-level DEBUG
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-portal/bin/sinefa-portal --conf $PWD/davids-portal.conf --logging:default-level DEBUG
+less log/nav.log
+vi davids-portal.conf
+rm -rf portal-log/*
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-portal/bin/sinefa-portal --conf davids-portal.conf
+nodejs ~/amqp-server.js 0
+egrep -r emit /usr/lib/nodejs/amqp/
+nodejs new-chain.js
+echo 870BB5EF-C864-4655-B5D7-08CA14928AA7 > foo.uuid
+ssh admin@172.26.0.159
+find /usr/share/doc/nodejs-* -name net.js
+calc '64*1024*1024'
+nodejs msg-broker.js
+ls -la /usr/lib/nodejs/sinefa-router
+../comms/sinefa-router/bin/sinefa-router --conf melb-main.cfg --endpoint 870bb5ef-c864-4655-b5d7-08ca14928aa7
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms/sinefa-router/bin/sinefa-router --conf melb-main.cfg --endpoint 870bb5ef-c864-4655-b5d7-08ca14928aa7
+cd /work/dtymon/web
+cd server
+egrep -r 'require.*user' .
+egrep -r 'utils.config' .
+cd -2
+../comms/sinefa-router/bin/router-pipe --upstream:host 172.26.0.126 --upstream:port 3004 --logging:default-level DEBUG --src cfgmgr --dst ui --dst-ep 11111111-2222-1111-1111-111111111111 <<EOF\
+{ "id": 33,\
+  "contents": {\
+    "uuid" : "870bb5ef-c864-4655-b5d7-08ca14928aa7",\
+    "changes" : {\
+      "/customer/name" : "Fred Smith",\
+      "/customer/age" : 50,\
+      "/customer/pets" : [ "dog", "cat" ]\
+    }\
+  }\
+}\
+EOF
+../comms/sinefa-router/bin/router-pipe --upstream:host 172.26.0.126 --upstream:port 3004 --logging:default-level DEBUG --src cfgmgr --dst ui --dst-ep 11111111-2222-1111-1111-111111111111 <<EOF\
+{ "_header": { "msg_id": 33 },\
+  "uuid" : "870bb5ef-c864-4655-b5d7-08ca14928aa7",\
+  "changes" : {\
+    "/customer/name" : "Fred Smith",\
+    "/customer/age" : 50,\
+    "/customer/pets" : [ "dog", "cat" ]\
+  }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs ../comms/sinefa-router/bin/router-pipe --upstream:host 172.26.0.126 --upstream:port 3004 --logging:default-level DEBUG --src cfgmgr --dst ui --dst-ep 11111111-2222-1111-1111-111111111111 <<EOF\
+{ "_header": { "msg_id": 33 },\
+  "uuid" : "870bb5ef-c864-4655-b5d7-08ca14928aa7",\
+  "changes" : {\
+    "/customer/name" : "Fred Smith",\
+    "/customer/age" : 50,\
+    "/customer/pets" : [ "dog", "cat" ]\
+  }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs ../comms/sinefa-router/bin/sinefa-router --conf melb-main.cfg --endpoint B34AACA1-B82E-4D0D-851B-33E6BE5CA462
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs ../comms/sinefa-router/bin/sinefa-router --conf melb-main.cfg --endpoint 870bb5ef-c864-4655-b5d7-08ca14928aa7
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs ../comms/sinefa-router/bin/sinefa-router --conf melb-main.cfg --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs ../comms/sinefa-router/bin/sinefa-router --conf melb-main.cfg --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --upstream:secure true
+echo NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-router/bin/sinefa-router --conf melb-main.cfg --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --upstream:secure true> poo
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-router/bin/sinefa-router --conf davids-portal.conf
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-router/bin/sinefa-router --conf davids-portal.conf --endpoint 00000000-0000-0000-0000-000000000000
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-router/bin/sinefa-router --conf melb-main.cfg --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --upstream:secure true --upstream:host portal-latest.sinefa.com --upstream:port 443
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-router/bin/sinefa-router --conf melb-main.cfg --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --upstream:secure true
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejes ../comms-latest/sinefa-router/lib/RouterMain.js --conf melb-main.cfg --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --upstream:secure true
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/lib/RouterMain.js --conf melb-main.cfg --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --upstream:secure true --portal true
+node-inspector
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/lib/RouterMain.js --conf melb-main.cfg --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --upstream:secure true --mode portal --debug-brk
+which ndb
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ndb ../comms-latest/sinefa-router/lib/RouterMain.js --conf melb-main.cfg --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --upstream:secure true --mode portal
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/lib/RouterMain.js --conf melb-main.cfg --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --upstream:secure true --mode portal
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/lib/RouterMain.js --conf melb-main.cfg --upstream:secure true --mode portal
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/sinefa-router --mode portal
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/sinefa-router --mode portal --logging:default-level DEBUG
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/sinefa-router
+NODE_PATH=/work/dtymon/comms-latest:/work/dtymon/web/server:/usr/lib/nodejs nodejs /work/dtymon/web/server/app.js
+NODE_ENV=development NODE_PATH=/work/dtymon/comms-latest:/work/dtymon/web/server:/usr/lib/nodejs nodejs /work/dtymon/web/server/app.js
+NODE_ENV=default NODE_PATH=/work/dtymon/comms-latest:/work/dtymon/web/server:/usr/lib/nodejs nodejs /work/dtymon/web/server/app.js
+NODE_ENV=default NODE_PATH=/work/dtymon/comms-latest:/work/dtymon/web/server:/usr/lib/nodejs nodejs /work/dtymon/web/server/app.js --conf melb-main.cfg
+less /var/log/sinefa/sinefa.log
+NODE_ENV=dtymon NODE_PATH=/work/dtymon/comms-latest:/work/dtymon/web/server:/usr/lib/nodejs nodejs /work/dtymon/web/server/app.js
+NODE_ENV=default NODE_PATH=/work/dtymon/comms-latest:/work/dtymon/web/server:/usr/lib/nodejs nodejs /work/dtymon/web/server/app.js --conf melb-main.cfg --logging:default-level DEBUG
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/lib/RouterMain.js --conf melb-main.cfg --upstream:secure true
+less log/router.log
+rm -f log/*
+md portal-log
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/lib/RouterMain.js --conf melb-main.cfg --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --upstream:secure true --upstream:port 443 --upstream:host portal-latest.sinefa.com
+ls -latr log/
+ls -latr portal-log
+less portal-log/wantrue.log
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/lib/RouterMain.js --conf melb-main.cfg --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca4621 --upstream:secure true
+less portal-log/cfgmgr.log
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/lib/RouterMain.js --conf melb-main.cfg --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --upstream:secure true
+egrep -r rpm elisp/config
+cd Downloads
+tar zxvf npm-1.1.59.tgz
+cd npm
+cd
+egrep -r SetAccessor /usr/lib/node_modules/zmq
+rpm -qa | egrep v8
+ldd /usr/lib/nodejs/zmq/build/Release/binding.node
+rpm -qf /usr/lib64/libv8.so.3
+man nm
+nm -D /usr/lib64/libv8.so.3 | less
+nm -D -C /usr/lib64/libv8.so.3 | less
+nm -DC /usr/lib64/libv8.so.3 | less
+echo _ZN2v814ObjectTemplate11SetAccessorENS_6HandleINS_6StringEEEPFNS1_INS_5ValueEEENS_5LocalIS2_EERKNS_12AccessorInfoEEPFvS7_NS6_IS4_EESA_ES5_NS_13AccessControlENS_17PropertyAttributeENS1_INS_17AccessorSignatureEEE | c++filt
+find /usr/lib/nodejs/zmq -name v8\*
+egrep -r AccessorSignature /usr/lib/nodejs/zmq
+egrep -r AccessorSignature /usr/include
+xxdiff -r /usr/include/v8.h /usr/include/node/v8.h
+xxdiff -r /usr/include/v8 /usr/include/node
+node-gyp --help
+nodejs /usr/lib/nodejs/zmq/examples/rpc.js
+nodejs /usr/lib/nodejs/zmq/examples/dealer_router.js
+less /work/dtymon/testing/log/nav.log
+nodejs zmq-test.js
+nodejs zmq-test1.js
+nodejs zmq-test1.js --conf /work/dtymon/testing/davids-portal.conf
+mv testing testing.old
+md testing
+cd testing.old
+mv * ../testing
+rd ../testing.old
+less melb-main.cfg
+../comms/sinefa-router/bin/sinefa-router --conf melb-main.cfg
+llprintf 1342243072
+nodejs ~/amqp-server.js
+md5sum /usr/lib/nodejs/ipv6/LICENSE
+ipv6
+less /usr/bin/ipv6
+less /usr/lib/nodejs/ipv6/LICENSE
+less davids-portal.conf
+nodejs ~/msg-broker.js
+telnet localhost 9292
+echo Hello | nc localhost 9292
+perl -e 'print pack("N", 5)' | hexdump
+perl -e 'print pack("N", 5)' | hex-dump
+perl -e 'print pack("l", 5)' | hex-dump
+perl -e 'print pack("N", 5),"Hello"' | hex-dump
+perl -e 'print pack("N", 5),"Hello"' | nc localhost 9292
+perl -e 'print pack("N", 589123),"Hello"' | hex-dump
+perl -e 'print pack("N", 589123),"Hello"' | nc localhost 9292
+man nc
+perl -e 'print pack("N", 589123),"Hello"' | nc -w 60 localhost 9292
+perl -e 'print pack("N", 32),"Hello"' | nc -w 60 localhost 9292
+perl -e 'print pack("N", 5),"Hello World"' | nc -w 60 localhost 9292
+echo '{"type": "stuff"}' | wc -c
+perl -e "print pack('N', 17),'{\"type\": \"stuff\"}' | hex-dump
+perl -e "print pack('N', 17),'{\"type\": \"stuff\"}'" | hex-dump
+perl -e "print pack('N', 16),'{\"type\": \"stuff\"}'" | nc -w 60 localhost 9292
+perl -e "print pack('N', 17),'{\"type\": \"stuff\"}'" | nc -w 60 localhost 9292
+perl -e "my $m = '{\"type\": \"stuff\"}'; print pack('N', length($m)),$m" | nc -w 60 localhost 9292
+perl -e 'my $m = "{\"type\": \"stuff\"}"; print pack("N", length($m)),$m' | hex-dump
+perl -e 'my $m = "{\"type\": \"announce\"}"; print pack("N", length($m)),$m' | nc -w 60 localhost 9292
+perl -e 'my $m = "{\"type\": \"announce\", \"seq_num\": 12 }"; print pack("N", length($m)),$m' | nc -w 60 localhost 9292
+perl -e 'my $m = "{\"type\": \"announce\", \"seq_num\": 12, \"comp\": 4 }"; print pack("N", length($m)),$m' | nc -w 60 localhost 9292
+perl -e 'my $m = ""; while (<>) { $m .= $_ } print pack("N", length($m)),$m' <<EOF | hex-dump\
+{ "foo": "bar",\
+"age: 12\
+}\
+EOF
+perl -e 'my $m = ""; while (<>) { $m .= $_ } print pack("N", length($m)),$m' <<EOF | hex-dump\
+{\
+  "type": "message",\
+  "seq_num": 23,\
+  "dst_comp": 4,\
+  "dst_ep": "870bb5ef-c864-4655-b5d7-08ca14928aa7",\
+  "payload": { "name": "david", "age": 21 }\
+}\
+EOF
+nc -w 60 localhost 9292
+perl -e 'my $m = ""; while (<>) { $m .= $_ } print pack("N", length($m)),$m' <<EOF | nc -w 60 localhost 9292\
+{\
+  "type": "message",\
+  "seq_num": 23,\
+  "dst_comp": 4,\
+  "dst_ep": "870bb5ef-c864-4655-b5d7-08ca14928aa7",\
+  "payload": { "name": "david", "age": 21 }\
+}\
+EOF
+perl -e 'my $m = ""; while (<>) { $m .= $_ } print pack("N", length($m)),$m' <<EOF | nc -w 60 localhost 9292\
+{\
+  "type": "announce",\
+  "seq_num": 23\
+}\
+EOF
+perl -e 'my $m = ""; while (<>) { $m .= $_ } print pack("N", length($m)),$m' <<EOF | nc -w 60 localhost 9292\
+{\
+  "type": "announce",\
+  "seq_num": 23\
+  "comp": "transient"\
+}\
+EOF
+perl -e 'my $m = ""; while (<>) { $m .= $_ } print pack("N", length($m)),$m' <<EOF | nc -w 60 localhost 9292\
+{\
+  "type": "announce",\
+  "seq_num": 23,\
+  "comp": "transient"\
+}\
+EOF
+../comms/sinefa-cfgmgr/bin/sinefa-cfgmgr --conf cfgmgr.cfg
+../comms/sinefa-cfgmgr/bin/sinefa-cfgmgr --conf cfgmgr.cfg --endpoint b032a038-3381-49cb-bb16-1e5973932a87
+wget http://localhost:3003/internal/liveness
+wget http://172.26.0.126:3003/internal/liveness
+wget http://172.26.0.126:3003/
+wget https://portal-latest.sinefa.com/internal/liveness
+wget https://portal.sinefa.com/internal/liveness
+wget --no-check-certificate https://portal.sinefa.com/internal/liveness
+less liveness
+rm liveness
+less /usr/lib/nodejs/websocket/package.json
+../comms/sinefa-cfgmgr/bin/sinefa-cfgmgr --logging:default-level DEBUG --endpoint 870bb5ef-c864-4655-b5d7-08ca14928aa7 --database:dir /work/dtymon/testing
+cd comms-latest
+cd sinefa-portal
+cd lib
+cp nav/TableMgr.js db/TableUtils.js
+rm db/TableUtils.js
+cp nav/TableMgr.js wantrue
+cd ../..
+rm ./sinefa-portal/lib/wantrue/TableMgr.js~
+tar jcvf sinefa.tar.bz2 sinefa-*
+scp -r -i ~/certs/latestsinefacom.pem sinefa.tar.bz2 ubuntu@portal-latest.sinefa.com:portal-pkgs/.
+egrep -r comb.logging.Logger.getLogger sinefa-*
+egrep -r comb.logging.Logger.getLogger sinefa-router
+egrep -r comb.logging.Logger.getLogger sinefa-*/lib
+egrep -r format sinefa-router/lib/interfaces
+cd -4
+man htonl
+man memset
+man memcpy
+man memcpyman htonl
+man git-merge
+egrep -r bin /usr/lib/nodejs/npm/lib
+egrep -r -i env /usr/lib/nodejs/npm/lib
+nodejs ~/k.js
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs router-client.js
+vi melb-preston.cfg
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs ../comms/sinefa-router/bin/router-snoop --comps nav
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs ../comms/sinefa-cfgmgr/bin/sinefa-cfgmgr --logging:default-level DEBUG --endpoint 870bb5ef-c864-4655-b5d7-08ca14928aa7 --database:dir /work/dtymon/testing
+ps -ef | grep node
+egrep -r 'connect.*failed' /usr/lib/nodejs/socket.io
+egrep -r 'connect.*failed' /usr/lib/nodejs/socket.io | less
+egrep -r 'connect_failed' /usr/lib/nodejs/socket.io | less
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs ../comms/sinefa-cfgmgr/bin/sinefa-cfgmgr --logging:default-level DEBUG --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --database:dir /work/dtymon/testing
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms/sinefa-cfgmgr/bin/sinefa-cfgmgr --logging:default-level DEBUG --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --database:dir /work/dtymon/testing 2> jimmy.out
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms/sinefa-cfgmgr/bin/sinefa-cfgmgr --logging:default-level DEBUG --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --database:dir /work/dtymon/testing > jimmy.out
+egrep -r charCodeAt ../comms/sinefa-*/lib
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms/sinefa-cfgmgr/bin/sinefa-cfgmgr --logging:default-level DEBUG --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --database:dir /work/dtymon/testing
+rm config.db
+echo NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms/sinefa-cfgmgr/bin/sinefa-cfgmgr --logging:default-level DEBUG --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --database:dir /work/dtymon/testing>poo
+echo NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-cfgmgr/bin/sinefa-cfgmgr --logging:default-level DEBUG --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --database:dir /work/dtymon/testing>poo
+rm poo
+echo NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-cfgmgr/bin/sinefa-cfgmgr --logging:default-level DEBUG --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --database:dir /work/dtymon/testing
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-cfgmgr/bin/sinefa-cfgmgr --logging:default-level DEBUG --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --database:dir /work/dtymon/testing > foo
+less foo
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-cfgmgr/bin/sinefa-cfgmgr --logging:default-level DEBUG --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --database:dir /work/dtymon/testing
+egrep -r stores ../comms-latest/sinefa-router/node_modules/nconf/lib
+node-inspector --help
+node-inspector ----web-port=12345
+node-inspector --web-port=12345
+cd ../comms-latest/sinefa-router/node_modules/nconf/lib
+egrep -r 'prototype.*get' .
+cd ../comms-latest/sinefa-router/node_modules
+mv nconf nconf.do_not_use_me
+mv nconf.do_not_use_me nconf
+cd ../../sinefa-comms/node_modules
+cp -r ../../sinefa-router/node_modules/nconf .
+/bin/cp -r ../../sinefa-router/node_modules/nconf .
+cd node_modules
+rm -rf nconf
+cp -a ../../sinefa-portal/node_modules/nconf .
+vi melb-main.cfg
+NODE_ENV=dtymon NODE_PATH=/work/dtymon/comms-latest:/work/dtymon/web/server:/usr/lib/nodejs nodejs /work/dtymon/web/server/app.js --conf melb-main.cfg --logging:default-level DEBUG
+ps -ef | egrep node
+kill 12888
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs ../comms-latest/sinefa-cfgmgr/bin/sinefa-cfgmgr --logging:default-level DEBUG --endpoint b34aaca1-b82e-4d0d-851b-33e6be5ca462 --database:dir /work/dtymon/testing --internal:port 9293
+calc '24*60'
+calc '24*60*11'
+calc 
+calc '1440/5'
+less ~/dtymon-london.log
+chmod +x ../comms/sinefa-router/bin/router-snoop
+cd ../code
+egrep -r boost.*timer bin lib
+egrep -r posix_time bin lib
+egrep -r async_connect bin lib
+egrep -r TcpConnSessionPtr bin lib
+egrep -r TcpConnSessionPtr bin lib | egrep 'class|struct|typedef'
+egrep -r TcpConnSession bin lib | egrep 'class|struct|typedef'
+egrep -r 'socket\(\)' bin/controld
+egrep -r null_buf bin lib
+egrep -r null_buffers /usr/include/boost
+egrep -r null_buffers /usr/include/boost/asio/buffer.hpp
+less /usr/include/boost/asio/buffer.hpp
+egrep -r get_pipe bin/wantrued-v1
+egrep -r connect_failed bin
+egrep -r read_some bin/controld
+egrep -r read_some bin/
+egrep -r -i ffffffff lib
+find . -name json\*
+find /usr/include -name json\*
+find ../appliance/meta-sinefa -name json\*
+egrep -r operator ~/Downloads/json_spirit_v4.05/json_spirit
+egrep -r condition_var /usr/include/boost
+egrep -r unique_ptr /usr/include
+egrep -r unique_ptr /usr/include/c++
+cd ../comms
+egrep -r msg_id sinefa-comms sinefa-router
+egrep -r EventOccurred sinefa-comm sinefa-router
+egrep -r EventOccurred sinefa-comms sinefa-router
+egrep -r handle_dis sinefa-*
+egrep -r handle_close sinefa-router/lib/interfaces
+egrep -r contents sinefa-router/lib
+egrep -r emit sinefa-router/lib
+egrep -r emit sinefa-router/lib | egrep nack
+egrep -r '\.id' sinefa-*/lib
+egrep -r AttachResponse sinefa-*/lib
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs /work/dtymon/comms/sinefa-router/bin/router-snoop --comps cfgmgr
+egrep -r guard bin/wantrued-v1
+egrep -r guard lib
+egrep -r Message::print bin lib
+egrep -r EventOccurred sinefa-*
+egrep -r PortalConn sinefa-*
+egrep -r -i publish sinefa-*
+egrep -r -i publish sinefa-*/lib
+scp sinefa-router/lib/MsgBroker.js root@192.168.101.95:/usr/lib/node/sinefa-router/lib/
+scp sinefa-cfgmgr/lib/Attacher.js root@192.168.101.95:/usr/lib/node/sinefa-cfgmgr/lib
+egrep -r 'new ' ../code/bin/navd
+egrep -r 'new ' ../code/bin/navd | egrep -v /test/
+egrep -r 'new ' ../code/bin/navd | egrep -v /test/ | wc -l
+egrep -r '\*.*flow' ../code-latest/bin/navd
+egrep -r 'const Flow.*flow' ../code-latest/bin/navd
+egrep -r 'summarize\(' ../code-latest/bin/navd
+egrep -r 'Core::process' ../code-latest/bin/navd
+egrep -r 'reset\(\)' ../code-latest/bin/navd
+scp sinefa-router/lib/Router.js root@192.168.102.10:/usr/lib/node/sinefa-router/lib/.
+scp sinefa-router/lib/Router.js root@192.168.102.11:/usr/lib/node/sinefa-router/lib/.
+scp sinefa-router/lib/interfaces/CommsInterface.js root@192.168.102.11:/usr/lib/node/sinefa-router/lib/interfaces/.
+egrep -r 'while connect' sinefa-*
+egrep -r 'while connect' sinefa-*/lib
+egrep -r 'while estab' sinefa-*/lib
+git checkout feature/dbus-byebye
+git rebase master
+git rebase --continue
+egrep -r msg_id sinefa-*/lib
+egrep -r msg_id sinefa-*/lib | egrep -v header
+scp sinefa-router/bin/router-snoop root@192.168.101.56:/usr/sbin/
+md local
+cd local
+cmake ..
+md root
+make DESTDIR=$PWD/root install
+rm -rf local
+scp sinefa-router/lib/MsgBroker.js root@192.168.102.10:/usr/lib/node/sinefa-router/lib/
+scp sinefa-comms/lib/RouterDefs.js root@192.168.102.10:/usr/lib/node/sinefa-comms/lib
+scp sinefa-router/bin/router-snoop root@192.168.102.10:/usr/sbin/
+git checkout master
+git pull --rebase
+git merge --no-ff feature/dbus-byebye
+grep -r -i dbus sinefa-*
+rm -rf sinefa-router/node_modules/websocket
+vi sinefa-router/package.json
+git pyush
+git log
+git show b6f58c5e831318e8a5f3a651220fc7085ba8c8d1
+rm foo.pcap
+npm config list -l
+rm -rf portal-pkgs/node-dbus
+cd portal-pkgs/build
+rm -rf *
+cd ..
+find portal-pkgs -name \*.deb
+find portal-pkgs -name \*.deb | xargs rm
+rm -rf modules
+find portal-pkgs -name \*.changes
+find portal-pkgs -name \*.changes | xargs rm
+find . -name CMakeLists.txt
+find . -name CMakeLists.txt | xargs rm
+find . -name \*[Cc][Mm]\*
+rm -rf sinefa-router/build/
+rm sinefa.tar.gz
+rm sinefa-router/lib/ZMQAdapter.js
+find . -name \*~
+find . -name \*~ | xargs rm
+egrep -r iswitchb ~/elisp/config
+cd ../testing
+../comms/sinefa-router/bin/router-pipe --upstream:host 172.26.0.126 --upstream:port 3004 --logging:default-level DEBUG --src cfgmgr <<EOF\
+{ "_header": { "msg_id": 33 },\
+  "uuid" : "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "changes" : {\
+    "/customer/name" : "Fred Smith",\
+    "/customer/age" : 55,\
+    "/customer/pets" : [ "dog", "cat" ]\
+  }\
+}\
+EOF
+../comms/sinefa-router/bin/router-pipe --upstream:host 172.26.0.126 --upstream:port 3004 --logging:default-level DEBUG --src cfgmgr <<EOF\
+{ "_header": { "msg_id": 33 },\
+  "uuid" : "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "changes" : {\
+    "/customer/name" : "Fred Smith",\
+    "/customer/age" : 50,\
+    "/customer/pets" : [ "dog", "cat" ]\
+  }\
+}\
+EOF
+../comms/sinefa-router/bin/router-pipe --upstream:host 172.26.0.126 --upstream:port 3004 --logging:default-level DEBUG --src nav --dst cfgmgr --dst-ep b34aaca1-b82e-4d0d-851b-33e6be5ca462 <<EOF\
+{ "_header": { "msg_id": 1 },\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "keys": [ "/config/router/downstream/port" ]\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --upstream:host 172.26.0.126 --upstream:port 3004 --logging:default-level DEBUG --src nav --dst cfgmgr --dst-ep b34aaca1-b82e-4d0d-851b-33e6be5ca462 <<EOF\
+{ "_header": { "msg_id": 1 },\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "keys": [ "/config/router/downstream/port" ]\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --upstream:host 172.26.0.126 --upstream:port 3004 --logging:default-level DEBUG --src nav --dst cfgmgr --dst-ep b34aaca1-b82e-4d0d-851b-33e6be5ca462 <<EOF\
+{ "_header": { "msg_id": 1 },\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "keys": [ "/config/router/downstream/port1" ]\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --upstream:host 172.26.0.126 --upstream:port 3004 --logging:default-level DEBUG --src nav --dst cfgmgr --dst-ep b34aaca1-b82e-4d0d-851b-33e6be5ca462 <<EOF\
+{ "_header": { "msg_id": 33 },\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "changes": { "/config/router/downstream/port": 443 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --upstream:host 172.26.0.126 --upstream:port 3004 --logging:default-level DEBUG --src nav --dst cfgmgr --dst-ep b34aaca1-b82e-4d0d-851b-33e6be5ca462 <<EOF\
+{ "_header": { "msg_id": 33 },\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "changes": { "/config/router/downstream/port": 444 }\
+}\
+EOF
+cat <<EOF > koo\
+{ "_header": { "msg_id": 33 },\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "changes": { "/config/router/downstream/port": 444 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe2 --src nav --dst cfgmgr --dst-ep local <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "changes": { "/config/router/downstream/port": 444 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe2 --comp nav --dst cfgmgr --dst-ep local --logging:default-level DEBUG <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "changes": { "/config/router/downstream/port": 444 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe2 --comp nav --dst cfgmgr --dst-ep local <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "changes": { "/config/router/downstream/port": 444 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe2 --dst cfgmgr --dst-ep local <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "changes": { "/config/router/downstream/port": 444 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe2 --dst cfgmgr --dst-ep local <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "changes": { "/config/router/downstream/port": 443 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe2 --dst cfgmgr --dst-ep local --verbose <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "changes": { "/config/router/downstream/port": 443 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe2 --dst cfgmgr --dst-ep local --verbose <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "changes": { "/config/router/downstream/port": 444 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe2 --dst cfgmgr --dst-ep local --verbose <<EOF\
+{\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "changes": { "/config/router/downstream/port": 443 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --verbose <<EOF\
+{\
+  "uuid": "b34aaca1-b82e-4d0d-851b-33e6be5ca462",\
+  "changes": { "/config/router/downstream/port": 443 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --verbose <<EOF\
+{\
+  "_header": { "msg_id": 1 },\
+  "values": [ "/config/router/downstream/port" ]\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --verbose <<EOF\
+{\
+  "_header": { "msg_id": 1 },\
+  "keys": [ "/config/router/downstream/port" ]\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --verbose <<EOF\
+{\
+  "_header": { "msg_id": 1 },\
+  "keys": [ "/config/router/downstream/port1" ]\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --verbose <<EOF\
+{\
+  "_header": { "msg_id": 1 },\
+  "tree": "/config/router/upstream"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --verbose <<EOF\
+{\
+  "_header": { "msg_id": 2 },\
+  "tree": "/config/router/upstream"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local <<EOF\
+{\
+  "_header": { "msg_id": 1 },\
+  "keys": [ "/config/router/downstream/port" ]\
+}\
+EOF
+../comms/sinefa-router/bin/router-pipe --upstream:host 172.26.0.126 --upstream:port 3003 --logging:default-level DEBUG --src cfgmgr --listen <<EOF\
+{ "id": 66,\
+  "contents": {\
+    "account" : 17,\
+    "regex" : ".*"\
+  }\
+}\
+EOF
+../comms/sinefa-router/bin/router-pipe --upstream:host 172.26.0.126 --upstream:port 3003 --logging:default-level DEBUG --comp cfgmgr --dst router --dst-ep local --listen <<EOF\
+{ "id": 66,\
+  "contents": {\
+    "account" : 17,\
+    "regex" : ".*"\
+  }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --verbose --listen <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/router/downstream/port": 444 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --verbose <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/router/downstream/port": 444 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --verbose <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/router/downstream/port": 443 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --verbose <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/router/downstream/port": 443 }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --verbose <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/router/downstream/port": 444 }\
+}\
+EOF
+less jimmy.out
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --verbose <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/dtymon/foo": "å½" }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --comp cfgmgr --dst cfgmgr --logging:default-level DEBUG --verbose <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/dtymon/foo": "å½" }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --comp cfgmgr --dst cfgmgr --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/dtymon/foo": "å½1" }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --comp cfgmgr --dst cfgmgr --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/dtymon/foo": "å½2" }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --logging:default-level DEBUG --verbose --internal:port 9292 <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/dtymon/foo": "å½1" }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/dtymon/foo": "å½1" }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep b34aaca1-b82e-4d0d-851b-33e6be5ca462 --logging:default-level DEBUG --verbose --internal:port 9292 <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/dtymon/foo": "å½1" }\
+}\
+EOF
+hex 0x54
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/dtymon/foo": "å½3" }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/dtymon/foo": "å½1" }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/dtymon/foo": "å½2" }\
+}\
+EOF
+calc '1+1+1+1+1.25+1+4.26+4.45+4.28+4.12+4.21+4.14'
+calc '(1+1+1+1+1.25+1+4.26+4.45+4.28+4.12+4.21+4.14)/12'
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --logging:default-level DEBUG --verbose --internal:port 9292 <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/dtymon/foo": "å½3" }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/dtymon/foo": "å½3" }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/dtymon/foo": "å½2" }\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/applications/234": "{\"id\":234,\"name\":\"David Protocol\",\"altNames\":\"Tymon\",\"definitions\":[{\"protocol\":234}]}\" }"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/applications/234": "{\"id\":234,\"name\":\"David Protocol\",\"altNames\":\"Tymon\",\"definitions\":[{\"protocol\":234}]}\" }"}\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 33 },\
+  "changes": { "/config/applications/567": "{\"id\":567,\"name\":\"David Protocol\",\"altNames\":\"Tymon\",\"definitions\":[{\"protocol\":567}]}\" }"}\
+}\
+EOF
+vi k
+hex 0x50
+ssh root@192.168.101.109
+perl -ne '$a .= $_; END { $a =~ m%downstream.*addr\s*=\s*"(.*?)"% and print "$1\n" }' ../comms-latest/sinefa-router/etc/sinefa-router.conf
+less ../comms-latest/sinefa-router/etc/sinefa-router.conf
+cp ../comms-latest/sinefa-router/etc/sinefa-router.conf .
+perl -ne '$a .= $_; END { $a =~ m%downstream.*addr\s*=\s*"(.*?)"%m and print "$1\n" }' ../comms-latest/sinefa-router/etc/sinefa-router.conf
+perl -ne '$a .= $_; END { $a =~ m%downstream(.*)%m and print "$1\n" }' ../comms-latest/sinefa-router/etc/sinefa-router.conf
+perl -ne 'chomp($a .= $_); END { $a =~ m%downstream(.*)% and print "$1\n" }' ../comms-latest/sinefa-router/etc/sinefa-router.conf
+man nodejs
+nodejs -e 'var fs = require("fs"); var contents = fs.readFileSync("sinefa-router.conf"); console.log(contents);'
+nodejs -e 'var fs = require("fs"); var contents = fs.readFileSync("sinefa-router.conf", "utf8"); console.log(contents);'
+nodejs -e 'var fs = require("fs"); try { var cfg = JSON.parse(fs.readFileSync("sinefa-router.conf", "utf8")); console.log(cfg);} catch () {}'
+nodejs -e 'var fs = require("fs"); try { var cfg = JSON.parse(fs.readFileSync("sinefa-router.conf", "utf8")); console.log(cfg);} catch (ex) {}'
+nodejs -e 'var fs = require("fs"); try { var cfg = JSON.parse(fs.readFileSync("sinefa-router.conf", "utf8")); if (("downstream" in cfg) && ("addr" in cfg.downstream)) { console.log(cfg.downstream.addr);} catch (ex) {}'
+nodejs -e 'var fs = require("fs"); try { var cfg = JSON.parse(fs.readFileSync("sinefa-router.conf", "utf8")); if (("downstream" in cfg) && ("addr" in cfg.downstream)) { console.log(cfg.downstream.addr) } } catch (ex) {}'
+chmod +x ../comms-latest/sinefa-portal/bin/sinefa-iptables.sh
+../comms-latest/sinefa-portal/bin/sinefa-iptables.sh
+vi sinefa-router.conf
+chmod 755 ../comms-latest/sinefa-portal/bin/sinefa-iptables.sh
+man iptables
+scp -i ~/certs/latestsinefacom.pem ../comms-latest/sinefa-portal/bin/sinefa-iptables.sh ubuntu@portal-latest.sinefa.com:.
+calc '4.8357009646772491e+23'
+hex 0xffffc0a8656d
+hex 0xc0 0xa8 0x65 0x6d
+gcalc
+llprintf 483570096467724910000000
+ifconfig
+less ../code/.git/config
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst instancemgmt --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 11003 },\
+  "account": 17,\
+  "uuid": "E12F79C8-B4A7-4FDD-B14E-D94C46E99DA8"\
+}\
+EOF
+less portal-log/instances.log
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst instancemgmt --logging:default-level DEBUG --verbose --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 11003 },\
+  "account": 17,\
+  "uuid": "DA8E5D88-6A94-43A8-90A3-426004F607B8"\
+}\
+EOF
+top
+man sendto
+cd redhat/RPMS/x86_64
+man rpm
+rpm -qpl boost-1.50.0-2.fc16.x86_64.rpm | less
+man cmake
+less /usr/share/cmake/Modules/FindBoost.cmake
+vi /work/dtymon/code-native/CMakeLists.txt
+vi /work/dtymon/code-native/bin/wantrued-v1/CMakeLists.txt
+vi /work/dtymon/code-native/lib/libsfa-common/CMakeLists.txt
+vi /work/dtymon/code-native/lib/libsfa-comms/CMakeLists.txt
+vi /work/dtymon/code-native/lib/libsfa-comms/CMakeLists.txt  /work/dtymon/code-native/lib/libsfa-config/CMakeLists.txt 
+vi /work/dtymon/code-native/lib/libsfa-comms/CMakeLists.txt  /work/dtymon/code-native/bin/example/CMakeLists.txt
+vi /work/dtymon/code-native/lib/libsfa-comms/CMakeLists.txt  /work/dtymon/code-native/bin/navd/CMakeLists.txt
+cd /work/dtymon/code-native
+git citool
+git commit
+git push
+git status
+git diff
+cd bin
+ln -s ../../code/bin/navd .
+cd ../native/bin/navd
+make clean
+make
+make test
+make VERBOSE=1 test
+less ../../../bin/navd/test/CMakeLists.txt
+less ../../../bin/navd/test/pcap/CMakeLists.txt
+cd ../../../bin/navd/test/pcap/
+export NAVD_PATH=/work/dtymon/code-native/native/bin/navd/navd
+export LOG_PATH=$PWD
+export NAVD_APPLICATIONS_PATH=../../apps/default_applications.json
+find /work/dtymon/code-native -name nprobe
+find /work/dtymon/code -name nprobe
+egrep -r nprobe /work/dtymon/code
+export NPROBE_PATH=/usr/local/bin/nprobe
+ls
+rm navd.trace.log
+less nprobe.stdout.log
+less nprobe.stderr.log
+ls -latr
+kill 9308
+less navd.trace.log
+ls -altr
+less navd.stdout.log
+less test.js
+ps -ef | egrep navd
+cd ../../../
+ls -la
+mv navd navd.new
+mv navd.orig navd
+./node_modules/.bin/mocha --reporter spec
+killall navd
+rm -f *.log
+egrep -r 'application.*10' .
+egrep -r 'application.*10' . | less
+egrep -r 'app.*10' . | less
+cd -l
+mv navd navd.orig
+mv navd.new navd
+cd -
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ~/addr.js
+hex 3232261485
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ~/addrs.js
+cd /work/dtymon/testing
+../comms/sinefa-router/bin/router-pipe --upstream:host 172.26.0.126 --upstream:port 3004 --logging:default-level DEBUG --src cfgmgr <<EOF\
+{ "id": 33,\
+  "contents": {\
+    "uuid" : "870bb5ef-c864-4655-b5d7-08ca14928aa7",\
+    "changes" : {\
+      "/customer/name" : "Fred Smith",\
+      "/customer/age" : 55,\
+      "/customer/pets" : [ "dog", "cat" ]\
+    }\
+  }\
+}\
+EOF
+nodejs ~/k1.js
+nodejs ../comms/sinefa-router/bin/router-snoop
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-snoop
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-snoop --comps wantrue,nav
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-snoop --comps wantrue
+hex 86
+../comms/sinefa-router/bin/router-pipe --upstream:host 172.26.0.126 --upstream:port 3004 --logging:default-level DEBUG --src cfgmgr <<EOF\
+{ "id": 33,\
+  "contents": {\
+    "uuid" : "870bb5ef-c864-4655-b5d7-08ca14928aa7",\
+    "changes" : {\
+      "/customer/name" : "Fred Smith",\
+      "/customer/age" : 50,\
+      "/customer/pets" : [ "dog", "cat" ]\
+    }\
+  }\
+}\
+EOF
+npm --help
+npm config
+npm config list
+NPM_CONFIG_PREFIX=asda npm config list
+NPM_CONFIG_PREFIX=asda npm config list -l
+NPM_CONFIG_PREFIX=asda npm config list -l | egrep -i bin
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-snoop --comps nav
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe2 --dst router --dst-ep local <<EOF\
+{\
+  "_header": { "msg_id": 0x54 },\
+  "regex": ".*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe2 --dst router --dst-ep local <<EOF\
+{\
+  "_header": { "msg_id": 84 },\
+  "regex": ".*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe2 --dst router --dst-ep local --verbose <<EOF\
+{\
+  "_header": { "msg_id": 84 },\
+  "regex": ".*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe2 --dst router --dst-ep local --verbose --oneway <<EOF\
+{\
+  "_header": { "msg_id": 84 },\
+  "regex": ".*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --dst router --dst-ep local --verbose --oneway <<EOF\
+{\
+  "_header": { "msg_id": 84 },\
+  "regex": ".*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --dst router --dst-ep local --verbose --oneway --listen <<EOF\
+{\
+  "_header": { "msg_id": 84 },\
+  "regex": ".*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --dst router --dst-ep local --verbose --oneway --listen <<EOF\
+{\
+  "_header": { "msg_id": 84 },\
+  "regex": "cfgmgr:.*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs router-client.js --conf melb-preston.cfg
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs router-client.js --conf melb-preston.cfg --logger:default-level DEBUG
+hex 80
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-snoop --comps cfgmgr
+NODE_PATH=/work/dtymon/comms:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --comp 24 --dst router --dst-ep local --verbose --oneway --listen <<EOF\
+{\
+  "_header": { "msg_id": 84 },\
+  "regex": "cfgmgr:.*"\
+}\
+EOF
+wireshark
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms/sinefa-router/bin/router-pipe --comp 24 --dst router --dst-ep local --verbose --oneway --listen <<EOF\
+{\
+  "_header": { "msg_id": 84 },\
+  "regex": "cfgmgr:.*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --comp 24 --dst router --dst-ep local --verbose --oneway --listen <<EOF\
+{\
+  "_header": { "msg_id": 84 },\
+  "regex": "cfgmgr:.*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-snoop --comps cfgmgr --logging:default-level DEBUG
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-snoop --comps cfgmgr
+wget http://localhost:11211/doit
+rm doit
+wget http://localhost:3000/doit
+less doit
+hex 192
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-snoop --comps cfgmgr --internal:port 9293 &
+k1
+k2
+k3
+k4
+k5
+k6
+j
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr <<EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --dst-ep local --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 65 },\
+  "uuid": "ffffffff-ffff-ffff-ffff-ffffffffffff",\
+  "regex": "/config/.*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 65 },\
+  "uuid": "ffffffff-ffff-ffff-ffff-ffffffffffff",\
+  "regex": "/config/.*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --listen --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 65 },\
+  "uuid": "ffffffff-ffff-ffff-ffff-ffffffffffff",\
+  "regex": "/config/.*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --listen --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 66 },\
+  "account": 17,\
+  "regex": "/config/.*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --listen --internal:port 9293 <<EOF\
+{\
+  "_header": { "msg_id": 67 },\
+  "regex": "/config/.*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-pipe --dst cfgmgr --listen --internal:port 9292 <<EOF\
+{\
+  "_header": { "msg_id": 67 },\
+  "regex": "/config/.*"\
+}\
+EOF
+NODE_PATH=/work/dtymon/comms-latest:/usr/lib/nodejs nodejs ../comms-latest/sinefa-router/bin/router-snoop --comps cfgmgr --internal:port 9293
+exit

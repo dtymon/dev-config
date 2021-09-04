@@ -1,0 +1,8 @@
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _complete
+zstyle :compinstall filename '/users/davidt/.zshnewcomp'
+
+autoload -U compinit
+compinit
+# End of lines added by compinstall

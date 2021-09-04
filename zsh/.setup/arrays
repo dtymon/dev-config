@@ -1,0 +1,386 @@
+#############################################################################
+#   cd history
+#############################################################################
+
+function _cd
+{
+    # Take care of zsh array index
+    [ -n "$zshFlag" ] && setopt localoptions ksharrays
+
+    # Go home if nothing specified
+    [ $# -eq 0 ] && set -- "$HOME"
+
+    # Parse options
+    typeset -i i=-1
+    typeset target arg
+    for arg in "${@:-}";do
+        case "$arg" in
+            # Previous directory
+            -|-1) i=0;
+                  target="${cdhist[i]}";;
+
+            # Offset
+            -[2-9]|-1[0-9]|-20) i=${arg##-}-1
+                                target="${cdhist[i]}";;
+
+            # List
+            -l) _array_display_rev cdhist
+                return 0;;
+
+            # Must be a directory
+            *) i=-1;target="$arg";;
+        esac
+    done
+    
+
+    # If an index was specified ensure it was valid.
+    typeset -i maxIdx=$(_array_max_idx cdhist)
+    if ((i<=0 && i>maxIdx));then
+        # Restore back to value passed
+        i=i+1;target="-$i"
+    fi
+
+    # If the target does not exist, but it starts with an _ and an envvar
+    # exists with that name then use the value in the envvar
+    if [ ! -d "$target" -a -z "${target##_*}" ];then
+        typeset varName=${target%%/*} dirOffset=${target#_*/}
+        [ "$dirOffset" = "$target" ] && dirOffset=""
+        typeset deref
+        eval deref=\"\$$varName\"
+        if [ -n "$deref" -a -d "$deref" ];then
+            target="$deref/$dirOffset"
+        fi
+    fi
+
+    # Attempt to cd to the target and if successful save this old directory in
+    # the cd history.
+    if 'cd' "$target";then
+        # Successful. Save old pwd, remove current dir from history
+        _cd_add "$OLDPWD" "$PWD"
+        title
+        /bin/ls -aCF
+    fi
+}
+
+
+function _cd_add
+{
+    # Take care of zsh array index
+    [ -n "$zshFlag" ] && setopt localoptions ksharrays
+
+    # Ignore if nothing specifed or it is the first element in the array
+    [ $# -lt 1 ] && return
+    [ "$1" = "${cdhist[0]}" ] && return
+
+    # Ensure the directory is removed first and prepend value to array
+    _array_remove  cdhist "$1"
+    _array_remove  cdhist "$2"
+    _array_prepend cdhist "$1"
+    [ ${#cdhist[@]} -gt 20 ] && _array_truncate cdhist 20
+}
+
+
+#############################################################################
+#   Path modifications
+#############################################################################
+
+function _path_add
+{
+    # Set defaults
+    typeset action="a" envVar="PATH"
+    [ -n "$zshFlag" ] && setopt localoptions shwordsplit ksharrays
+
+    # Parse options
+    while [ $# -gt 0 -a -z "${1##-*}" ];do
+        typeset arg="${1#-}"  && shift
+        [ "$arg" = "-" ]      && break
+        [ -z "${arg#[apr]}" ] && action=$arg && continue
+        [ "$arg" != "v" ]     && echo "$0: Unrecognised arg -$arg" && return 1
+        [ $# -lt 1 ]          && echo "$0: -v expects an arg" && return 1
+        envVar="$1"           && shift
+    done
+
+    # Remove all dirs specified from the current value of variable
+    typeset pathVar oldIFS="$IFS";IFS=":"
+    eval _array_create pathVar \$$envVar
+    IFS="$oldIFS"
+    _array_remove pathVar "$@"
+
+    # Append/prepend as appropriate
+    [ "${action}" = "a" ] && _array_append pathVar "$@"
+    [ "${action}" = "p" ] && _array_prepend pathVar "$@"
+
+    # Put it back together again
+    typeset -i i=0 maxIdx=${#pathVar[@]}
+    typeset newValue="" nextVal
+    while ((i<maxIdx));do
+        # For vars which have lists of directories, ensure that the value to be
+        # added exists
+        case $envVar in
+            *PATH*)  [ ! -d "${pathVar[$i]}" ] && i=i+1 && continue;;
+        esac
+
+        [ -n "$newValue" ] && newValue="$newValue:${pathVar[$i]}"
+        [ -z "$newValue" ] && newValue="${pathVar[$i]}"
+        i=i+1
+    done
+    eval $envVar=\"$newValue\"
+}
+alias chpath='_path_add'
+
+
+function _path
+{
+    # Take care of zsh word splitting
+    [ -n "$zshFlag" ] && setopt localoptions shwordsplit
+    typeset pathVar
+    _array_create_with_IFS : pathVar "$PATH"
+    _array_display pathVar
+}
+alias prpath='_path'
+
+
+function _sanitise_path
+{
+    typeset envVar=${1:-PATH}
+
+    # Take care of zsh word splitting
+    [ -n "$zshFlag" ] && setopt localoptions shwordsplit
+    typeset a1
+    eval _array_create_with_IFS ":" a1 \$$envVar
+    _array_remove_dups a1
+    _array_display a1
+    _array_join a1 $envVar ":"
+}
+alias cleanpath='_sanitise_path'
+
+
+#############################################################################
+#   General array functionality
+#############################################################################
+
+function _array_length
+{
+    typeset arrName="$1"
+    eval echo \$\{\#${arrName}\[@\]\}
+}
+
+function _array_max_idx
+{
+    typeset arrName="$1"
+    typeset -i numVals
+    eval numVals=\${\#${arrName}\[@\]\}-1
+    echo $numVals
+}
+
+function _array_display_base
+{
+    # Take care of zsh array index
+    [ -n "$zshFlag" ] && setopt localoptions ksharrays
+
+    typeset arrName="$1" nextVal
+    typeset -i start=$2 finish=$3 offset=$4
+
+    typeset -i idx=$start
+    while ((idx!=finish+offset));do
+        typeset -i  x=idx+1
+        eval nextVal=\${$arrName\[idx\]}
+        printf "%3d) %s\n" $x "$nextVal"
+        idx=idx+offset
+    done
+}
+
+function _array_display
+{
+    _array_display_base "$1" 0 $(_array_max_idx "$1") 1
+}
+
+function _array_display_rev
+{
+    _array_display_base "$1" $(_array_max_idx "$1") 0 -1
+}
+
+function _array_append
+{
+    typeset arrName="$1";shift
+    typeset -i len=$(_array_length $arrName)
+
+    # If array contains some values then append new ones else initialise array
+    ((len>0)) && eval _array_create $arrName \"\${$arrName\[@\]}\" \"\$@\"
+    ((len<=0)) && eval _array_create $arrName \"\$@\"
+}
+
+function _array_prepend
+{
+    typeset arrName="$1";shift
+    typeset -i len=$(_array_length $arrName)
+
+    # If array contains some values then prepend new ones else initialise array
+    ((len>0)) && eval _array_create $arrName \"\$@\" \"\${$arrName\[@\]}\"
+    ((len<=0)) && eval _array_create $arrName \"\$@\"
+}
+
+function _array_truncate
+{
+    # Take care of zsh array index
+    [ -n "$zshFlag" ] && setopt localoptions ksharrays
+
+    typeset arrName="$1"
+    typeset -i maxVals=$2 maxIdx=maxVals-1
+
+    # Need to take care with zsh word splitting
+    if [ -n "$zshFlag" ];then
+        eval _array_create $arrName '${(@)'$arrName'[0,$maxIdx]}'
+    else
+        typeset -i idx=$(_array_max_idx $arrName)
+        while ((idx > maxIdx));do
+            eval unset $arrName\[idx\]
+            idx=idx-1
+        done
+        eval _array_create $arrName \"\${$arrName\[@\]}\"
+    fi
+}
+
+function _array_remove_base
+{
+    # Take care of zsh array index
+    [ -n "$zshFlag" ] && setopt localoptions ksharrays
+
+    typeset arrName="$1" value="$2"
+    typeset -i rmByVal="$3" i=0 j=0 skip=0 numVals maxIdx
+    typeset nextVal
+    eval numVals=\${\#$arrName\[@\]}
+
+    # If we are removing by index convert value to an integer
+    ((!rmByVal)) && typeset -i value=$value
+
+    # Go through the array values and move each element up one index to erase
+    # the old element
+    while ((i<numVals)); do
+        # Get next value in array
+        eval nextVal=\${$arrName\[\$i\]}
+
+        # Should it be skipped
+        skip=0
+        ((rmByVal)) && [ "$value" = "$nextVal" ] && skip=1
+        ((!rmByVal)) && ((i==value)) && skip=1
+
+        if ((!skip));then
+            eval $arrName\[j\]=\${$arrName\[i\]}
+            j=j+1
+        fi
+        i=i+1
+    done
+
+    # Return if a match was not found
+    ((i==j)) && return 1
+
+    _array_truncate $arrName $j
+    return 0
+}
+
+function _array_remove
+{
+    typeset arrName="$1" ele;shift
+    for ele in "$@";do
+        _array_remove_base "$arrName" "$ele" 1
+    done
+}
+
+function _array_remove_by_idx
+{
+    typeset arrName="$1" ele;shift
+    for ele in "$@";do
+        _array_remove_base "$arrName" "$ele" 0
+    done
+}
+
+function _array_find
+{
+    # Take care of zsh array index
+    [ -n "$zshFlag" ] && setopt localoptions ksharrays
+
+    typeset arrName="$1" value="$2"
+    typeset -i i=0 numVals
+    typeset nextVal
+    eval numVals=\${#$arrName\[@\]}
+
+    # Go through the array looking for the specified value
+    while ((i<numVals)); do
+        # Get next value in array and return index if it matches
+        eval nextVal=\${$arrName\[\$i\]}
+        i=i+1
+        [ "$value" = "$nextVal" ] && return $i
+    done
+    return 0
+}
+
+function _array_has
+{
+    return _array_find "$@"
+}
+
+function _array_join
+{
+    # Take care of zsh array index
+    [ -n "$zshFlag" ] && setopt localoptions ksharrays
+
+    typeset arrName="$1" envVar="$2" sep="$3"
+    typeset -i i=0 numVals
+    typeset nextVal
+    eval numVals=\${#$arrName\[@\]}
+
+    typeset result=""
+    while ((i<numVals)); do
+        eval nextVal=\${$arrName\[\$i\]}
+        [ -n "$result" ] && result="${result}${sep}${nextVal}"
+        [ -z "$result" ] && result="${nextVal}"
+        i=i+1
+    done
+    eval $envVar=\"$result\"
+}
+
+
+function _array_remove_dups
+{
+    # Take care of zsh array index
+    [ -n "$zshFlag" ] && setopt localoptions ksharrays
+
+    typeset arrName="$1"
+    typeset -i i=0 numVals
+    typeset nextVal result
+    eval numVals=\${#$arrName\[@\]}
+
+    _array_create copied
+    while ((i<numVals)); do
+        eval nextVal=\${$arrName\[\$i\]}
+        _array_has copied $nextVal || _array_append copied $nextVal
+        i=i+1
+    done
+
+    eval _array_create ${arrName} \${copied\[@\]}
+}
+
+function _array_create
+{
+    # Take care of zsh word splitting and array index
+    [ -n "$zshFlag" ] && setopt localoptions shwordsplit ksharrays
+
+    typeset arrName="$1";shift
+    if [ "$SHELL" != "/bin/ksh" ];then
+        eval ${arrName}=\(\"\$@\"\)
+    else
+        eval set -A ${arrName} \"\$@\"
+    fi
+}
+
+function _array_create_with_IFS
+{
+    # Take care of zsh word splitting and array index
+    [ -n "$zshFlag" ] && setopt localoptions shwordsplit ksharrays
+
+    typeset oldIFS="$IFS";IFS="$1";shift
+    typeset arrName="$1";shift
+    _array_create $arrName $1
+    IFS="$oldIFS"
+}

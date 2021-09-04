@@ -1,0 +1,38 @@
+export LANG=en_AU.UTF8
+export LC_COLLATE=C LC_TIME=C LC_NUMERIC=C
+export LC_CTYPE=$LANG LC_MONETARY=$LANG_AU LC_MESSAGES=$LANG
+export KDE_LANG=$LANG
+
+# Source the other files which will do the work
+. "${SCRIPTDIR}/.msgs"
+. "${SCRIPTDIR}/.path"
+. "${SCRIPTDIR}/.funcs"
+. "${SCRIPTDIR}/.aliases"
+
+
+#############################################################################
+# Prompt stuff
+#############################################################################
+
+function promptChroot
+{
+    # Setup some colour variables
+    typeset fg=$(doColour aqua)
+    typeset fgReset=$(doColour normal)
+    typeset bold=$(tput bold)
+    typeset boldReset=$(tput sgr0)
+}
+
+function titleWho
+{
+    # Pretty print login name and machine
+    typeset -ix eid=$($IDPROG -u)
+    ((eid == 0)) && printf "root@$HOST" || printf "${LOGNAME}@$HOST"
+}
+
+# Source system-specific file
+[ -f "$HOME/.setup/.shrc.$SYSTYPE" ] && . "$HOME/.setup/.shrc.$SYSTYPE"
+
+_path_add -p "${HOME}/local/bin" "${SYSBINDIR}"
+
+export PATH MANPATH

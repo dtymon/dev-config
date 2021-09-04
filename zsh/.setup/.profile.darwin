@@ -1,0 +1,29 @@
+startStage "Setting up Mac OS specifics"
+
+# Use GNU versions of coreutils over Mac BSD
+GNU_COREUTILS=/usr/local/Cellar/coreutils
+if [ -d $GNU_COREUTILS ]; then
+    COREUTILS_VERSION=$(/bin/ls -1 /usr/local/Cellar/coreutils | sort -nr | head -1)
+    [ -n "$COREUTILS_VERSION" ] && _path_add -p "$GNU_COREUTILS/$COREUTILS_VERSION/libexec/gnubin"
+fi
+
+# System specific env vars
+export TZ=Australia/Melbourne
+
+# Additional system-specific paths
+export IDPROG=/usr/bin/id
+export PRINTER=lp
+
+# Java location
+export JAVA_HOME=/usr/java/latest
+export JAVA_VM=$JAVA_HOME/bin/java
+_path_add -p $JAVA_HOME/bin
+
+# Set the erase char appropriately
+stty erase '^?'
+#stty erase '^H'
+
+_path_add -v LD_LIBRARY_PATH /usr/local/lib .
+export LD_LIBRARY_PATH
+
+endStage

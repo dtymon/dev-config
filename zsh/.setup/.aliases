@@ -1,0 +1,23 @@
+startStage "Defining aliases"
+
+[ -z "$zshFlag" ] && \
+  alias reread='. ~/.profile;. ~/.kshrc' || alias reread='. ~/.zprofile;. ~/.zshrc'
+
+alias cd='_cd'
+alias rd='rmdir'
+alias md='mkdir'
+
+alias rm=new_rm
+alias cp='cp -i'
+alias mv='mv -i'
+alias y='echo No more responses'
+
+alias k1='kill -9 %1'
+alias j='jobs -l'
+
+alias ls='ls -aCF'
+alias ll='ls -apFl'
+
+alias ps='COLUMNS=512 ps'
+
+endStage

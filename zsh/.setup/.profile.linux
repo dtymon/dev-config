@@ -1,0 +1,23 @@
+startStage "Setting up Linux specifics"
+
+# System specific env vars
+export TZ=Australia/Melbourne
+
+# Additional system-specific paths
+export IDPROG=/usr/bin/id
+export PRINTER=lp
+
+# Java location
+#export JAVA_HOME=/opt/SUNWappserver/jdk
+export JAVA_HOME=/usr/java/latest
+export JAVA_VM=$JAVA_HOME/bin/java
+_path_add -p $JAVA_HOME/bin
+
+# Set the erase char appropriately
+#stty erase '^?'
+stty erase '^H'
+
+_path_add -v LD_LIBRARY_PATH /usr/local/lib .
+export LD_LIBRARY_PATH
+
+endStage
