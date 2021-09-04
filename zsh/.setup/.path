@@ -1,0 +1,29 @@
+# Protect against multiple inclusion
+if [ -z "$_pathSetup" ];then
+    typeset _pathSetup=1
+
+    startStage "Setting up PATH"
+
+    # Source the functions that are used to manipulate paths nicely. Windows
+    # NT requires a completely different implementation coz it's crap
+    [ "$SYSTYPE" = "$_sys_win32" ] && \
+        . "${SCRIPTDIR}/arrays.nt" || . "${SCRIPTDIR}/arrays"
+
+    # Prepend important paths to PATH
+    _path_add -p /bin /usr/bin /usr/sbin /sbin /usr/local/sbin /etc /usr/etc
+
+    # Ensure my bin directory overrides everything
+    _path_add -p "${HOME}/local/bin" "${HOME}/scripts" /usr/local/bin
+    _path_add -p "${SYSBINDIR}"
+
+    # Add . to the front of the MANPATH so that we can chdir to pick up
+    # a particular manpage.
+    _path_add -v MANPATH -p . /usr/share/man /usr/man
+    _path_add -v MANPATH /usr/local/man
+    _path_add -v MANPATH -p "${HOME}/local/man"
+
+    # Make sure java compiler is taken from where JAVA_HOME is specified
+    _path_add -p $JAVA_HOME/bin
+
+    endStage
+fi

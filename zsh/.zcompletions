@@ -1,0 +1,11 @@
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' max-errors 0
+zstyle ':completion:*' prompt 'Errors %e'
+zstyle :compinstall filename '/users/davidt/.zcompletions'
+
+autoload -U compinit
+compinit
+# End of lines added by compinstall

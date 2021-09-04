@@ -1,0 +1,7 @@
+startStage "Setting up Windows NT specifics"
+
+# System specific env vars
+export TZ=Australia/Melbourne
+export IDPROG=id
+
+endStage

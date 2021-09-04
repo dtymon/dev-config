@@ -1,0 +1,6 @@
+export LANG=en_AU.UTF-8
+export LC_COLLATE=C LC_TIME=C LC_NUMERIC=C
+export LC_ALL=$LANG LC_CTYPE=$LANG LC_MONETARY=$LANG_AU LC_MESSAGES=$LANG
+
+#bindkey '^H' backward-delete-char
+#bindkey '^?' delete-char
