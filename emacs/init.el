@@ -4,8 +4,8 @@
 (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
 
 ;; Make the initial frame about 90% of display width and height
-(setq davidt::frame-width (round (* 0.57 (display-pixel-width))))
-(setq davidt::frame-height (round (* 0.85 (display-pixel-height))))
+(setq davidt::frame-width (round (* 0.9 (display-pixel-width))))
+(setq davidt::frame-height (round (* 0.8 (display-pixel-height))))
 (add-to-list 'initial-frame-alist (cons 'width (cons 'text-pixels davidt::frame-width)))
 (add-to-list 'initial-frame-alist (cons 'height (cons 'text-pixels davidt::frame-height)))
 
@@ -203,7 +203,7 @@
 (require 'setup-visual-regexp)
 (require 'setup-highlight-escape-sequences)
 (require 'setup-smart-forward)
-(require 'setup-emacs-server)
+;;(require 'setup-emacs-server)
 ;;(require 'setup-prodigy)
 (require 'setup-doom-themes)
 (require 'setup-solarized-theme)
@@ -221,6 +221,7 @@
 (require 'setup-css-eldoc)
 (require 'setup-dockerfile-mode)
 (require 'setup-htmlize)
+(require 'setup-rainbow-delimiters)
 
 (when is-mac (require 'setup-mac))
 
