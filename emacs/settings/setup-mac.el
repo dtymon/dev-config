@@ -83,10 +83,12 @@
 
 ;; mac friendly font
 (when window-system
-  (setq magnars/default-font "-apple-Monaco-medium-normal-normal-*-15-*-*-*-m-0-iso10646-1")
-  (setq magnars/default-font "-apple-Fira Code-medium-normal-normal-*-15-*-*-*-m-0-iso10646-1")
-  (setq magnars/presentation-font "-apple-Monaco-medium-normal-normal-*-21-*-*-*-m-0-iso10646-1")
-  (set-face-attribute 'default nil :font magnars/default-font))
+  ;; (setq magnars/default-font "-apple-Monaco-medium-normal-normal-*-15-*-*-*-m-0-iso10646-1")
+  ;; (setq magnars/default-font "-apple-Fira Code-medium-normal-normal-*-15-*-*-*-m-0-iso10646-1")
+  ;; (setq magnars/presentation-font "-apple-Monaco-medium-normal-normal-*-21-*-*-*-m-0-iso10646-1")
+  ;; (set-face-attribute 'default nil :font magnars/default-font)
+  (set-face-attribute 'default nil :family "Fira Code" :height 150)
+  )
 
 ;; keybinding to toggle full screen mode
 (global-set-key (quote [M-f10]) (quote ns-toggle-fullscreen))
