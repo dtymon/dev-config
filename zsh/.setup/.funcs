@@ -1,12 +1,10 @@
 startStage "Defining functions"
 
-function new_rm
-{
+function new_rm {
     [ $# -gt 1 -a -n "${1##-*f*}" ] && 'rm' -i "$@" || 'rm' "$@"
 }
 
-function title
-{
+function title {
     [ "$LOCKTITLE" = "1" ] && return
 
     # Work out what to put on title bar
@@ -27,18 +25,15 @@ function title
     esac
 }
 
-function pushd
-{
-    [ -z "$1" ] && _cd - || _cd "$1"
-}
+#function pushd {
+#    [ -z "$1" ] && _davidt_cd - || _davidt_cd "$1"
+#}
 
-function is_zsh
-{
+function is_zsh {
     [ ! -z "$ZSH_VERSION" ] && [ ! -z "$ZSH_NAME" ]
 }
 
-function doColour
-{
+function doColour {
     case "$TERM" in
         hp*) case "$1" in
                  normal)  printf '\033&d@\033&v0S';;
@@ -67,23 +62,8 @@ function doColour
     esac
 }
 
-function _lesscmd
-{
+function _lesscmd {
     "$@" | eval $PAGER
-}
-
-function ediff
-{
-    typeset file1="$1" file2="$2"
-    typeset viewName=$(cleartool pwv -short)
-    if [ "$viewName" = '** NONE **' ];then
-        viewName=""
-    else
-        viewName="/view/$viewName"
-    fi
-    file1="$viewName$PWD/$file1"
-    file2="$viewName$PWD/$file2"
-    gnuclient -eval "(dtymon::ediff \"$file1\" \"$file2\")"
 }
 
 endStage

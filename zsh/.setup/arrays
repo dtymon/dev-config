@@ -2,7 +2,7 @@
 #   cd history
 #############################################################################
 
-function _cd
+function _davidt_cd
 {
     # Take care of zsh array index
     [ -n "$zshFlag" ] && setopt localoptions ksharrays
@@ -58,7 +58,7 @@ function _cd
         # Successful. Save old pwd, remove current dir from history
         _cd_add "$OLDPWD" "$PWD"
         title
-        /bin/ls -aCF
+        # /bin/ls -aCF
     fi
 }
 

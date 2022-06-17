@@ -14,11 +14,6 @@ export TZ=Australia/Melbourne
 export IDPROG=/usr/bin/id
 export PRINTER=lp
 
-# Java location
-export JAVA_HOME=/usr/java/latest
-export JAVA_VM=$JAVA_HOME/bin/java
-_path_add -p $JAVA_HOME/bin
-
 # Set the erase char appropriately
 stty erase '^?'
 #stty erase '^H'

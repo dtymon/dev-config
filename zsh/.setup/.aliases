@@ -3,7 +3,8 @@ startStage "Defining aliases"
 [ -z "$zshFlag" ] && \
   alias reread='. ~/.profile;. ~/.kshrc' || alias reread='. ~/.zprofile;. ~/.zshrc'
 
-alias cd='_cd'
+alias cd='_davidt_cd'
+compdef _cd _davidt_cd
 alias rd='rmdir'
 alias md='mkdir'
 
