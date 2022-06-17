@@ -22,8 +22,5 @@ if [ -z "$_pathSetup" ];then
     _path_add -v MANPATH /usr/local/man
     _path_add -v MANPATH -p "${HOME}/local/man"
 
-    # Make sure java compiler is taken from where JAVA_HOME is specified
-    _path_add -p $JAVA_HOME/bin
-
     endStage
 fi

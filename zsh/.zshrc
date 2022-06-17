@@ -16,37 +16,61 @@ typeset zshFlag=1
 
 #   Configure completion control
 #
-[ -f "${HOME}/.zcompctl" ] && . "${HOME}/.zcompctl"
+#[ -f "${HOME}/.zcompctl" ] && . "${HOME}/.zcompctl"
 
-#  Set some of zsh's options
+autoload -U compinit; compinit
+autoload add-zsh-hook
+
+##############################################################################
+# Options
 #
+
+# Generic options
+setopt zle
+
+# Completion options
+setopt alwaystoend autolist automenu autoremoveslash completeinword listtypes nolistbeep
 # This breaks stuff
 #setopt alwayslastprompt
-setopt alwaystoend autocd autolist automenu appendhistory
-#setopt autonamedirs autoparamkeys autoremoveslash
-setopt  autoremoveslash
-setopt cdablevars completeinword extendedglob globdots hashcmds hashdirs
-setopt histverify ignoreeof interactivecomments
+
+# Globbing options
+setopt extendedglob globdots nonomatch
+# setopt markdirs
+
+# Input/output options
+setopt hashcmds hashdirs ignoreeof interactivecomments
+
+# Changing directory options
+setopt nocdablevars
+
+# Shell emulation options
 #setopt ksharrays
-setopt listtypes longlistjobs mailwarning markdirs monitor
-setopt nolistbeep nonomatch zle
-setopt histignorealldups histexpiredupsfirst histsavenodups transientrprompt
 
-#setopt rcquotes
+# Job control options
+setopt longlistjobs monitor
 
+# Prompt options
+setopt promptsubst transientrprompt
+
+# History options
+setopt appendhistory histignorealldups histexpiredupsfirst histsavenodups histverify
 unsetopt banghist
 
 export HISTSIZE=3000
 export SAVEHIST=$HISTSIZE
 export HISTFILE=$HOME/.zsh_history
 
-# Chars that are considered part of a word
+# Chars that are considered part of a word navigating words
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 # If we are being run from emacs then unset the zsh line editor
 [ "${TERM}" = "dumb" ] && unsetopt zle && PS1='$ '
 
+
+##############################################################################
 # Key bindings
+#
+
 bindkey -e
 bindkey "\ex"   execute-named-cmd
 bindkey "\es"   history-incremental-search-backward
@@ -77,6 +101,10 @@ bindkey '^?' backward-delete-char
 # Source common functions if we are running in interactive mode
 . "${SCRIPTDIR}/.shrc.common"
 
+##############################################################################
+# Prompt
+#
+
 # Setup prompt
 #   %B (%b)     => Turn on (off) bold
 #   %{...}      => Raw text (not interpretted, cannot change cursor location)
@@ -101,6 +129,7 @@ function setPrompt
     typeset line1Info="%{$aquaFG%}zsh%{$normFG%}"
     [ -n "$PS1_ROLE" ] &&
         line1Info="%{$aquaFG$boldOn%}${PS1_ROLE}%{$normFG%}"
+    
     PS1="
 $line1Info %B%50[<... ]%~%b
 %{${yellowFG}%}%@%{${normFG}%} %(#.%Broot%b@%m#.%m>) "
@@ -141,3 +170,27 @@ alias reread='. ~/.zprofile;. ~/.zshrc'
 export NVM_DIR="$HOME/.nvm"
 
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Stuff required to get vterm working in emacs
+function vterm_printf {
+    if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
+        # Tell tmux to pass the escape sequences through
+        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+    elif [ "${TERM%%-*}" = "screen" ]; then
+        # GNU screen (screen, screen-256color, screen-256color-bce)
+        printf "\eP\e]%s\007\e\\" "$1"
+    else
+        printf "\e]%s\e\\" "$1"
+    fi
+}
+vterm_prompt_end() {
+    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
+}
+
+PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
+
+
+do-ls() { emulate -L zsh; /bin/ls -aCF }
+add-zsh-hook chpwd do-ls
