@@ -4,6 +4,11 @@ if [ -n "${0#*zsh}" ]; then
     return
 fi
 
+if [ "$TERM" = "dumb" ]; then
+    export PS='$ ' PROMPT='> '
+    return
+fi
+
 # Are we running in interactive mode
 [ -z "$-" -o -n "${-%%*i*}" ] && return
 
@@ -56,7 +61,7 @@ setopt promptsubst transientrprompt
 setopt appendhistory histignorealldups histexpiredupsfirst histsavenodups histverify
 unsetopt banghist
 
-export HISTSIZE=3000
+export HISTSIZE=5000
 export SAVEHIST=$HISTSIZE
 export HISTFILE=$HOME/.zsh_history
 
@@ -105,6 +110,17 @@ bindkey '^?' backward-delete-char
 # Prompt
 #
 
+function gitCurrentBranch
+{
+    typeset gitHash=$(git rev-parse --short HEAD 2>/dev/null)
+    if [ -z "$gitHash" ]; then
+        echo "zsh"
+    else
+        typeset gitBranch=$(git branch --show-current 2>/dev/null)
+        [ -n "$gitBranch" ] && echo "[$gitBranch]" || echo "[rev:$gitHash]"
+    fi
+}
+
 # Setup prompt
 #   %B (%b)     => Turn on (off) bold
 #   %{...}      => Raw text (not interpretted, cannot change cursor location)
@@ -126,7 +142,7 @@ function setPrompt
     typeset boldOn=$(tput bold)
     # typeset boldOff=$(tput sgr0)
 
-    typeset line1Info="%{$aquaFG%}zsh%{$normFG%}"
+    typeset line1Info="%{$aquaFG%}\$(gitCurrentBranch)%{$normFG%}"
     [ -n "$PS1_ROLE" ] &&
         line1Info="%{$aquaFG$boldOn%}${PS1_ROLE}%{$normFG%}"
     
@@ -158,15 +174,6 @@ alias reread='. ~/.zprofile;. ~/.zshrc'
 #    ls -aCFp
 #}
 
-# The following lines were added by compinstall
-#
-#zstyle ':completion:*' completer _complete
-#zstyle :compinstall filename '/home/davidt/.zshrc'
-#
-#autoload -U compinit
-#compinit
-## End of lines added by compinstall
-
 export NVM_DIR="$HOME/.nvm"
 
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
@@ -191,6 +198,5 @@ vterm_prompt_end() {
 
 PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
 
-
-do-ls() { emulate -L zsh; /bin/ls -aCF }
+do-ls() { emulate -L zsh; ls -aCFN }
 add-zsh-hook chpwd do-ls
