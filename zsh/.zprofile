@@ -1,3 +1,8 @@
+if [ "$TERM" = "dumb" ]; then
+    export PS1='$ '
+    return
+fi
+
 echo "Sourcing .zprofile"
 
 typeset -i zshFlag=1
