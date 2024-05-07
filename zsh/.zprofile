@@ -10,6 +10,14 @@ typeset -i zshFlag=1
 # Define where the other startup scripts are held
 export SCRIPTDIR="${HOME}/.setup"
 
+[ -d "/opt/homebrew" ] && export BREW_HOME="/opt/homebrew" || export BREW_HOME="/usr/local/Homebrew"
+
+eval "$($BREW_HOME/bin/brew shellenv)"
+eval "$(direnv hook zsh)"
+
+export PYENV_ROOT="$HOME/.pyenv"
+eval "$(pyenv init -)"
+
 #  Load the common profile settings
 #
 . "${SCRIPTDIR}/.profile.common"
@@ -29,9 +37,3 @@ PS2="Contd> "
 
 # Ignore emacs backup files on completions
 fignore=( \~ .o )
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
-eval "$(direnv hook zsh)"
-
-export PYENV_ROOT="$HOME/.pyenv"
-eval "$(pyenv init -)"

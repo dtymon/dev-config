@@ -1,9 +1,9 @@
 startStage "Setting up Mac OS specifics"
 
 # Use GNU versions of coreutils over Mac BSD
-GNU_COREUTILS=/usr/local/Cellar/coreutils
+GNU_COREUTILS=$HOMEBREW_CELLAR/coreutils
 if [ -d $GNU_COREUTILS ]; then
-    COREUTILS_VERSION=$(/bin/ls -1 /usr/local/Cellar/coreutils | sort -nr | head -1)
+    COREUTILS_VERSION=$(/bin/ls -1 "$GNU_COREUTILS" | sort -nr | head -1)
     [ -n "$COREUTILS_VERSION" ] && _path_add -p "$GNU_COREUTILS/$COREUTILS_VERSION/libexec/gnubin"
 fi
 
@@ -16,6 +16,6 @@ _path_add -v LD_LIBRARY_PATH /usr/local/lib .
 export LD_LIBRARY_PATH
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && . "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"  # This loads nvm
 
 endStage

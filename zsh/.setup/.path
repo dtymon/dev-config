@@ -29,7 +29,7 @@ if [ -z "$_pathSetup" ];then
     _path_add -p $HOME/.pyenv/shims $HOME/.local/bin
 
     # Postgres
-    _path_add /opt/homebrew/opt/postgresql@15/bin
+    _path_add $BREW_HOME/opt/postgresql@15/bin
 
     # Add completions
     _path_add -v FPATH $HOME/.setup/zsh-functions
