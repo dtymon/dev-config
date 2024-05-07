@@ -1,4 +1,4 @@
-export LANG=en_AU.UTF8
+export LANG=en_AU.UTF-8
 export LC_COLLATE=C LC_TIME=C LC_NUMERIC=C
 export LC_CTYPE=$LANG LC_MONETARY=$LANG_AU LC_MESSAGES=$LANG
 export KDE_LANG=$LANG
@@ -14,19 +14,10 @@ export KDE_LANG=$LANG
 # Prompt stuff
 #############################################################################
 
-function promptChroot
-{
-    # Setup some colour variables
-    typeset fg=$(doColour aqua)
-    typeset fgReset=$(doColour normal)
-    typeset bold=$(tput bold)
-    typeset boldReset=$(tput sgr0)
-}
-
 function titleWho
 {
     # Pretty print login name and machine
-    typeset -ix eid=$($IDPROG -u)
+    typeset -ix eid=$(id -u)
     ((eid == 0)) && printf "root@$HOST" || printf "${LOGNAME}@$HOST"
 }
 

@@ -6,6 +6,8 @@
 # Setup the umask
 umask 022
 
+export TZ=Australia/Melbourne
+
 # Setup the terminal if we have one (ignore crappy Windows NT)
 if [ "$SYSTYPE" != "windows_nt" ];then
     if tty >/dev/null; then

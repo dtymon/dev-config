@@ -4,6 +4,38 @@ function new_rm {
     [ $# -gt 1 -a -n "${1##-*f*}" ] && 'rm' -i "$@" || 'rm' "$@"
 }
 
+function unmv {
+  typeset dst="$1"; shift
+  typeset src="$1"; shift
+  mv "$src" "$dst"
+}
+
+function swap_files {
+  typeset file1="$1"; shift
+  typeset file2="$1"; shift
+
+  typeset id=$$
+  typeset origFile1="$file1.$id"
+  typeset origFile2="$file2.$id"
+
+  # Move both files to temporaries so that we can restore them on failure
+  typeset -i success=1
+  mv "$file1" "$origFile1" || success=0
+  ((success)) && mv "$file2" "$origFile2" || success=0
+
+  # Now swap the files
+  ((success)) && cp -a "$origFile1" "$file2" || success=0
+  ((success)) && cp -a "$origFile2" "$file1" || success=0
+
+  # On success remove the original files. On failure, restore them as they were.
+  if ((success)); then
+      rm -f "$origFile1" "$origFile2"
+  else
+      mv -f "$origFile1" "$file1"
+      mv -f "$origFile2" "$file2"
+  fi
+}
+
 function title {
     [ "$LOCKTITLE" = "1" ] && return
 
@@ -64,6 +96,22 @@ function doColour {
 
 function _lesscmd {
     "$@" | eval $PAGER
+}
+
+function pyenv-create {
+    typeset base=$(pyenv global) name=$(basename "$PWD")
+    if [ $# -gt 0 ]; then
+        name="$1"; shift
+    fi
+
+    if [ $# -gt 0 ]; then
+        base="$1"; shift
+    fi
+
+    read "REPLY?Create virtualenv called $name based on $base? [Y/n] "
+    [ "$REPLY" = "n" ] && return
+
+    pyenv virtualenv "$base" "$name" && pyenv local "$name"
 }
 
 endStage

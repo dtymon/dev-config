@@ -19,6 +19,9 @@ alias j='jobs -l'
 alias ls='ls -aCFN'
 alias ll='ls -apFlN'
 
+# Ignore binary file matches with grep
+alias egrep='egrep -I'
+
 alias ps='COLUMNS=512 ps'
 
 endStage

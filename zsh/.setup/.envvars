@@ -22,9 +22,9 @@ if [ -z "$DISPLAY" -a -n "$SSH_CONNECTION" ]; then
     export DISPLAY="${SSH_CONNECTION%% *}:0"
 fi
 
-export LANG=en_AU.UTF8
-export LC_ALL=C LC_COLLATE=C LC_TIME=C LC_NUMERIC=C
-export LC_CTYPE=$LANG LC_MONETARY=$LANG_AU LC_MESSAGES=$LANG
+export LANG=en_AU.UTF-8
+export LC_COLLATE=C LC_TIME=C LC_NUMERIC=C
+export LC_ALL=$LANG LC_CTYPE=$LANG LC_MONETARY=$LANG LC_MESSAGES=$LANG
 export KDE_LANG=$LANG
 
 # less stuff
@@ -43,6 +43,7 @@ which less >/dev/null 2>&1 && export PAGER="less -isrR" || export PAGER=more
 
 export TERMCMD=urxvt
 export TERMCMDRUN=urxvt
-export BB_ENV_EXTRAWHITE="TERMCMD TERMCMDRUN"
+
+export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
 
 endStage
