@@ -12,3 +12,7 @@ export SCRIPTDIR="${HOME}/.setup"
 
 #  Set the environment variable to be .kshrc if we are in an interactive shell
 [ -n "$-" -a -z "${-%%*i*}" ] && export ENV="${HOME}/.kshrc"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="$HOME/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

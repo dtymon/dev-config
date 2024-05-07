@@ -29,3 +29,9 @@ PS2="Contd> "
 
 # Ignore emacs backup files on completions
 fignore=( \~ .o )
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(direnv hook zsh)"
+
+export PYENV_ROOT="$HOME/.pyenv"
+eval "$(pyenv init -)"

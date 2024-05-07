@@ -7,18 +7,15 @@ if [ -d $GNU_COREUTILS ]; then
     [ -n "$COREUTILS_VERSION" ] && _path_add -p "$GNU_COREUTILS/$COREUTILS_VERSION/libexec/gnubin"
 fi
 
-# System specific env vars
-export TZ=Australia/Melbourne
-
-# Additional system-specific paths
-export IDPROG=/usr/bin/id
-export PRINTER=lp
-
 # Set the erase char appropriately
 stty erase '^?'
-#stty erase '^H'
 
+_path_add -p /opt/homebrew/opt/coreutils/libexec/gnubin
+_path_add /opt/homebrew/bin /opt/homebrew/sbin
 _path_add -v LD_LIBRARY_PATH /usr/local/lib .
 export LD_LIBRARY_PATH
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 
 endStage

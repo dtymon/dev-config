@@ -1,6 +1,12 @@
-export LANG=en_AU.UTF-8
-export LC_COLLATE=C LC_TIME=C LC_NUMERIC=C
-export LC_ALL=$LANG LC_CTYPE=$LANG LC_MONETARY=$LANG_AU LC_MESSAGES=$LANG
+# Use GNU versions of coreutils over Mac BSD
+GNU_COREUTILS=/usr/local/Cellar/coreutils
+if [ -d $GNU_COREUTILS ]; then
+    COREUTILS_VERSION=$(/bin/ls -1 /usr/local/Cellar/coreutils | sort -nr | head -1)
+    [ -n "$COREUTILS_VERSION" ] && _path_add -p "$GNU_COREUTILS/$COREUTILS_VERSION/libexec/gnubin"
+fi
 
-#bindkey '^H' backward-delete-char
-#bindkey '^?' delete-char
+# Set the erase char appropriately
+stty erase '^?'
+
+_path_add -v LD_LIBRARY_PATH /usr/local/lib .
+export LD_LIBRARY_PATH

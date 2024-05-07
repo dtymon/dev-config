@@ -113,11 +113,17 @@ bindkey '^?' backward-delete-char
 function gitCurrentBranch
 {
     typeset gitHash=$(git rev-parse --short HEAD 2>/dev/null)
-    if [ -z "$gitHash" ]; then
-        echo "zsh"
-    else
+    if [ -n "$gitHash" ]; then
         typeset gitBranch=$(git branch --show-current 2>/dev/null)
-        [ -n "$gitBranch" ] && echo "[$gitBranch]" || echo "[rev:$gitHash]"
+        [ -n "$gitBranch" ] && echo "[$gitBranch] " || echo "[rev:$gitHash] "
+    fi
+}
+
+function getPythonEnv
+{
+    if [ -n "$PYENV_VIRTUAL_ENV" ]; then
+        VENV=$(basename "$PYENV_VIRTUAL_ENV")
+        echo "[${VENV}] "
     fi
 }
 
@@ -137,22 +143,23 @@ function setPrompt
     # typeset greenFG=$(doColour green)
     typeset yellowFG=$(doColour yellow)
     # typeset yellowBG=$(doColour yellowBG)
+    typeset greenFG=$(doColour green)
     typeset aquaFG=$(doColour aqua)
     typeset normFG=$(doColour normal)
     typeset boldOn=$(tput bold)
     # typeset boldOff=$(tput sgr0)
 
-    typeset line1Info="%{$aquaFG%}\$(gitCurrentBranch)%{$normFG%}"
+    typeset line1Info="%{$greenFG%}\$(getPythonEnv)%{$normFG%}%{$aquaFG%}\$(gitCurrentBranch)%{$normFG%}"
     [ -n "$PS1_ROLE" ] &&
         line1Info="%{$aquaFG$boldOn%}${PS1_ROLE}%{$normFG%}"
     
     PS1="
-$line1Info %B%50[<... ]%~%b
+${line1Info}%B%50[<... ]%~%b
 %{${yellowFG}%}%@%{${normFG}%} %(#.%Broot%b@%m#.%m>) "
 }
 
 setPrompt
-    
+
 unset PS2
 RPS2='<More'
 
