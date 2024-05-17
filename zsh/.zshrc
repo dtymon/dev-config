@@ -104,7 +104,7 @@ bindkey '^?' backward-delete-char
 
 
 # Source common functions if we are running in interactive mode
-. "${SCRIPTDIR}/.shrc.common"
+. "${SCRIPTDIR}/shrc.common"
 
 ##############################################################################
 # Prompt

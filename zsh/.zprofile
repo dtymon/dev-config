@@ -10,30 +10,24 @@ typeset -i zshFlag=1
 # Define where the other startup scripts are held
 export SCRIPTDIR="${HOME}/.setup"
 
-[ -d "/opt/homebrew" ] && export BREW_HOME="/opt/homebrew" || export BREW_HOME="/usr/local/Homebrew"
+#  Load the common profile settings
+. "${SCRIPTDIR}/profile.common"
 
-eval "$($BREW_HOME/bin/brew shellenv)"
+# Install the direnv hooks to re-evaluate on directory changes
 eval "$(direnv hook zsh)"
 
 export PYENV_ROOT="$HOME/.pyenv"
 eval "$(pyenv init -)"
 
-#  Load the common profile settings
-#
-. "${SCRIPTDIR}/.profile.common"
+# It should already be the case but ensure the pyenv shim directory is at the
+# start of the path. Otherwise it can break Python coding in Emacs.
+_path_add -p "$PYENV_ROOT/.shims"
 
 #  Set the environment variable to be .zshrc
-#
-[ -z "${-%%*i*}" ] && export ENV=~/.zshrc
-
-#   Set up the prompt
-#
-PS1='
-%50[<... ]%~%[]
-%@ %m> '
-PS2="Contd> "
-
-[ -z "${-%%*i*}" ] && /bin/ls -aCFp
+if [ -z "${-%%*i*}" ]; then
+    export ENV=~/.zshrc
+    /bin/ls -aCFp
+fi
 
 # Ignore emacs backup files on completions
 fignore=( \~ .o )

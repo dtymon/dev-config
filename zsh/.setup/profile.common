@@ -1,7 +1,7 @@
 # Setup environment variables and path
-. "${SCRIPTDIR}/.msgs"
-. "${SCRIPTDIR}/.envvars"
-. "${SCRIPTDIR}/.path"
+. "${SCRIPTDIR}/msgs"
+. "${SCRIPTDIR}/envvars"
+. "${SCRIPTDIR}/path"
 
 # Setup the umask
 umask 022
@@ -21,4 +21,4 @@ fi
 ulimit -c unlimited    # No limit on coredumps
 
 # Include system specific file
-[ -f "$SCRIPTDIR/.profile.$SYSTYPE" ] && . "$SCRIPTDIR/.profile.$SYSTYPE"
+[ -f "$SCRIPTDIR/profile.$SYSTYPE" ] && . "$SCRIPTDIR/profile.$SYSTYPE"

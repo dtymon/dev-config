@@ -4,10 +4,10 @@ export LC_CTYPE=$LANG LC_MONETARY=$LANG_AU LC_MESSAGES=$LANG
 export KDE_LANG=$LANG
 
 # Source the other files which will do the work
-. "${SCRIPTDIR}/.msgs"
-. "${SCRIPTDIR}/.path"
-. "${SCRIPTDIR}/.funcs"
-. "${SCRIPTDIR}/.aliases"
+. "${SCRIPTDIR}/msgs"
+. "${SCRIPTDIR}/path"
+. "${SCRIPTDIR}/funcs"
+. "${SCRIPTDIR}/aliases"
 
 
 #############################################################################

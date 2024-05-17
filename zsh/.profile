@@ -8,7 +8,7 @@ trap "[ -f ${HISTFILE} ] && rm -f ${HISTFILE}" 0 15
 export SCRIPTDIR="${HOME}/.setup"
 
 # Source the profile common stuff
-. "${SCRIPTDIR}/.profile.common"
+. "${SCRIPTDIR}/profile.common"
 
 #  Set the environment variable to be .kshrc if we are in an interactive shell
 [ -n "$-" -a -z "${-%%*i*}" ] && export ENV="${HOME}/.kshrc"

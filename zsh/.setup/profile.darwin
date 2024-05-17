@@ -1,5 +1,9 @@
 startStage "Setting up Mac OS specifics"
 
+# Setup brew
+[ -d "/opt/homebrew" ] && export BREW_HOME="/opt/homebrew" || export BREW_HOME="/usr/local/Homebrew"
+eval "$($BREW_HOME/bin/brew shellenv)"
+
 # Use GNU versions of coreutils over Mac BSD
 GNU_COREUTILS=$HOMEBREW_CELLAR/coreutils
 if [ -d $GNU_COREUTILS ]; then
@@ -11,7 +15,6 @@ fi
 stty erase '^?'
 
 _path_add -p /opt/homebrew/opt/coreutils/libexec/gnubin
-_path_add /opt/homebrew/bin /opt/homebrew/sbin
 _path_add -v LD_LIBRARY_PATH /usr/local/lib .
 export LD_LIBRARY_PATH
 
