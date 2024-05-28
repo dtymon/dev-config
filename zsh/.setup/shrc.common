@@ -22,7 +22,7 @@ function titleWho
 }
 
 # Source system-specific file
-[ -f "$HOME/.setup/.shrc.$SYSTYPE" ] && . "$HOME/.setup/.shrc.$SYSTYPE"
+[ -f "$HOME/.setup/shrc.$SYSTYPE" ] && . "$HOME/.setup/shrc.$SYSTYPE"
 
 _path_add -p "${HOME}/local/bin" "${SYSBINDIR}"
 

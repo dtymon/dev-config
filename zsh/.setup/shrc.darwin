@@ -10,3 +10,5 @@ stty erase '^?'
 
 _path_add -v LD_LIBRARY_PATH /usr/local/lib .
 export LD_LIBRARY_PATH
+
+_path_add "$HOMEBREW_PREFIX/opt/postgresql@15/bin"
