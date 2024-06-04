@@ -16,16 +16,9 @@ export SCRIPTDIR="${HOME}/.setup"
 # Install the direnv hooks to re-evaluate on directory changes
 eval "$(direnv hook zsh)"
 
-export PYENV_ROOT="$HOME/.pyenv"
-eval "$(pyenv init -)"
-
-# It should already be the case but ensure the pyenv shim directory is at the
-# start of the path. Otherwise it can break Python coding in Emacs.
-_path_add -p "$PYENV_ROOT/.shims"
-
 #  Set the environment variable to be .zshrc
 if [ -z "${-%%*i*}" ]; then
-    export ENV=~/.zshrc
+    export ENV=$HOME/.zshrc
     /bin/ls -aCFp
 fi
 

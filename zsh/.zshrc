@@ -23,7 +23,9 @@ typeset zshFlag=1
 #
 #[ -f "${HOME}/.zcompctl" ] && . "${HOME}/.zcompctl"
 
-autoload -U compinit; compinit
+autoload -Uz compinit
+compinit -u
+
 autoload add-zsh-hook
 
 ##############################################################################

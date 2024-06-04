@@ -22,9 +22,6 @@ if [ -z "$_pathSetup" ];then
     _path_add -v MANPATH /usr/local/man
     _path_add -v MANPATH -p "${HOME}/local/man"
 
-    # Python-related paths
-    _path_add -p $HOME/.pyenv/shims $HOME/.local/bin
-
     # Postgres
     _path_add $BREW_HOME/opt/postgresql@15/bin
 
