@@ -63,7 +63,7 @@ setopt promptsubst transientrprompt
 setopt appendhistory histignorealldups histexpiredupsfirst histsavenodups histverify
 unsetopt banghist
 
-export HISTSIZE=5000
+export HISTSIZE=10000
 export SAVEHIST=$HISTSIZE
 export HISTFILE=$HOME/.zsh_history
 
