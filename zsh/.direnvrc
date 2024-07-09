@@ -1,0 +1,24 @@
+layout_virtualenv() {
+    local base="$1"; shift
+
+    [ -n "$1" ] && venv_name="$1" || venv_name=$(basename "$PWD")
+    if ! pyenv local "$venv_name" >/dev/null 2>&1; then
+        echo Creating virtual environment $venv_name
+        pyenv virtualenv "$base" "$venv_name"
+
+        eval $(pyenv sh-activate --unset)
+        eval $(pyenv sh-activate "$venv_name")
+        if [ "$PYENV_VERSION" != "$venv_name" ]; then
+            echo "Incorrect venv set: expected=$venv_name actual=$PYENV_VERSION"
+            exit 1
+        fi
+
+        # Install lsp so that emacs will work correctly in this venv
+        echo Installing lsp into new venv "$venv_name"
+        "$HOME/.pyenv/shims/pip" install --upgrade pip
+        "$HOME/.pyenv/shims/pip" install 'python-lsp-server[all]'
+        "$HOME/.pyenv/shims/pip" install poetry
+    else
+        eval "$(pyenv sh-activate --quiet || true)"
+    fi
+}
