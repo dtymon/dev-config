@@ -18,6 +18,7 @@ layout_virtualenv() {
         "$HOME/.pyenv/shims/pip" install --upgrade pip
         "$HOME/.pyenv/shims/pip" install 'python-lsp-server[all]'
         "$HOME/.pyenv/shims/pip" install poetry
+        "$HOME/.pyenv/shims/pip" install ruff-lsp pyright
     else
         eval "$(pyenv sh-activate --quiet || true)"
     fi
