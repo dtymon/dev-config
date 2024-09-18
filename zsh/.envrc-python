@@ -1,2 +1,2 @@
-layout virtualenv 3.10.12
+layout virtualenv 3.12.3
 PATH_add $HOME/.pyenv/shims
