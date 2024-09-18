@@ -1,209 +1,103 @@
-# Leave now if not running zsh
-if [ -n "${0#*zsh}" ]; then
-    unset ENV
-    return
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-if [ "$TERM" = "dumb" ]; then
-    export PS='$ ' PROMPT='> '
-    return
-fi
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
-# Are we running in interactive mode
-[ -z "$-" -o -n "${-%%*i*}" ] && return
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
 
-# Make sure zprofile has been sourced
-[ -n "${SCRIPTDIR}" ] || . "${HOME}/.zprofile"
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time Oh My Zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="robbyrussell"
 
-echo "Sourcing .zshrc"
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
-typeset zshFlag=1
+# Uncomment the following line to use case-sensitive completion.
+CASE_SENSITIVE="true"
 
-#   Configure completion control
-#
-#[ -f "${HOME}/.zcompctl" ] && . "${HOME}/.zcompctl"
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
 
-autoload -Uz compinit
-compinit -u
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
-autoload add-zsh-hook
+# Uncomment the following line to change how often to auto-update (in days).
+# zstyle ':omz:update' frequency 13
 
-##############################################################################
-# Options
-#
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
 
-# Generic options
-setopt zle
+# Uncomment the following line to disable colors in ls.
+DISABLE_LS_COLORS="true"
 
-# Completion options
-setopt alwaystoend autolist automenu autoremoveslash completeinword listtypes nolistbeep
-# This breaks stuff
-#setopt alwayslastprompt
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
 
-# Globbing options
-setopt extendedglob globdots nonomatch
-# setopt markdirs
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
 
-# Input/output options
-setopt hashcmds hashdirs ignoreeof interactivecomments
+# Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
+COMPLETION_WAITING_DOTS="true"
 
-# Changing directory options
-setopt nocdablevars
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Shell emulation options
-#setopt ksharrays
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
 
-# Job control options
-setopt longlistjobs monitor
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Prompt options
-setopt promptsubst transientrprompt
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git)
 
-# History options
-setopt appendhistory histignorealldups histexpiredupsfirst histsavenodups histverify
-unsetopt banghist
+source $ZSH/oh-my-zsh.sh
 
-export HISTSIZE=10000
-export SAVEHIST=$HISTSIZE
-export HISTFILE=$HOME/.zsh_history
+export ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[cyan]%}["
+export ZSH_THEME_GIT_PROMPT_CLEAN="]"
+export ZSH_THEME_GIT_PROMPT_DIRTY="]"
 
-# Chars that are considered part of a word navigating words
-export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
-
-# If we are being run from emacs then unset the zsh line editor
-[ "${TERM}" = "dumb" ] && unsetopt zle && PS1='$ '
-
-
-##############################################################################
-# Key bindings
-#
-
-bindkey -e
-bindkey "\ex"   execute-named-cmd
-bindkey "\es"   history-incremental-search-backward
-bindkey '\e#'   pound-insert
-bindkey '\e\e'  expand-or-complete
-bindkey '\e\t'  self-insert-unmeta
-bindkey '\eo'   vi-open-line-below
-bindkey '\eO'   vi-open-line-above
-bindkey '\e[7~' beginning-of-line
-bindkey '\e[8~' end-of-line
-bindkey '^I'    expand-or-complete-prefix
-bindkey "^[Od"  backward-word
-bindkey "^[Oc"  forward-word
-bindkey "\e[1;5C"  forward-word     # C-right
-bindkey "\e[1;5D"  backward-word    # C-left
-bindkey '\e[3~' delete-char         # Delete
-bindkey '∂' delete-word             # M-d
-bindkey '^[^?' backward-kill-word
-bindkey '^?' backward-delete-char
-
-#if [ "$TERM" = "linux" -o "${TERM#screen}" != "$TERM" ];then
-#    bindkey '^?' backward-delete-char
-#else
-#    bindkey '^?' delete-char
-#fi
-
-
-# Source common functions if we are running in interactive mode
-. "${SCRIPTDIR}/shrc.common"
-
-##############################################################################
-# Prompt
-#
-
-function gitCurrentBranch
-{
-    typeset gitHash=$(git rev-parse --short HEAD 2>/dev/null)
-    if [ -n "$gitHash" ]; then
-        typeset gitBranch=$(git branch --show-current 2>/dev/null)
-        [ -n "$gitBranch" ] && echo "[$gitBranch] " || echo "[rev:$gitHash] "
-    fi
-}
-
-function getPythonEnv
+function pyenv_prompt_info
 {
     if [ -n "$PYENV_VIRTUAL_ENV" ]; then
-        VENV=$(basename "$PYENV_VIRTUAL_ENV")
-        echo "[${VENV}] "
+        local ZSH_PYENV_VIRTUAL_ENV=$(basename "$PYENV_VIRTUAL_ENV")
+        echo "%{$fg[green]%}[${ZSH_PYENV_VIRTUAL_ENV}]$reset_color "
     fi
 }
 
-# Setup prompt
-#   %B (%b)     => Turn on (off) bold
-#   %{...}      => Raw text (not interpretted, cannot change cursor location)
-#   %50[<... ]  => Truncation behaviour for path (trunc left, replace with
-#                      3 dots)
-#   %~          => Path removing leading $HOME
-#   %@          => Current time
-#   %m          => Current host
-#   %(#.#.>)    => If uid is root, use # else use >
-#   
-function setPrompt
-{
-    # Setup some colour variables
-    # typeset greenFG=$(doColour green)
-    typeset yellowFG=$(doColour yellow)
-    # typeset yellowBG=$(doColour yellowBG)
-    typeset greenFG=$(doColour green)
-    typeset aquaFG=$(doColour aqua)
-    typeset normFG=$(doColour normal)
-    typeset boldOn=$(tput bold)
-    # typeset boldOff=$(tput sgr0)
+PROMPT='
+$(pyenv_prompt_info)$(git_prompt_info)%~%b
+%{$fg[yellow]%}%@%{$reset_color%} %(#.%Broot%b@%m#.%m>) '
 
-    typeset line1Info="%{$greenFG%}\$(getPythonEnv)%{$normFG%}%{$aquaFG%}\$(gitCurrentBranch)%{$normFG%}"
-    [ -n "$PS1_ROLE" ] &&
-        line1Info="%{$aquaFG$boldOn%}${PS1_ROLE}%{$normFG%}"
-    
-    PS1="
-${line1Info}%B%50[<... ]%~%b
-%{${yellowFG}%}%@%{${normFG}%} %(#.%Broot%b@%m#.%m>) "
-}
+source $HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme
 
-setPrompt
-
-unset PS2
-RPS2='<More'
-
-# Set the window title
-title "$HOST:$PWD"
-
-#  Aliases
-#
-alias reread='. ~/.zprofile;. ~/.zshrc'
-
-#############################################################################
-#  Functions
-#############################################################################
-
-#function chpwd
-#{
-#    [ "$PWD" = "${PWD##$HOME}" ]  && title "${HOST}:${PWD}"
-#    [ "$PWD" != "${PWD##$HOME}" ] && title "${HOST}:~${PWD##$HOME}"
-#    ls -aCFp
-#}
-
-export NVM_DIR="$HOME/.nvm"
-
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-
-# Stuff required to get vterm working in emacs
-function vterm_printf {
-    if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
-        # Tell tmux to pass the escape sequences through
-        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-    elif [ "${TERM%%-*}" = "screen" ]; then
-        # GNU screen (screen, screen-256color, screen-256color-bce)
-        printf "\eP\e]%s\007\e\\" "$1"
-    else
-        printf "\e]%s\e\\" "$1"
-    fi
-}
-vterm_prompt_end() {
-    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
-}
-
-PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
-
-do-ls() { emulate -L zsh; ls -aCFN }
-add-zsh-hook chpwd do-ls
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
