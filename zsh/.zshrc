@@ -1,3 +1,88 @@
+# Use emacs key bindings
+set -o emacs
+
+export VISUAL=vi EDITOR=emacs FCEDIT=vi
+export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
+# History config
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE=50000
+export SAVEHIST=$HISTSIZE
+
+# History options
+setopt appendhistory           # Append history to the history file
+setopt extendedhistory         # Include timestamps in the history file
+setopt histexpiredupsfirst     # Discard oldest to make space for newer
+setopt histignorealldups       # Remove older duplicates
+setopt histignorespace         # Commands starting with a space are not saved
+setopt histreduceblanks        # Remove superfluous to increase dup matching
+setopt histsavenodups          # Don't save duplicates
+setopt histverify              # Expanded history completions don't execute
+
+unsetopt banghist              # Do not expand !n, that sucks
+unsetopt sharehistory          # Each shell has its own history which is
+                               # written to the history file when it exits
+
+# Setup MANPATH
+typeset -U manpath
+_array_prepend manpath "${HOME}/local/man" /usr/share/man /usr/man
+
+# Setup brew
+if [ -d "/opt/homebrew" ]; then
+    export BREW_HOME="/opt/homebrew"
+elif [ -d "/usr/local/Homebrew" ]; then
+    export BREW_HOME="/usr/local/Homebrew"
+fi
+if [ -n "$BREW_HOME" ]; then
+    eval "$($BREW_HOME/bin/brew shellenv)"
+fi
+
+# Use GNU versions of coreutils over Mac BSD
+GNU_COREUTILS=$HOMEBREW_CELLAR/coreutils
+if [ -d "$GNU_COREUTILS" ]; then
+    COREUTILS_VERSION=$(/bin/ls -1 "$GNU_COREUTILS" | sort -nr | head -1)
+    [ -n "$COREUTILS_VERSION" ] && _path_prepend "$GNU_COREUTILS/$COREUTILS_VERSION/libexec/gnubin"
+fi
+
+# Install the direnv hooks to re-evaluate on directory changes
+eval "$(direnv hook zsh)"
+
+# Leave early if this is a dumb terminal
+if [ "$TERM" = "dumb" ]; then
+    export PROMPT='$ '
+    return
+fi
+
+# Setup terminal if one exists
+if tty >/dev/null; then
+    stty erase '^?' susp '^Z' intr '^C' eof '^D' start '^Q' stop '^S' kill '^U'
+    set -o ignoreeof
+    trap "echo 'bye bye'" 0
+fi
+
+function zcompile-many() {
+    local f
+    for f; do zcompile -R -- "$f".zwc "$f"; done
+}
+
+function load-modules() {
+    local f
+    for f; do [[ "$f.zwc" -nt "$f" ]] || zcompile-many "$f"; source "$f"; done
+}
+
+# Enable the completion system
+autoload -Uz compinit && compinit
+[[ ~/.zcompdump.zwc -nt ~/.zcompdump ]] || zcompile-many ~/.zcompdump
+
+# Load modules
+if [[ -e "$HOME/zsh-modules" ]]; then
+    load-modules $HOME/zsh-modules/**/*.zsh
+fi
+unfunction zcompile-many load-modules
+
+# Ignore emacs backup files on completions
+fignore=( \~ .o )
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -5,99 +90,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-
-# Path to your Oh My Zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
-
-export ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[cyan]%}["
-export ZSH_THEME_GIT_PROMPT_CLEAN="]"
-export ZSH_THEME_GIT_PROMPT_DIRTY="]"
-
-function pyenv_prompt_info
-{
-    if [ -n "$PYENV_VIRTUAL_ENV" ]; then
-        local ZSH_PYENV_VIRTUAL_ENV=$(basename "$PYENV_VIRTUAL_ENV")
-        echo "%{$fg[green]%}[${ZSH_PYENV_VIRTUAL_ENV}]$reset_color "
-    fi
-}
-
-PROMPT='
-$(pyenv_prompt_info)$(git_prompt_info)%~%b
-%{$fg[yellow]%}%@%{$reset_color%} %(#.%Broot%b@%m#.%m>) '
-
-source $HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme
+source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
