@@ -10,18 +10,19 @@ export HISTSIZE=50000
 export SAVEHIST=$HISTSIZE
 
 # History options
-setopt appendhistory           # Append history to the history file
-setopt extendedhistory         # Include timestamps in the history file
-setopt histexpiredupsfirst     # Discard oldest to make space for newer
-setopt histignorealldups       # Remove older duplicates
-setopt histignorespace         # Commands starting with a space are not saved
-setopt histreduceblanks        # Remove superfluous to increase dup matching
-setopt histsavenodups          # Don't save duplicates
-setopt histverify              # Expanded history completions don't execute
+setopt appendhistory        # Append history to the history file
+setopt extendedhistory      # Include timestamps in the history file
+setopt histexpiredupsfirst  # Discard oldest to make space for newer
+setopt histignorealldups    # Remove older duplicates
+setopt histignoredups       # Ignore dups when searching back through history
+setopt histignorespace      # Commands starting with a space are not saved
+setopt histreduceblanks     # Remove superfluous to increase dup matching
+setopt histsavenodups       # Don't save duplicates
+setopt histverify           # Expanded history completions don't execute
 
-unsetopt banghist              # Do not expand !n, that sucks
-unsetopt sharehistory          # Each shell has its own history which is
-                               # written to the history file when it exits
+unsetopt banghist           # Do not expand !n, that sucks
+unsetopt sharehistory       # Each shell has its own history which is
+                            # written to the history file when it exits
 
 # Setup MANPATH
 typeset -U manpath
@@ -70,13 +71,10 @@ function load-modules() {
     for f; do [[ "$f.zwc" -nt "$f" ]] || zcompile-many "$f"; source "$f"; done
 }
 
-# Enable the completion system
-autoload -Uz compinit && compinit
-[[ ~/.zcompdump.zwc -nt ~/.zcompdump ]] || zcompile-many ~/.zcompdump
-
 # Load modules
-if [[ -e "$HOME/zsh-modules" ]]; then
-    load-modules $HOME/zsh-modules/**/*.zsh
+CUSTOM_MODULE_PATH="$DEVENV_ZSH_HOME/custom"
+if [[ -e "$CUSTOM_MODULE_PATH" ]]; then
+    load-modules $CUSTOM_MODULE_PATH/**/*.zsh
 fi
 unfunction zcompile-many load-modules
 
