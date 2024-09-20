@@ -11,3 +11,6 @@ alias md='mkdir'
 
 # Ignore binary file matches with grep
 alias egrep='egrep -I'
+
+# git
+alias gpr='git pull --rebase'
