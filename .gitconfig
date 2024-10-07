@@ -1,23 +1,16 @@
 [user]
-	email = david.tymon@judo.bank
-	name = David Tymon
-
-[alias]
-        lt = log --color --graph --pretty=format:'%Cred%h%Creset %C(bold)%(trailers:key=Refs,valueonly,separator=%x2c)%Creset - %s %Cgreen(%cr)%C(bold blue) <%an>%C(nobold yellow)%d%Creset' --abbrev-commit
-        rebase-branch-onto = "!f(){ git rebase --onto $1 $(git merge-base --octopus $1); };f"
-        fork-point = "!f(){ git merge-base --fork-point $1; };f"
-        rebase-branch-from-to = "!f(){ git rebase --onto $2 $(git fork-point $1); };f"
-        jim = "!f() {                                                       \
-                commits=($(git merge-base --octopus $1));                   \
-                if [ ${#commits[@]} -gt 1 ]; then                           \
-                    echo Too many merge points: ${commits[@]};              \
-                    exit 1;                                                 \
-                fi;                                                         \
-                echo Rebasing on ${commits[0]} ;                            \
-                git rebase --onto $1 ${commits[0]};                         \
-            };                                                              \
-            f"
-
+    email = david.tymon@judo.bank
+    name = David Tymon
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+[pull]
+    rebase = true
+[merge]
+    renamelimit = 5000
+[init]
+    defaultBranch = main
 [diff]
     tool = ediffclient
 [difftool]
@@ -28,5 +21,33 @@
     cmd = /opt/homebrew/bin/emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
 [difftool "ediffclient"]
     cmd = /opt/homebrew/bin/emacsclient -n -c --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
-[pull]
-    rebase = true
+[alias]
+    lt = log --color --graph --pretty=format:'%Cred%h%Creset %C(bold)%(trailers:key=Refs,valueonly,separator=%x2c)%Creset - %s %Cgreen(%cr)%C(bold blue) <%an>%C(nobold yellow)%d%Creset' --abbrev-commit
+    rebase-branch-onto = "!f(){ git rebase --onto $1 $(git merge-base --octopus $1); };f"
+    fork-point = "!f(){ git merge-base --fork-point $1; };f"
+    rebase-branch-from-to = "!f(){ git rebase --onto $2 $(git fork-point $1); };f"
+    jim = "!f() {                                                       \
+            commits=($(git merge-base --octopus $1));                   \
+            if [ ${#commits[@]} -gt 1 ]; then                           \
+                echo Too many merge points: ${commits[@]};              \
+                exit 1;                                                 \
+            fi;                                                         \
+            echo Rebasing on ${commits[0]} ;                            \
+            git rebase --onto $1 ${commits[0]};                         \
+        };                                                              \
+        f"
+    # resurrect= "!_resurrect() { git log --format='%h' -n 1 --skip=1 --all  -- $1 | xargs -ihash git show hash:$1 }; _resurrect"
+    resurrect = !git-resurrect "$1"
+    review = !git-review "$1"
+[credential]
+    helper = /usr/libexec/git-core/git-credential-libsecret
+[cola]
+    fontdiff = Monospace,10,-1,5,50,0,0,0,0,0
+    textwidth = 80
+    linebreak = false
+[gui]
+    spellingdictionary = none
+    fontdiff = -family Menlo -size 14 -weight normal -slant roman -underline 0 -overstrike 0
+    fontui = -family .AppleSystemUIFont -size 14 -weight normal -slant roman -underline 0 -overstrike 0
+    wmstate = normal
+    geometry = 1740x1035+5+30 439 418
