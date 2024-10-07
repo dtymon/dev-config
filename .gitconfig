@@ -1,0 +1,32 @@
+[user]
+	email = david.tymon@judo.bank
+	name = David Tymon
+
+[alias]
+        lt = log --color --graph --pretty=format:'%Cred%h%Creset %C(bold)%(trailers:key=Refs,valueonly,separator=%x2c)%Creset - %s %Cgreen(%cr)%C(bold blue) <%an>%C(nobold yellow)%d%Creset' --abbrev-commit
+        rebase-branch-onto = "!f(){ git rebase --onto $1 $(git merge-base --octopus $1); };f"
+        fork-point = "!f(){ git merge-base --fork-point $1; };f"
+        rebase-branch-from-to = "!f(){ git rebase --onto $2 $(git fork-point $1); };f"
+        jim = "!f() {                                                       \
+                commits=($(git merge-base --octopus $1));                   \
+                if [ ${#commits[@]} -gt 1 ]; then                           \
+                    echo Too many merge points: ${commits[@]};              \
+                    exit 1;                                                 \
+                fi;                                                         \
+                echo Rebasing on ${commits[0]} ;                            \
+                git rebase --onto $1 ${commits[0]};                         \
+            };                                                              \
+            f"
+
+[diff]
+    tool = ediffclient
+[difftool]
+    prompt = false
+[difftool "meld"]
+    cmd = meld "$LOCAL" "$REMOTE"
+[difftool "ediff"]
+    cmd = /opt/homebrew/bin/emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
+[difftool "ediffclient"]
+    cmd = /opt/homebrew/bin/emacsclient -n -c --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
+[pull]
+    rebase = true
