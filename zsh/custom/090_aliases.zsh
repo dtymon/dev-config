@@ -14,3 +14,4 @@ alias egrep='egrep -I'
 
 # git
 alias gpr='git pull --rebase'
+alias gfap='git fetch --all --prune'
