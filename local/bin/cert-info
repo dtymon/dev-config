@@ -1,0 +1,3 @@
+#!/bin/bash
+
+gnutls-cli -V --print-cert "$@" < /dev/null

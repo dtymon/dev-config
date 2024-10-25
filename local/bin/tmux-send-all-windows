@@ -1,0 +1,6 @@
+#!/bin/bash
+
+session="$1"; shift
+for window in $(tmux list-windows -t "$session" -F '#S:#{window_id}'); do
+    tmux send-keys -t "$window" "$@" ENTER
+done

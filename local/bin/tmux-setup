@@ -1,0 +1,46 @@
+#!/bin/bash -x
+
+function createSession
+{
+    local session="$1"; shift
+    local name="$1"; shift
+    local dir="$1"; shift
+
+    tmux new-session -d -s "$session" \;        \
+         rename-window "$name" \;               \
+         send-keys -t 0 "cd \"$dir\"" ENTER
+}
+
+function addWindow
+{
+    local session="$1"; shift
+    local name="$1"; shift
+    local dir="$1"; shift
+
+    tmux new-window -a -t "$session" -n "$name" \;      \
+         send-keys -t 0 "cd \"$dir\"" ENTER
+}
+
+function firstWindow
+{
+    local session="$1"; shift
+    tmux select-window -t "$session:0"
+}
+
+# Payments session
+PAYMENTS_ROOT="$HOME/work/judo/repos/payments"
+createSession payments clean "$PAYMENTS_ROOT/payments-clean"
+addWindow payments release "$PAYMENTS_ROOT/payments-release"
+firstWindow payments
+
+# Common session
+REPO_ROOT="$HOME/work/judo/repos"
+createSession common bsb "$REPO_ROOT/common/bsb-service"
+addWindow common loans "$REPO_ROOT/loans/business-loan-service"
+firstWindow common
+
+# Scratch
+createSession scratch emacs "$HOME/.emacs.d"
+addWindow scratch dev "$HOME/dev-env"
+addWindow scratch general "$HOME"
+firstWindow scratch

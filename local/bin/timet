@@ -1,0 +1,71 @@
+#!/usr/bin/env perl
+
+use strict;
+
+use constant MAX_SECS  => ( 2 ** 31 ) - 1;
+use constant MAX_MSECS => MAX_SECS * 1000;
+use constant MAX_USECS => MAX_MSECS * 1000;
+
+my $localTz = $ENV{TZ};
+if (scalar(@ARGV) < 1)
+{
+    showTimes(time * 1000);
+}
+elsif ((scalar(@ARGV) == 1) && ($ARGV[0] eq '-'))
+{
+    while (<>)
+    {
+        chomp($_);
+        ($_ eq '') and last;
+        m%^\d+$% and showTimes($_);
+    }
+}
+else
+{
+    foreach my $arg (@ARGV)
+    {
+        foreach ( split( /,/, $arg ) )
+        {
+            $_ = eval "$_";
+            showTimes($_);
+        }
+    }
+}
+
+sub showTimes
+{
+    my $timestamp = shift;
+    my ( $secs, $nsecs ) = getSeconds( $timestamp );
+    printf( "%u  Local => [%s] %9d nsecs\n",   $timestamp, scalar( localtime $secs ), $nsecs );
+    printf( "%u    UTC => [%s] %9d nsecs\n", $timestamp, scalar( gmtime $secs ), $nsecs );
+    $ENV{TZ} = 'Europe/London';
+    printf( "%u London => [%s] %9d nsecs\n",   $timestamp, scalar( localtime $secs ), $nsecs );
+    $ENV{TZ} = 'America/Los_Angeles';
+    printf( "%u     LA => [%s] %9d nsecs\n",   $timestamp, scalar( localtime $secs ), $nsecs );
+    $ENV{TZ} = 'America/New_York';
+    printf( "%u     NY => [%s] %9d nsecs\n",   $timestamp, scalar( localtime $secs ), $nsecs );
+    $ENV{TZ} = 'Asia/Tokyo';
+    printf( "%u  Tokyo => [%s] %9d nsecs\n\n",   $timestamp, scalar( localtime $secs ), $nsecs );
+    $ENV{TZ} = $localTz;
+}
+
+sub getSeconds
+{
+    my $value = shift;
+    if ( $value <= MAX_SECS )
+    {
+        return ( $value, 0 );
+    }
+    elsif ( $value <= MAX_MSECS )
+    {
+        return ( int( $value / 1000 ), ( $value % 1000 ) * 1000000 );
+    }
+    elsif ( $value <= MAX_USECS )
+    {
+        return ( int( $value / 1000000 ), ( $value % 1000000 ) * 1000 );
+    }
+    else
+    {
+        return ( int( $value / 1000000000 ), ( $value % 1000000000 ) );
+    }
+}

@@ -1,0 +1,23 @@
+#!/bin/zsh
+
+setopt shwordsplit
+
+function pkgNameToVar
+{
+    echo "$@" | tr '\@\+\-\.\/' '____'
+}
+
+brew deps --installed | sed -E 's/^[^:]+: *//g;/^ *$/d' | while read line; do
+    for pkg in $line; do echo $pkg; done
+done | sort | uniq | while read pkg; do
+    typeset varName=$(pkgNameToVar "$pkg")
+    eval "typeset brew_leaves_$varName=1"
+done
+
+brew deps --installed | sed -E 's/^([^:]+):.*/\1/g' | while read line; do
+    for pkg in $line; do echo $pkg; done
+done | sort | uniq | while read pkg; do
+    typeset varName=$(pkgNameToVar "$pkg")
+    typeset isDependency=$(eval echo "\$brew_leaves_$varName")
+    [ -n "$isDependency" ] || echo "$pkg"
+done
