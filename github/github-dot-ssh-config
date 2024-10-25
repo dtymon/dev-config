@@ -1,0 +1,13 @@
+Include /Users/davidtymon/.colima/ssh_config
+
+# Personal GitHub
+Host github.com-personal
+   HostName github.com
+   User git
+   IdentityFile ~/.ssh/id_github_personal
+
+# Work GitHub
+Host github.com
+   HostName github.com
+   User git
+   IdentityFile ~/.ssh/id_github
