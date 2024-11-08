@@ -6,9 +6,7 @@ function createSession
     local name="$1"; shift
     local dir="$1"; shift
 
-    tmux new-session -d -s "$session" \;        \
-         rename-window "$name" \;               \
-         send-keys -t 0 "cd \"$dir\"" ENTER
+    tmux new-session -d -s "$session" -n "$name" -c "$dir"
 }
 
 function addWindow
@@ -17,30 +15,40 @@ function addWindow
     local name="$1"; shift
     local dir="$1"; shift
 
-    tmux new-window -a -t "$session" -n "$name" \;      \
-         send-keys -t 0 "cd \"$dir\"" ENTER
-}
-
-function firstWindow
-{
-    local session="$1"; shift
-    tmux select-window -t "$session:0"
+    local numWindows=$(tmux list-windows -t "$session" | wc -l)
+    tmux new-window -d -t "$session:$numWindows" -n "$name" -c "$dir"
 }
 
 # Payments session
-PAYMENTS_ROOT="$HOME/work/judo/repos/payments"
-createSession payments clean "$PAYMENTS_ROOT/payments-clean"
-addWindow payments release "$PAYMENTS_ROOT/payments-release"
-firstWindow payments
+PAYMENTS_ROOT="$HOME/work/ben/repos/payments"
+createSession payments payments "$PAYMENTS_ROOT"
+addWindow payments npp-core-library "$PAYMENTS_ROOT/npp-core-library"
+addWindow payments npp-enquire-payment "$PAYMENTS_ROOT/npp-enquire-payment"
+addWindow payments npp-institution-resolution "$PAYMENTS_ROOT/npp-institution-resolution"
+addWindow payments npp-make-enquiry-payment "$PAYMENTS_ROOT/npp-make-enquiry-payment"
+addWindow payments npp-make-payment "$PAYMENTS_ROOT/npp-make-payment"
+addWindow payments npp-receive-payment "$PAYMENTS_ROOT/npp-receive-payment"
+addWindow payments npp-service-availability "$PAYMENTS_ROOT/npp-service-availability"
+addWindow payments payid-maintenance "$PAYMENTS_ROOT/payid-maintenance"
+addWindow payments payid-resolution "$PAYMENTS_ROOT/payid-resolution"
 
-# Common session
-REPO_ROOT="$HOME/work/judo/repos"
-createSession common bsb "$REPO_ROOT/common/bsb-service"
-addWindow common loans "$REPO_ROOT/loans/business-loan-service"
-firstWindow common
+# Kelpie session
+KELPIE_ROOT="$HOME/work/ben/repos/kelpie"
+createSession kelpie build "$KELPIE_ROOT/ben-kelpie-build"
+addWindow kelpie 3rd-party "$KELPIE_ROOT/ben-kelpie-3rd-party"
+addWindow kelpie core "$KELPIE_ROOT/ben-kelpie-core"
+addWindow kelpie api "$KELPIE_ROOT/ben-kelpie-api"
+addWindow kelpie db "$KELPIE_ROOT/ben-kelpie-db"
+addWindow kelpie kafka "$KELPIE_ROOT/ben-kelpie-kafka"
+addWindow kelpie auth "$KELPIE_ROOT/ben-kelpie-auth"
+addWindow kelpie aws "$KELPIE_ROOT/ben-kelpie-aws"
+addWindow kelpie apm "$KELPIE_ROOT/ben-kelpie-apm"
+addWindow kelpie express "$KELPIE_ROOT/ben-kelpie-express"
+addWindow kelpie mongodb "$KELPIE_ROOT/ben-kelpie-mongodb"
+addWindow kelpie postgres "$KELPIE_ROOT/ben-kelpie-postgres"
+addWindow kelpie mssql "$KELPIE_ROOT/ben-kelpie-mssql"
 
 # Scratch
 createSession scratch emacs "$HOME/.emacs.d"
 addWindow scratch dev "$HOME/dev-env"
 addWindow scratch general "$HOME"
-firstWindow scratch
