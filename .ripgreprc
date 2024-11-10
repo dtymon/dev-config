@@ -1,0 +1,16 @@
+# Don't let ripgrep vomit really long lines to my terminal, and show a preview.
+--max-columns=150
+--max-columns-preview
+
+# Search hidden files and folders
+--hidden
+
+# Ignore some folders
+--glob=!.git/*
+--glob=!node_modules/*
+
+# Perform case-insensitive search unless input has some uppercase chars
+--smart-case
+
+# Don't use .gitignore to ignore files
+--no-ignore-vcs
