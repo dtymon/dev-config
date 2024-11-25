@@ -11,8 +11,8 @@ setopt autolist             # Go straight to a menu on ambiguous completions
 setopt automenu             # Consecutive tabs shows menu
 setopt completeinword       # Allow completion while within a word
 setopt extendedglob         # Allow use of #, ~ and ^ in globs
+setopt globdots             # No explicit leading '.' is required when matching
 unsetopt cdablevars         # Do not try to add a ~ to a non-directory
-unsetopt globdots           # Explicit leading '.' is required when matching
 unsetopt listbeep           # Do not beep if no completion found
 unsetopt listrowsfirst      # Sort order goes down then across
 unsetopt menucomplete       # Do no cycle through options, show menu instead
