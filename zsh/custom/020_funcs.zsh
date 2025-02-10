@@ -43,3 +43,65 @@ function _path
         printf "%3d) %s\n" $idx $dir
     done
 }
+
+function _git_trunk
+{
+    git symbolic-ref refs/remotes/origin/HEAD | sed 's/.*\///g'
+}
+
+function _git_checkout_push {
+  local toBranch="$1"
+  if [ -z "$toBranch" ]; then
+      echo A destination branch must be specified
+      return 1
+  elif [ "$toBranch" = "trunk" ]; then
+      toBranch=$(_git_trunk)
+  fi
+
+  local fromBranch=$(git branch --show-current)
+  if [ "$toBranch" = "$fromBranch" ]; then
+      echo Already on branch $fromBranch
+      return
+  fi
+
+  if ! git checkout $toBranch; then
+      return $?
+  fi
+
+  # Create the stack if required
+  if [ -z "${_git_checkout_stack}" ]; then
+      _git_checkout_stack=()
+  fi
+
+  # Remove the from branch from the stack
+  let -i depth=${#_git_checkout_stack[@]}
+  let -i idx=${_git_checkout_stack[(i)${fromBranch}]}
+  echo "index $idx depth $depth"
+  if ((idx <= depth)); then
+      _git_checkout_stack[$idx]=()
+  fi
+
+  # Add the from branch to the top of stack
+  _git_checkout_stack=($fromBranch $_git_checkout_stack[@])
+}
+
+
+function _git_checkout_pop {
+  let -i depth=${#_git_checkout_stack[@]}
+  if ((depth < 1)); then
+      echo The git branch stack is empty
+      return 1
+  fi
+
+  local toBranch="${_git_checkout_stack[1]}"
+  if git checkout "$toBranch"; then
+      _git_checkout_stack[1]=()
+  fi
+}
+
+function _git_checkout_trunk
+{
+    local trunk=$(_git_trunk)
+    echo Checking out $trunk
+    git checkout $trunk
+}

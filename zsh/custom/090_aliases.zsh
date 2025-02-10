@@ -15,3 +15,7 @@ alias egrep='egrep -I'
 # git
 alias gpr='git pull --rebase'
 alias gfap='git fetch --all --prune'
+alias gct='_git_checkout_trunk'
+alias gpush='_git_checkout_push'
+alias gpusht='_git_checkout_push trunk'
+alias gpop='_git_checkout_pop'
