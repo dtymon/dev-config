@@ -105,3 +105,13 @@ function _git_checkout_trunk
     echo Checking out $trunk
     git checkout $trunk
 }
+
+function _git_push_new_branch {
+  local localBranch=$(git branch --show-current)
+  if [ -n "${localBranch##adm*}" ]; then
+      echo "Error: $localBranch does not start with 'adm'" >&2
+      return 1
+  fi
+
+  git push --set-upstream origin "$localBranch"
+}
