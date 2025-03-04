@@ -115,3 +115,9 @@ function _git_push_new_branch {
 
   git push --set-upstream origin "$localBranch"
 }
+
+function _gitfix {
+  local numCommits="$1"
+  [ -z "$numCommits" ] && numCommits=2
+  git rebase -i HEAD~${numCommits}
+}
