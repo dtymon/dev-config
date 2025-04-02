@@ -74,8 +74,8 @@ function _git_checkout_push {
   fi
 
   # Remove the from branch from the stack
-  let -i depth=${#_git_checkout_stack[@]}
-  let -i idx=${_git_checkout_stack[(i)${fromBranch}]}
+  local -i depth=${#_git_checkout_stack[@]}
+  local -i idx=${_git_checkout_stack[(i)${fromBranch}]}
   echo "index $idx depth $depth"
   if ((idx <= depth)); then
       _git_checkout_stack[$idx]=()
@@ -87,7 +87,7 @@ function _git_checkout_push {
 
 
 function _git_checkout_pop {
-  let -i depth=${#_git_checkout_stack[@]}
+  local -i depth=${#_git_checkout_stack[@]}
   if ((depth < 1)); then
       echo The git branch stack is empty
       return 1
@@ -114,6 +114,11 @@ function _git_push_new_branch {
   fi
 
   git push --set-upstream origin "$localBranch"
+}
+
+function _git_create_adm_branch {
+  local name="$1"
+  git checkout -b $USER/$name
 }
 
 function _gitfix {
