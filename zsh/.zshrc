@@ -68,7 +68,10 @@ function zcompile-many() {
 
 function load-modules() {
     local f
-    for f; do [[ "$f.zwc" -nt "$f" ]] || zcompile-many "$f"; source "$f"; done
+    for f; do
+        [[ "$f.zwc" -nt "$f" ]] || zcompile-many "$f"
+        source "$f"
+    done
 }
 
 # Load modules
