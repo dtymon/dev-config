@@ -22,6 +22,7 @@
 [difftool "ediffclient"]
     cmd = /opt/homebrew/bin/emacsclient -n -c --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
 [alias]
+    co = checkout
     lt = log --color --graph --pretty=format:'%Cred%h%Creset %C(bold)%(trailers:key=Refs,valueonly,separator=%x2c)%Creset - %s %Cgreen(%cr)%C(bold blue) <%an>%C(nobold yellow)%d%Creset' --abbrev-commit
     rebase-branch-onto = "!f(){ git rebase --onto $1 $(git merge-base --octopus $1); };f"
     fork-point = "!f(){ git merge-base --fork-point $1; };f"
@@ -39,15 +40,18 @@
     # resurrect= "!_resurrect() { git log --format='%h' -n 1 --skip=1 --all  -- $1 | xargs -ihash git show hash:$1 }; _resurrect"
     resurrect = !git-resurrect "$1"
     review = !git-review "$1"
-[credential]
-    helper = /usr/libexec/git-core/git-credential-libsecret
+[credential_old]
+    helper = /opt/homebrew/var/homebrew/linked/git-credential-oauth/bin/git-credential-oauth
 [cola]
     fontdiff = Monospace,10,-1,5,50,0,0,0,0,0
     textwidth = 80
     linebreak = false
 [gui]
     spellingdictionary = none
-    fontdiff = -family Menlo -size 14 -weight normal -slant roman -underline 0 -overstrike 0
-    fontui = -family .AppleSystemUIFont -size 14 -weight normal -slant roman -underline 0 -overstrike 0
+    fontdiff = -family \"M+CodeLat60 Nerd Font Mono\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+    fontui = -family .AppleSystemUIFont -size 12 -weight normal -slant roman -underline 0 -overstrike 0
     wmstate = normal
     geometry = 1740x1035+5+30 439 418
+[credential]
+	helper = osxkeychain
+	helper = oauth
