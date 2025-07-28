@@ -66,17 +66,17 @@ hs.hotkey.bind({}, "pad+", function ()
 end)
 
 hs.hotkey.bind({}, "pad3", function ()
-      focusAndWarpPointerToApp("Firefox")
+      focusAndWarpPointerToApp("Google Chrome")
 end)
 
 hs.hotkey.bind({}, "pad2", function ()
       focusAndWarpPointerToApp("Slack")
 end)
 
-hs.hotkey.bind({}, "pad1", function ()
+hs.hotkey.bind({}, "pad0", function ()
       focusAndWarpPointerToApp("Microsoft Teams")
 end)
 
-hs.hotkey.bind({}, "pad-", function ()
+hs.hotkey.bind({}, "pad1", function ()
       focusAndWarpPointerToApp("Microsoft Outlook")
 end)
