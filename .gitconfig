@@ -1,5 +1,5 @@
 [user]
-    email = david.tymon@judo.bank
+    email = david.tymon@gmail.com
     name = David Tymon
 [color]
     diff = auto
@@ -40,8 +40,6 @@
     # resurrect= "!_resurrect() { git log --format='%h' -n 1 --skip=1 --all  -- $1 | xargs -ihash git show hash:$1 }; _resurrect"
     resurrect = !git-resurrect "$1"
     review = !git-review "$1"
-[credential_old]
-    helper = /opt/homebrew/var/homebrew/linked/git-credential-oauth/bin/git-credential-oauth
 [cola]
     fontdiff = Monospace,10,-1,5,50,0,0,0,0,0
     textwidth = 80
@@ -53,5 +51,5 @@
     wmstate = normal
     geometry = 1740x1035+5+30 439 418
 [credential]
-	helper = osxkeychain
-	helper = oauth
+    helper = osxkeychain
+    helper = oauth
