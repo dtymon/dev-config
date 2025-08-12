@@ -1,9 +1,13 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
-config.font_size = 13
+config.front_end = 'WebGpu'
+config.font_size = 15
 config.font = wezterm.font_with_fallback({
-  {family="M+CodeLat60 Nerd Font Mono", weight="Medium"}
+  {
+     family = "M+CodeLat60 Nerd Font Mono",
+     weight = "Medium"
+  },
 })
 
 config.colors = {
@@ -149,5 +153,9 @@ config.mouse_bindings = {
        action = act.Nop,
     },
 }
+
+-- wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
+--               return pane.current_working_dir.path
+-- end)
 
 return config
