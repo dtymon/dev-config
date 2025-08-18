@@ -553,8 +553,8 @@
 
   ###################[ command_execution_time: duration of the last command ]###################
   # Execution time color.
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=0
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND=3
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND="fffffff"
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND="#0077c2"
   # Show duration of the last command if takes at least this many seconds.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=3
   # Show this many fractional digits. Zero means round to seconds.
@@ -990,7 +990,7 @@
 
   ###[ virtualenv: python virtual environment (https://docs.python.org/3/library/venv.html) ]###
   # Python virtual environment color.
-  typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND="#FFFFFF"
+  typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND="#ffffff"
   typeset -g POWERLEVEL9K_VIRTUALENV_BACKGROUND="#828282"
   # Don't show Python version next to the virtual environment name.
   typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
@@ -1038,7 +1038,7 @@
 
   ################[ pyenv: python environment (https://github.com/pyenv/pyenv) ]################
   # Pyenv color.
-  typeset -g POWERLEVEL9K_PYENV_FOREGROUND="#FFFFFF"
+  typeset -g POWERLEVEL9K_PYENV_FOREGROUND="#ffffff"
   typeset -g POWERLEVEL9K_PYENV_BACKGROUND="#36648b"
   # Hide python version if it doesn't come from one of these sources.
   typeset -g POWERLEVEL9K_PYENV_SOURCES=(shell local global)
@@ -1093,13 +1093,13 @@
 
   ##############[ nvm: node.js version from nvm (https://github.com/nvm-sh/nvm) ]###############
   # Nvm color.
-  typeset -g POWERLEVEL9K_NVM_FOREGROUND=0
-  typeset -g POWERLEVEL9K_NVM_BACKGROUND=5
+  typeset -g POWERLEVEL9K_NVM_FOREGROUND="#ffffff"
+  typeset -g POWERLEVEL9K_NVM_BACKGROUND="#417e38"
   # If set to false, hide node version if it's the same as default:
   # $(nvm version current) == $(nvm version default).
   typeset -g POWERLEVEL9K_NVM_PROMPT_ALWAYS_SHOW=false
   # If set to false, hide node version if it's equal to "system".
-  typeset -g POWERLEVEL9K_NVM_SHOW_SYSTEM=true
+  typeset -g POWERLEVEL9K_NVM_SHOW_SYSTEM=false
   # Custom icon.
   # typeset -g POWERLEVEL9K_NVM_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
@@ -1748,7 +1748,7 @@
 
   ####################################[ time: current time ]####################################
   # Current time color.
-  typeset -g POWERLEVEL9K_TIME_FOREGROUND="#FFFFFF"
+  typeset -g POWERLEVEL9K_TIME_FOREGROUND="#ffffff"
   typeset -g POWERLEVEL9K_TIME_BACKGROUND="#595959"
   # Format for the current time: 09:51:02. See `man 3 strftime`.
   typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%H:%M:%S}'
