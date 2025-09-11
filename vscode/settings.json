@@ -1,0 +1,70 @@
+{
+  "editor.fontFamily": "'M+CodeLat60 Nerd Font Mono',Menlo, Monaco, 'Courier New', monospace",
+  "workbench.editor.enablePreview": false,
+  "editor.fontSize": 12,
+  "eslint.options": {
+    "overrideConfigFile": "./application/.eslint.config.mjs"
+  },
+  "eslint.useFlatConfig": true,
+  "eslint.workingDirectories": [
+    {
+      "directory": "./application/src"
+    },
+    {
+      "directory": "./application/tests"
+    }
+  ],
+  "terminal.integrated.fontSize": 12,
+  "jest.runMode": { "type": "on-demand" },
+  "jest.debugMode": true,
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "runtimeExecutable": "npx",
+        "name": "jest-tests",
+        "request": "launch",
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "disableOptimisticBPs": true,
+        "program": "jest",
+        "args": [
+          "--config",
+          "application/jest.config.js",
+          "--passWithNoTests",
+          "--runInBand"
+        ],
+        "env": {
+          "NODE_CONFIG_DIR": "./application/src/config",
+          "NODE_ENV": "test",
+          "NODE_OPTIONS": "--experimental-vm-modules"
+        }
+      },
+      {
+        "type": "node",
+        "runtimeExecutable": "npx",
+        "name": "jest-tests-single",
+        "request": "launch",
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "disableOptimisticBPs": true,
+        "program": "jest",
+        "args": [
+          "--config",
+          "application/jest.config.js",
+          "--passWithNoTests",
+          "--runInBand",
+          "${file}"
+        ],
+        "env": {
+          "NODE_CONFIG_DIR": "./application/src/config",
+          "NODE_ENV": "test",
+          "NODE_OPTIONS": "--experimental-vm-modules"
+        }
+      }
+    ]
+  }
+}
