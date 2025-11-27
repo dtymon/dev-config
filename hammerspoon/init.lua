@@ -57,24 +57,48 @@ function focusAndWarpPointerToApp(appName)
    end)
 end
 
+hs.hotkey.bind({"cmd"}, "padEnter", function ()
+      focusAndWarpPointerToApp("Emacs")
+end)
+
 hs.hotkey.bind({}, "padEnter", function ()
       focusAndWarpPointerToApp("Emacs")
+end)
+
+hs.hotkey.bind({"cmd"}, "pad+", function ()
+      focusAndWarpPointerToApp("WezTerm")
 end)
 
 hs.hotkey.bind({}, "pad+", function ()
       focusAndWarpPointerToApp("WezTerm")
 end)
 
+hs.hotkey.bind({"cmd"}, "pad3", function ()
+      focusAndWarpPointerToApp("Google Chrome")
+end)
+
 hs.hotkey.bind({}, "pad3", function ()
       focusAndWarpPointerToApp("Google Chrome")
 end)
 
+hs.hotkey.bind({"cmd"}, "pad2", function ()
+      focusAndWarpPointerToApp("Chatbox")
+end)
+
 hs.hotkey.bind({}, "pad2", function ()
-      focusAndWarpPointerToApp("Slack")
+      focusAndWarpPointerToApp("Chatbox")
+end)
+
+hs.hotkey.bind({"cmd"}, "pad0", function ()
+      focusAndWarpPointerToApp("Microsoft Teams")
 end)
 
 hs.hotkey.bind({}, "pad0", function ()
       focusAndWarpPointerToApp("Microsoft Teams")
+end)
+
+hs.hotkey.bind({"cmd"}, "pad1", function ()
+      focusAndWarpPointerToApp("Microsoft Outlook")
 end)
 
 hs.hotkey.bind({}, "pad1", function ()
