@@ -11,6 +11,13 @@
 #
 #   for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; done
 
+function prompt_tmux_session() {
+    [[ -n "$TMUX" ]] || return
+    local session_name
+    session_name=$(tmux display-message -p "#S" 2>/dev/null)
+    p10k segment -f 39 -b 0 -t "[$session_name]"
+}
+
 # Temporarily change options.
 'builtin' 'local' '-a' 'p10k_config_opts'
 [[ ! -o 'aliases'         ]] || p10k_config_opts+=('aliases')
@@ -107,6 +114,7 @@
     time                    # current time
     # =========================[ Line #2 ]=========================
     newline
+    tmux_session
     # ip                    # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
     # proxy                 # system-wide http/https/ftp proxy
@@ -1698,6 +1706,8 @@
   # can slow down prompt by 1-2 milliseconds, so it's better to keep it turned off unless you
   # really need it.
   typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
+
+  typeset -g POWERLEVEL9K_TMUX_SESSION_FOREGROUND=104
 
   # If p10k is already loaded, reload configuration.
   # This works even with POWERLEVEL9K_DISABLE_HOT_RELOAD=true.
