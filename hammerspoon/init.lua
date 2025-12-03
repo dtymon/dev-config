@@ -59,6 +59,10 @@ function focusAndWarpPointerToApp(appName)
    end)
 end
 
+hs.hotkey.bind({}, "padEnter", function ()
+      focusAndWarpPointerToApp("Emacs")
+end)
+
 hs.hotkey.bind({"cmd"}, "padEnter", function ()
       focusAndWarpPointerToApp("Emacs")
 end)
