@@ -1,3 +1,5 @@
+alias reread='source ~/.zprofile && source ~/.zshrc'
+
 alias ls='ls -aCFN'
 alias rm=_dtymon_rm
 compdef _rm _dtymon_rm
@@ -27,5 +29,6 @@ alias gpop='_git_checkout_pop'
 alias gpr='git pull --rebase'
 alias gpush='_git_checkout_push'
 alias gpusht='_git_checkout_push trunk'
+alias gst='git status'
 alias gstatus='git status'
 alias gfix='_gitfix'
