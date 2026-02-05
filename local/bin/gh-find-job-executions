@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT=${0##*/}
+OWNER="CBA-General"
+REPO=""
+JOB_NAME=""
+WORKFLOW="App"
+BRANCH="main"
+LIMIT=100
+SKIP=0
+
+usage() {
+  cat <<EOF
+Usage:
+  $SCRIPT -r <repo> -j <job_name> [options]
+
+Required:
+  -r  Repo name (e.g. my-repo)
+  -j  Job name to match (e.g. deploy-prd)
+
+Optional:
+  -o  Owner/org (default: CBA-General)
+  -w  Workflow name (default: App)
+  -b  Branch (default: main)
+  -l  Limit runs to fetch (default: 100)
+  -s  Skip newest N runs (default: 0)
+  -h  Show help
+
+Example:
+  $SCRIPT my-repo -j deploy-prd -w App -b main -l 80 -s 10
+EOF
+}
+
+# getopts parsing
+while getopts ":o:r:j:w:b:l:s:h" opt; do
+  case "$opt" in
+    o) OWNER="$OPTARG" ;;
+    r) REPO="$OPTARG" ;;
+    j) JOB_NAME="$OPTARG" ;;
+    w) WORKFLOW="$OPTARG" ;;
+    b) BRANCH="$OPTARG" ;;
+    l) LIMIT="$OPTARG" ;;
+    s) SKIP="$OPTARG" ;;
+    h) usage; exit 0 ;;
+    :)
+      echo "Error: -$OPTARG requires an argument" >&2
+      usage >&2
+      exit 2
+      ;;
+    \?)
+      echo "Error: Unknown option -$OPTARG" >&2
+      usage >&2
+      exit 2
+      ;;
+  esac
+done
+
+shift $((OPTIND - 1))
+
+# Validate required args
+if [[ -z "$REPO" || -z "$JOB_NAME" ]]; then
+  echo "Error: -r <repo> and -j <job_name> are required." >&2
+  usage >&2
+  exit 2
+fi
+
+# Basic numeric validation (avoid jq slice errors)
+if ! [[ "$LIMIT" =~ ^[0-9]+$ && "$SKIP" =~ ^[0-9]+$ ]]; then
+  echo "Error: -l <limit> and -s <skip> must be non-negative integers." >&2
+  exit 2
+fi
+
+gh run list -b "$BRANCH" -R "$OWNER/$REPO" -L "$LIMIT" -w "$WORKFLOW" --json startedAt,databaseId \
+  | jq "sort_by(.startedAt) | reverse | .[$SKIP:] | .[].databaseId" \
+  | while read -r runId; do
+      gh api "repos/$OWNER/$REPO/actions/runs/$runId/jobs" \
+        --jq ".jobs[]
+          | select(.name==\"$JOB_NAME\")
+          | select(.started_at != null)
+          | select(.conclusion != \"skipped\")
+          | {
+              run_id: $runId,
+              job: .name,
+              status: .status,
+              conclusion: .conclusion,
+              started_at: .started_at,
+              completed_at: .completed_at,
+              url: .html_url
+            }"
+    done
