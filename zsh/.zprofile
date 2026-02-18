@@ -32,3 +32,4 @@ function _path_prepend() {
 typeset -U path
 _path_prepend /usr/local/bin /bin /usr/bin /usr/sbin /sbin /usr/local/sbin
 _path_prepend "${HOME}/local/bin.${SYSTYPE}" "${HOME}/local/bin" "${HOME}/scripts"
+_path_prepend $HOME/.local/bin
