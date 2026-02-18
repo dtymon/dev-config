@@ -82,6 +82,13 @@ config.keys = {
     key = 'F5',
     action = act.SplitVertical { domain = 'CurrentPaneDomain' },
   },
+  {
+    key = 'F6',
+    action = act.SplitPane {
+        direction = 'Right',
+        size = { Percent = 33 }
+    },
+  },
   activatePane('Left'),
   activatePane('Right'),
   activatePane('Up'),
