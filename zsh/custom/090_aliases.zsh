@@ -17,6 +17,7 @@ alias egrep='egrep -I'
 # git
 alias gbc='git branch --show-current'
 alias gbd='git branch -d'
+alias gbD='git branch -D'
 alias gbn='git checkout -b'
 alias gbnadm='_git_create_adm_branch'
 alias gct='_git_checkout_trunk'
