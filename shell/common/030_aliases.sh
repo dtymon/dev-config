@@ -1,20 +1,21 @@
-alias reread='source ~/.zprofile && source ~/.zshrc'
+# ===========================================================================
+# Shared aliases — portable across bash and zsh
+# ===========================================================================
 
+# Filesystem
 alias ls='ls -aCFN'
 alias rm=_dtymon_rm
-compdef _rm _dtymon_rm
 alias cp='cp -i'
 alias mv='mv -i'
+alias rd='rmdir'
+alias md='mkdir'
 alias y='echo No more responses'
 alias k1='kill -9 %1'
 
-alias rd='rmdir'
-alias md='mkdir'
-
-# Ignore binary file matches with grep
+# Ignore binary file matches
 alias egrep='egrep -I'
 
-# git
+# Git
 alias gbc='git branch --show-current'
 alias gbd='git branch -d'
 alias gbD='git branch -D'

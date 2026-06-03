@@ -1,7 +1,4 @@
-export NVM_DIR="$HOME/.nvm"
-
-# nvm is now lazy loaded as it slows down shell creation too much
-# [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && . "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
+# App PATH additions (uses zsh path array syntax)
 
 if [ -d "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ]; then
     path+=("/Applications/Visual Studio Code.app/Contents/Resources/app/bin")

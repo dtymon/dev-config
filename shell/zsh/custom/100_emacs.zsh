@@ -3,7 +3,7 @@ if [[ "$INSIDE_EMACS" != "vterm" ]]; then
   return
 fi
 
-source "$DEVENV_ZSH_HOME/emacs-vterm.zsh"
+source "$DEVENV_ZSH/emacs-vterm.zsh"
 
 # Open a file in Emacs while inside a vterm
 e() {

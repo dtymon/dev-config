@@ -1,5 +1,15 @@
-# Use emacs key bindings
-set -o emacs
+# Uncomment for profiling
+# zmodload zsh/zprof
+
+zstyle ':omz:plugins:nvm' lazy yes
+# zstyle ':omz:plugins:nvm' autoload yes
+zstyle ':omz:plugins:nvm' silent-autoload yes
+plugins=( nvm )
+
+# ZSH=$HOME/work/zsh/oh-my-zsh
+ZSH=$DEVENV_ZSH/oh-my-zsh
+source $ZSH/lib/nvm.zsh
+source $ZSH/plugins/nvm/nvm.plugin.zsh
 
 export VISUAL=vi EDITOR=emacs FCEDIT=vi
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
@@ -24,26 +34,12 @@ unsetopt banghist           # Do not expand !n, that sucks
 unsetopt sharehistory       # Each shell has its own history which is
                             # written to the history file when it exits
 
+# Source shared environment (common to bash and zsh)
+source "$DEVENV_SHELL/load.sh"
+
 # Setup MANPATH
 typeset -U manpath
 _array_prepend manpath "${HOME}/local/man" /usr/share/man /usr/man
-
-# Setup brew
-if [ -d "/opt/homebrew" ]; then
-    export BREW_HOME="/opt/homebrew"
-elif [ -d "/usr/local/Homebrew" ]; then
-    export BREW_HOME="/usr/local/Homebrew"
-fi
-if [ -n "$BREW_HOME" ]; then
-    eval "$($BREW_HOME/bin/brew shellenv)"
-fi
-
-# Use GNU versions of coreutils over Mac BSD
-GNU_COREUTILS=$HOMEBREW_CELLAR/coreutils
-if [ -d "$GNU_COREUTILS" ]; then
-    COREUTILS_VERSION=$(/bin/ls -1 "$GNU_COREUTILS" | sort -nr | head -1)
-    [ -n "$COREUTILS_VERSION" ] && _path_prepend "$GNU_COREUTILS/$COREUTILS_VERSION/libexec/gnubin"
-fi
 
 # Install the direnv hooks to re-evaluate on directory changes
 eval "$(direnv hook zsh)"
@@ -63,7 +59,9 @@ fi
 
 function zcompile-many() {
     local f
-    for f; do zcompile -R -- "$f".zwc "$f"; done
+    for f; do
+        zcompile -R -- "$f".zwc "$f"
+    done
 }
 
 function load-modules() {
@@ -75,7 +73,7 @@ function load-modules() {
 }
 
 # Load modules
-CUSTOM_MODULE_PATH="$DEVENV_ZSH_HOME/custom"
+CUSTOM_MODULE_PATH="$DEVENV_ZSH/custom"
 if [[ -e "$CUSTOM_MODULE_PATH" ]]; then
     load-modules $CUSTOM_MODULE_PATH/**/*.zsh
 fi
@@ -93,7 +91,10 @@ fi
 
 source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# To customize prompt, run `p10k configure` or edit $DEVENV_ZSH/.p10k.zsh
+[[ -f "$DEVENV_ZSH/.p10k.zsh" ]] && source "$DEVENV_ZSH/.p10k.zsh"
 
-# eval "$(oh-my-posh init zsh --config ~/dev-env/zsh/.omp.json)"
+# eval "$(oh-my-posh init zsh --config $DEVENV_ZSH/.omp.json)"
+
+# Uncomment for profiling
+# zprof
