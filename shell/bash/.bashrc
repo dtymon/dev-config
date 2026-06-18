@@ -9,3 +9,5 @@ source "$DEVENV_SHELL/load.sh"
 
 # direnv
 command -v direnv >/dev/null && eval "$(direnv hook bash)"
+
+eval "$(starship init bash)"
