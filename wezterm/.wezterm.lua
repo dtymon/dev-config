@@ -11,7 +11,7 @@ config.font = wezterm.font_with_fallback({
 })
 
 config.colors = {
-  foreground = '#e5e5f0',
+  foreground = '#f9f5f9',
   background = '#091c31',
   cursor_bg = '#fa0000',
   cursor_fg = '#e5e5f0',
@@ -21,8 +21,9 @@ config.colors = {
 }
 
 config.inactive_pane_hsb = {
-  saturation = 1.0,
-  brightness = 0.8,
+  hue = 1.0,
+  saturation = 0.60,
+  brightness = 0.73,
 }
 
 config.audible_bell = 'Disabled'
