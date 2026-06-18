@@ -15,6 +15,9 @@ export NODE_DEFAULT_VERSION="24.16.0"
 export ESLINT_USE_FLAT_CONFIG=true
 export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
 
+# Where git bare repositories can be found
+export GIT_PROJECTS_ROOT="$HOME/work/git-projects"
+
 # Setup brew
 if [ -d "/opt/homebrew" ]; then
     export BREW_HOME="/opt/homebrew"
