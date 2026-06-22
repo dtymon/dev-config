@@ -7,86 +7,86 @@ local eventtap = hs.eventtap
 hs.application.enableSpotlightForNameSearches(true)
 
 function warpPointerToWindow(win)
-   local winFrame = win:frame()
-   x = winFrame.x + winFrame.w / 2
-   y = winFrame.y + winFrame.h / 2
-   hs.mouse.absolutePosition({ x = x, y = y })
+    local winFrame = win:frame()
+    x = winFrame.x + winFrame.w / 2
+    y = winFrame.y + winFrame.h / 2
+    hs.mouse.absolutePosition({ x = x, y = y })
 end
 
 function cycleAppWindows(app)
-   local windows = app:allWindows()
-   if #windows < 2 then
-      return
-   end
+    local windows = app:allWindows()
+    if #windows < 2 then
+        return
+    end
 
-   -- Get the windows into a deterministic order
-   table.sort(windows, function (a, b) return a:id() < b:id() end)
+    -- Get the windows into a deterministic order
+    table.sort(windows, function (a, b) return a:id() < b:id() end)
 
-   local currentWin = hs.window.focusedWindow()
-   local nextWin = windows[1]
-   for i, win in ipairs(windows) do
-      if win:id() == currentWin:id() then
-         local nextIndex = (i % #windows) + 1
-         nextWin = windows[nextIndex]
-         break
-      end
-   end
+    local currentWin = hs.window.focusedWindow()
+    local nextWin = windows[1]
+    for i, win in ipairs(windows) do
+        if win:id() == currentWin:id() then
+            local nextIndex = (i % #windows) + 1
+            nextWin = windows[nextIndex]
+            break
+        end
+    end
 
-   nextWin:focus()
-   hs.timer.doAfter(0.7, function()
-                       warpPointerToWindow(nextWin)
-   end)
+    nextWin:focus()
+    hs.timer.doAfter(0.7, function()
+                         warpPointerToWindow(nextWin)
+    end)
 end
 
-function focusAndWarpPointerToApp(appName)
-   -- If it is already the focused application then cycle through its windows
-   local currentApp = hs.application.frontmostApplication()
-   if currentApp and currentApp:name() == appName then
-      cycleAppWindows(currentApp)
-      return
-   end
+function focusAndWarpPointerToApp(appName, bundleName)
+    if bundleName == nil then
+        bundleName = appName
+    end
 
-   hs.application.launchOrFocus(appName)
-   hs.timer.doAfter(0.7, function()
-                       hs.alert.show(appName)
-                       local app = hs.application.get(appName)
-                       app:activate(true)
+    -- If it is already the focused application then cycle through its windows
+    local currentApp = hs.application.frontmostApplication()
+    if currentApp and currentApp:name() == appName then
+        cycleAppWindows(currentApp)
+        return
+    end
 
-                       local win = app:mainWindow()
-                       if win then
-                          warpPointerToWindow(win)
-                       end
-   end)
+    hs.application.launchOrFocus(bundleName)
+    hs.timer.doAfter(0.7, function()
+                         hs.alert.show(appName)
+                         local app = hs.application.get(appName)
+                         app:activate(true)
+
+                         local win = app:mainWindow()
+                         if win then
+                             warpPointerToWindow(win)
+                         end
+    end)
 end
 
 hs.hotkey.bind({}, "padEnter", function ()
-      focusAndWarpPointerToApp("Emacs")
+        focusAndWarpPointerToApp("Emacs")
 end)
 
 hs.hotkey.bind({"cmd"}, "padEnter", function ()
-      focusAndWarpPointerToApp("Emacs")
+        focusAndWarpPointerToApp("Emacs")
 end)
 
 hs.hotkey.bind({"cmd"}, "pad+", function ()
-      focusAndWarpPointerToApp("WezTerm")
+        focusAndWarpPointerToApp("WezTerm")
 end)
 
 hs.hotkey.bind({"cmd"}, "pad-", function ()
-      focusAndWarpPointerToApp("Code")
+        focusAndWarpPointerToApp("Code", "Visual Studio Code")
 end)
 
 hs.hotkey.bind({"cmd"}, "pad3", function ()
-      focusAndWarpPointerToApp("Google Chrome")
-end)
-
-hs.hotkey.bind({"cmd"}, "pad2", function ()
-      focusAndWarpPointerToApp("Chatbox")
+        focusAndWarpPointerToApp("Google Chrome")
 end)
 
 hs.hotkey.bind({"cmd"}, "pad0", function ()
-      focusAndWarpPointerToApp("Microsoft Teams")
+        focusAndWarpPointerToApp("Microsoft Teams")
 end)
 
 hs.hotkey.bind({"cmd"}, "pad1", function ()
-      focusAndWarpPointerToApp("Microsoft Outlook")
+        focusAndWarpPointerToApp("Microsoft Outlook")
 end)
