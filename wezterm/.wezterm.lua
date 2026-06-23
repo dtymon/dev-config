@@ -11,8 +11,9 @@ config.font = wezterm.font_with_fallback({
 })
 
 config.colors = {
+  -- foreground = '#e5e5f0',
   foreground = '#f9f5f9',
-  background = '#091c31',
+  background = '#0f1c31',
   cursor_bg = '#fa0000',
   cursor_fg = '#e5e5f0',
   cursor_border = '#fa0000',
@@ -161,5 +162,27 @@ config.mouse_bindings = {
 -- wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
 --               return pane.current_working_dir.path
 -- end)
+
+wezterm.on('window-focus-changed', function(window, pane)
+  local overrides = window:get_config_overrides() or {}
+
+  if window:is_focused() then
+    overrides.colors = nil
+    overrides.window_background_opacity = 1.0
+  else
+    overrides.colors = {
+      foreground = '#d8d5da',
+      background = '#171b22',
+      cursor_bg = '#666666',
+      cursor_fg = '#e5e5f0',
+      cursor_border = '#666666',
+      selection_bg = '#8f8548',
+      selection_fg = '#e5e5f0',
+    }
+    overrides.window_background_opacity = 0.75
+  end
+
+  window:set_config_overrides(overrides)
+end)
 
 return config

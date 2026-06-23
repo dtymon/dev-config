@@ -2,7 +2,7 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
 config.front_end = 'WebGpu'
-config.font_size = 13.5
+config.font_size = 12.5
 config.font = wezterm.font_with_fallback({
   {
      family = "M+CodeLat60 Nerd Font Mono",
@@ -11,8 +11,9 @@ config.font = wezterm.font_with_fallback({
 })
 
 config.colors = {
-  foreground = '#e5e5f0',
-  background = '#091c31',
+  -- foreground = '#e5e5f0',
+  foreground = '#f9f5f9',
+  background = '#0f1c31',
   cursor_bg = '#fa0000',
   cursor_fg = '#e5e5f0',
   cursor_border = '#fa0000',
@@ -21,8 +22,9 @@ config.colors = {
 }
 
 config.inactive_pane_hsb = {
-  saturation = 1.0,
-  brightness = 0.8,
+  hue = 1.0,
+  saturation = 0.60,
+  brightness = 0.73,
 }
 
 config.audible_bell = 'Disabled'
@@ -33,10 +35,31 @@ config.selection_word_boundary = ' \t\n{[}]()"\':'
 config.swallow_mouse_click_on_window_focus = false
 config.term = 'xterm-256color'
 config.window_close_confirmation = 'AlwaysPrompt'
+config.window_background_opacity = 0.92
 config.skip_close_confirmation_for_processes_named = {}
--- config.window_decorations = 'RESIZE'
+
+-- config.window_decorations = 'RESIZE|MACOS_FORCE_ENABLE_SHADOW|MACOS_USE_BACKGROUND_COLOR_AS_TITLEBAR_COLOR'
+-- config.window_decorations = 'RESIZE|MACOS_FORCE_ENABLE_SHADOW|INTEGRATED_BUTTONS|INTEGRATED_BUTTONS'
+config.window_decorations = 'RESIZE|MACOS_FORCE_ENABLE_SHADOW'
 
 local act = wezterm.action
+
+local function activatePane(direction)
+   return {
+      key = direction..'Arrow',
+      mods = 'SHIFT',
+      action = act.ActivatePaneDirection(direction),
+   }
+end
+
+local function adjustPaneSize(direction)
+   return {
+      key = direction..'Arrow',
+      mods = 'CTRL|SHIFT',
+      action = act.AdjustPaneSize({ direction, 1 }),
+   }
+end
+
 config.keys = {
   {
     key = 'Insert',
@@ -62,45 +85,20 @@ config.keys = {
     action = act.SplitVertical { domain = 'CurrentPaneDomain' },
   },
   {
-    key = 'LeftArrow',
-    mods = 'SHIFT',
-    action = act.ActivatePaneDirection 'Left',
+    key = 'F6',
+    action = act.SplitPane {
+        direction = 'Right',
+        size = { Percent = 33 }
+    },
   },
-  {
-    key = 'RightArrow',
-    mods = 'SHIFT',
-    action = act.ActivatePaneDirection 'Right',
-  },
-  {
-    key = 'UpArrow',
-    mods = 'SHIFT',
-    action = act.ActivatePaneDirection 'Up',
-  },
-  {
-    key = 'DownArrow',
-    mods = 'SHIFT',
-    action = act.ActivatePaneDirection 'Down',
-  },
-  {
-    key = 'LeftArrow',
-    mods = 'CTRL|SHIFT',
-    action = act.AdjustPaneSize { 'Left', 1 },
-  },
-  {
-    key = 'RightArrow',
-    mods = 'CTRL|SHIFT',
-    action = act.AdjustPaneSize { 'Right', 1 },
-  },
-  {
-    key = 'UpArrow',
-    mods = 'CTRL|SHIFT',
-    action = act.AdjustPaneSize { 'Up', 1 },
-  },
-  {
-    key = 'DownArrow',
-    mods = 'CTRL|SHIFT',
-    action = act.AdjustPaneSize { 'Down', 1 },
-  },
+  activatePane('Left'),
+  activatePane('Right'),
+  activatePane('Up'),
+  activatePane('Down'),
+  adjustPaneSize('Left'),
+  adjustPaneSize('Right'),
+  adjustPaneSize('Up'),
+  adjustPaneSize('Down'),
   {
     key = 'PageUp',
     mods = 'SHIFT',
@@ -116,6 +114,7 @@ config.keys = {
     mods = 'CTRL|SHIFT',
     action = act.TogglePaneZoomState,
   },
+  -- Press Ctrl-Shift S to enter mode to swap pane contents
   {
     key = 'S',
     mods = 'CTRL|SHIFT',
@@ -152,10 +151,38 @@ config.mouse_bindings = {
        mods = "SUPER",
        action = act.Nop,
     },
+    -- Instead, use a different modifier combination to start window drags
+    {
+       event = { Drag = { streak = 1, button = "Left" } },
+       mods = "CTRL|SHIFT",
+       action = act.StartWindowDrag,
+    },
 }
 
 -- wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
 --               return pane.current_working_dir.path
 -- end)
+
+wezterm.on('window-focus-changed', function(window, pane)
+  local overrides = window:get_config_overrides() or {}
+
+  if window:is_focused() then
+    overrides.colors = nil
+    overrides.window_background_opacity = 1.0
+  else
+    overrides.colors = {
+      foreground = '#d8d5da',
+      background = '#171b22',
+      cursor_bg = '#666666',
+      cursor_fg = '#e5e5f0',
+      cursor_border = '#666666',
+      selection_bg = '#8f8548',
+      selection_fg = '#e5e5f0',
+    }
+    overrides.window_background_opacity = 0.75
+  end
+
+  window:set_config_overrides(overrides)
+end)
 
 return config
