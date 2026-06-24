@@ -43,7 +43,25 @@ swap_files() {
 # ---------------------------------------------------------------------------
 
 _git_trunk() {
-    git symbolic-ref refs/remotes/origin/HEAD | sed 's/.*\///g'
+    local ref common
+
+    # 1. Full clones (and worktrees of them): origin/HEAD is the trunk and is
+    #    independent of the currently checked-out branch. No network.
+    if ref=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null); then
+        printf '%s\n' "${ref#origin/}"
+        return 0
+    fi
+
+    # 2. Bare clones and worktrees linked to them: origin/HEAD doesn't exist,
+    #    but the *common* git dir's HEAD is pinned to the default branch.
+    if common=$(git rev-parse --git-common-dir 2>/dev/null); then
+        if ref=$(git --git-dir="$common" symbolic-ref --quiet --short HEAD 2>/dev/null); then
+            printf '%s\n' "$ref"
+            return 0
+        fi
+    fi
+
+    return 1   # not a git repo, or default genuinely undeterminable
 }
 
 _git_checkout_trunk() {
