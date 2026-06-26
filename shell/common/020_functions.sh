@@ -111,121 +111,42 @@ git-project-dir() {
     echo "$projectDir"
 }
 
-git-add-worktree() {
-    local repoName="$1"
-    local worktreeName="$2"
+git-worktree-project-path() {
+    git rev-parse --git-common-dir
+}
 
-    if [ -z "$repoName" ] || [ -z "$worktreeName" ]; then
-        echo "usage: git-add-worktree <bare-repo-name> <worktree-name> [existing-branch]" >&2
-        echo "       git-add-worktree <bare-repo-name> <worktree-name> -b <new-branch> [start-point]" >&2
-        return 1
-    fi
+git-worktree-project-name() {
+    local projectName=$(basename $(git-worktree-project-path))
+    echo ${projectName%.git}
+}
 
-    shift 2
+# Wrapper around `git-worktree delete` that runs in the current shell so that,
+# if the deleted worktree was the one we are standing in, we can escape the now
+# non-existent directory. Walks up to the nearest surviving ancestor (the parent
+# of the removed worktree, even when invoked from a subdirectory of it).
+gwtrm() {
+    git-worktree delete "$@" || return $?
 
-    local projectDir
-    projectDir="$(git-project-dir "$repoName")" || return 1
-
-    local worktreePath
-    worktreePath="$(pwd -P)/$worktreeName"
-
-    if [ "$1" = "-b" ]; then
-        local branchName="$2"
-        local startPoint="${3:-main}"
-
-        if [ -z "$branchName" ] || [ "$#" -gt 3 ]; then
-            echo "usage: git-add-worktree <bare-repo-name> <worktree-name> -b <new-branch> [start-point]" >&2
-            return 1
-        fi
-
-        git -C "$projectDir" worktree add -b "$branchName" "$worktreePath" "$startPoint"
-    else
-        local existingBranch="${1:-main}"
-
-        if [ "$#" -gt 1 ]; then
-            echo "usage: git-add-worktree <bare-repo-name> <worktree-name> [existing-branch]" >&2
-            return 1
-        fi
-
-        git -C "$projectDir" worktree add "$worktreePath" "$existingBranch"
+    # The only way our cwd can vanish is if the delete removed the worktree we
+    # are in; detect that by probing the current directory rather than parsing
+    # which worktree was targeted. Test "$PWD" rather than "." — macOS keeps the
+    # cwd's vnode alive after it is unlinked, so "[ -d . ]" lies, whereas a fresh
+    # pathname lookup of "$PWD" correctly reports the directory gone.
+    if [ ! -d "$PWD" ]; then
+        local dir="$PWD"
+        while [ -n "$dir" ] && [ ! -d "$dir" ]; do
+            dir="${dir%/*}"
+        done
+        cd "${dir:-/}" || return $?
     fi
 }
 
-git-rm-worktree() {
-    local repoName="$1"
-    local worktreeName="$2"
-
-    if [ -z "$repoName" ] || [ -z "$worktreeName" ] || [ "$#" -gt 2 ]; then
-        echo "usage: git-rm-worktree <bare-repo-name> <worktree-name>" >&2
-        return 1
-    fi
-
-    local projectDir
-    projectDir="$(git-project-dir "$repoName")" || return 1
-
-    local worktreePath
-    worktreePath="$(pwd)/$worktreeName"
-
-    git -C "$projectDir" worktree remove "$worktreePath"
-}
-
-git-show-branch-diff() {
-    local repoName="$1"
-    local branchName="$2"
-    local baseBranch="${3:-main}"
-
-    if [ -z "$repoName" ] || [ -z "$branchName" ] || [ "$#" -gt 3 ]; then
-        echo "usage: git-show-branch-diff <bare-repo-name> <branch-name> [base-branch]" >&2
-        return 1
-    fi
-
-    local projectDir
-    projectDir="$(git-project-dir "$repoName")" || return 1
-
-    echo "Commits on $branchName not on $baseBranch:"
-    git -C "$projectDir" log --oneline --cherry-pick --right-only "$baseBranch...$branchName"
-
-    echo
-    echo "Tree diff from $baseBranch to $branchName:"
-    git -C "$projectDir" diff --stat "$baseBranch...$branchName"
-}
-
-git-rm-worktree-branch() {
-    local repoName="$1"
-    local branchName="$2"
-    local baseBranch="${3:-main}"
-
-    if [ -z "$repoName" ] || [ -z "$branchName" ] || [ "$#" -gt 3 ]; then
-        echo "usage: git-rm-worktree-branch <bare-repo-name> <branch-name> [base-branch]" >&2
-        return 1
-    fi
-
-    local projectDir
-    projectDir="$(git-project-dir "$repoName")" || return 1
-
-    git-show-branch-diff "$repoName" "$branchName" "$baseBranch" || return 1
-
-    local baseTree
-    local mergedTree
-
-    baseTree="$(git -C "$projectDir" rev-parse "$baseBranch^{tree}")" || return 1
-
-    mergedTree="$(git -C "$projectDir" merge-tree --write-tree "$baseBranch" "$branchName" 2>/dev/null)"
-    if [ "$?" -ne 0 ] || [ -z "$mergedTree" ]; then
-        echo
-        echo "$branchName: cannot prove branch is cleanly absorbed by $baseBranch" >&2
-        echo "Refusing to delete" >&2
-        return 1
-    fi
-
-    if [ "$mergedTree" != "$baseTree" ]; then
-        echo
-        echo "$branchName: merging into $baseBranch would still change the tree" >&2
-        echo "Refusing to delete" >&2
-        return 1
-    fi
-
-    echo
-    echo "$branchName: no tree changes remain relative to $baseBranch"
-    git -C "$projectDir" branch -D "$branchName"
+# Jump to the worktree of the current project whose branch or directory matches
+# a pattern. Runs in the current shell because it changes directory. The project
+# is inferred from the current worktree; pass -p <project> (and optionally
+# -r <root>) to jump across projects from outside one.
+gwtcd() {
+    local target
+    target="$(git-worktree path "$@")" || return $?
+    cd "$target" || return $?
 }

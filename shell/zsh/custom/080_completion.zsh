@@ -52,3 +52,125 @@ zle -N expand-or-complete-with-dots
 
 # Set the function as the default tab completion widget
 bindkey -M emacs "^I" expand-or-complete-with-dots
+
+# ---------------------------------------------------------------------------
+# Completion for the git-worktree script (see ~/local/bin/git-worktree).
+#
+# The completion system is already initialised above, so we register with
+# compdef directly rather than relying on the #compdef tag (which only applies
+# to files autoloaded from $fpath).
+# ---------------------------------------------------------------------------
+
+# Scan the current command line for an -r/-p option pair, setting the named
+# variables so completers can honour a root/project already typed by the user.
+# $1 = name of the var to receive -r's value, $2 = the var for -p's value.
+_git-worktree_scan_opts() {
+    local rootVar="$1" projVar="$2" i
+    for (( i = 2; i < $#words; i++ )); do
+        [[ $words[i] == -r ]] && eval "$rootVar=\${words[i+1]}"
+        [[ $words[i] == -p ]] && eval "$projVar=\${words[i+1]}"
+    done
+}
+
+# Complete a project name from the bare clones under the projects root. Honours
+# an -r <root> already on the line; otherwise the script falls back to
+# $GIT_PROJECTS_ROOT.
+_git-worktree_projects() {
+    local root
+    _git-worktree_scan_opts root _unused
+
+    local -a projects
+    projects=( ${(f)"$(git-worktree projects ${root:+-r} ${root} 2>/dev/null)"} )
+    (( $#projects )) && _describe -t projects 'project' projects
+}
+
+# Complete a worktree name (directory basename) for the resolved project,
+# honouring inline -r/-p and falling back to the current project otherwise.
+# The bare clone entry is excluded.
+_git-worktree_worktrees() {
+    local root project
+    _git-worktree_scan_opts root project
+
+    local -a worktrees
+    worktrees=( ${(f)"$(git-worktree list ${root:+-r} ${root} ${project:+-p} ${project} 2>/dev/null \
+        | awk '$NF != "(bare)" { n = split($1, p, "/"); print p[n] }')"} )
+    (( $#worktrees )) && _describe -t worktrees 'worktree' worktrees
+}
+
+_git-worktree() {
+    local curcontext="$curcontext" state line
+    typeset -A opt_args
+
+    local -a commands
+    commands=(
+        'create:create a new worktree and optional branch'
+        'delete:remove a worktree and optionally its branch'
+        'diff:diff a branch against the trunk'
+        'list:list the worktrees of a project'
+        'path:resolve a pattern to a worktree path'
+        'prune:remove stale worktree admin entries'
+        'projects:list the bare clones under the root'
+        'help:show usage'
+    )
+
+    _arguments -C \
+        '1: :->command' \
+        '*:: :->args' && return
+
+    case $state in
+        command)
+            _describe -t commands 'git-worktree sub-command' commands
+            ;;
+        args)
+            case $line[1] in
+                create)
+                    _arguments \
+                        '-r[projects root]:root:_files -/' \
+                        '-p[project]:project:_git-worktree_projects' \
+                        '-b[base branch]:base branch:' \
+                        '-n[new branch to create]:new branch:' \
+                        '1:worktree dir:'
+                    ;;
+                delete)
+                    _arguments \
+                        '-r[projects root]:root:_files -/' \
+                        '-p[project]:project:_git-worktree_projects' \
+                        '-d[also delete the local branch]' \
+                        '-b[base branch to compare against]:base branch:' \
+                        '1:worktree name:_git-worktree_worktrees'
+                    ;;
+                diff)
+                    _arguments \
+                        '-r[projects root]:root:_files -/' \
+                        '-p[project]:project:_git-worktree_projects' \
+                        '-b[branch to diff against]:base branch:' \
+                        '1:source branch:'
+                    ;;
+                list)
+                    _arguments \
+                        '-r[projects root]:root:_files -/' \
+                        '-p[project]:project:_git-worktree_projects'
+                    ;;
+                path)
+                    _arguments \
+                        '-r[projects root]:root:_files -/' \
+                        '-p[project]:project:_git-worktree_projects' \
+                        '1:pattern:_git-worktree_worktrees'
+                    ;;
+                prune)
+                    _arguments \
+                        '-r[projects root]:root:_files -/' \
+                        '-p[project]:project:_git-worktree_projects' \
+                        '-n[dry run; report only]'
+                    ;;
+                projects)
+                    _arguments \
+                        '-r[projects root]:root:_files -/'
+                    ;;
+            esac
+            ;;
+    esac
+}
+
+compdef _git-worktree git-worktree
+compdef _git-worktree gwt

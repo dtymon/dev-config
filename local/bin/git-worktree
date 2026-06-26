@@ -1,0 +1,547 @@
+#!/usr/bin/env bash
+# ===========================================================================
+# git-worktree — manage git worktrees backed by bare clones
+#
+# Bare clones are expected to live under a single projects root (defaulting to
+# $GIT_PROJECTS_ROOT) as "<project>.git". Worktrees themselves may live in
+# arbitrary directories; this tool only needs to locate the owning bare clone.
+#
+# Usage:
+#   git-worktree create [-r <root>] [-p <project>] [-b <base-branch>] [-n <new-branch>] <worktree-dir>
+#   git-worktree delete [-r <root>] [-p <project>] [-d] [-b <base-branch>] <worktree-name>
+#   git-worktree diff   [-r <root>] [-p <project>] [-b <base-branch>] [<source-branch>]
+#   git-worktree help
+#
+# Common options (accepted by every sub-command):
+#   -r <root>     directory containing the bare clones; default $GIT_PROJECTS_ROOT
+#   -p <project>  project name without the .git suffix; defaults to the owning
+#                 project of the current worktree when run from inside one
+#
+# Note: "worktree" is a git builtin, so this script is invoked directly as
+# "git-worktree <subcommand>", not as "git worktree".
+# ===========================================================================
+
+##
+# Print an error message to stderr and exit non-zero.
+# @param $* the message to print
+##
+die() {
+    echo "Error: $*" >&2
+    exit 1
+}
+
+##
+# Print the top-level usage summary to stderr.
+##
+usage() {
+    cat >&2 <<'EOF'
+usage:
+  git-worktree create   [-r <root>] [-p <project>] [-b <base-branch>] [-n <new-branch>] <worktree-dir>
+  git-worktree delete   [-r <root>] [-p <project>] [-d] [-b <base-branch>] <worktree-name>
+  git-worktree diff     [-r <root>] [-p <project>] [-b <base-branch>] [<source-branch>]
+  git-worktree list     [-r <root>] [-p <project>]
+  git-worktree path     [-r <root>] [-p <project>] <pattern>
+  git-worktree prune    [-r <root>] [-p <project>] [-n]
+  git-worktree projects [-r <root>]
+  git-worktree help
+EOF
+}
+
+##
+# Determine the trunk (default) branch of a bare clone without any network
+# access. Tries origin/HEAD first (full clones), then the bare repo's own
+# pinned HEAD (bare clones), echoing the short branch name on success.
+# @param $1 path to the bare clone
+# @return 0 and echoes the trunk name, or 1 if it cannot be determined
+##
+trunk_branch() {
+    local bareDir="$1"
+    local ref
+
+    # Full clones: origin/HEAD points at the trunk, independent of checkout.
+    if ref=$(git -C "$bareDir" symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null); then
+        printf '%s\n' "${ref#origin/}"
+        return 0
+    fi
+
+    # Bare clones: the repo's own HEAD is pinned to the default branch.
+    if ref=$(git -C "$bareDir" symbolic-ref --quiet --short HEAD 2>/dev/null); then
+        printf '%s\n' "$ref"
+        return 0
+    fi
+
+    return 1
+}
+
+##
+# Resolve a project name to the path of its bare clone under the given root,
+# accepting both "<project>" and "<project>.git" on disk.
+# @param $1 projects root directory
+# @param $2 project name (without .git)
+# @return 0 and echoes the bare clone path, or dies if it does not exist
+##
+resolve_project_dir() {
+    local root="$1"
+    local project="$2"
+    local projectDir="$root/$project"
+
+    if [ ! -d "$projectDir" ] && [ -d "${projectDir}.git" ]; then
+        projectDir="${projectDir}.git"
+    fi
+
+    [ -d "$projectDir" ] || die "$projectDir: no such git bare clone"
+    printf '%s\n' "$projectDir"
+}
+
+##
+# Echo the owning project name of the current worktree (basename of the common
+# git dir with any .git suffix stripped). Echoes nothing when not inside a repo.
+##
+current_project_name() {
+    local commonDir
+    commonDir=$(git rev-parse --git-common-dir 2>/dev/null) || return 0
+
+    local name
+    name=$(basename "$commonDir")
+    printf '%s\n' "${name%.git}"
+}
+
+##
+# Resolve the bare clone directory from a root override and a project override,
+# applying the standard defaults: root -> $GIT_PROJECTS_ROOT, project -> the
+# owning project of the current worktree. Dies with guidance if the project
+# cannot be determined or located.
+# @param $1 root override (may be empty)
+# @param $2 project override (may be empty)
+# @return echoes the resolved bare clone path
+##
+resolve_bare_dir() {
+    local root="$1"
+    local project="$2"
+
+    [ -n "$root" ] || root="$GIT_PROJECTS_ROOT"
+    [ -n "$root" ] || die "no projects root given and \$GIT_PROJECTS_ROOT is unset (use -r)"
+
+    [ -n "$project" ] || project="$(current_project_name)"
+    [ -n "$project" ] || die "could not determine project; run inside a worktree or pass -p <project>"
+
+    resolve_project_dir "$root" "$project"
+}
+
+##
+# create sub-command: add a new worktree for a project.
+#
+# Placement of the new worktree directory: when the current directory is inside
+# a git clone/worktree, the new directory is created as a sibling of that
+# worktree's toplevel; otherwise it is created under the current directory. The
+# worktree directory name is always given explicitly as a positional argument.
+##
+cmd_create() {
+    local root project baseBranch newBranch
+    local OPTIND opt
+    while getopts "r:p:b:n:h" opt; do
+        case "$opt" in
+            r) root="$OPTARG" ;;
+            p) project="$OPTARG" ;;
+            b) baseBranch="$OPTARG" ;;
+            n) newBranch="$OPTARG" ;;
+            *)
+                echo "usage: git-worktree create [-r <root>] [-p <project>] [-b <base-branch>] [-n <new-branch>] <worktree-dir>" >&2
+                return 1 ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+
+    local worktreeDir="$1"
+    if [ -z "$worktreeDir" ] || [ "$#" -gt 1 ]; then
+        echo "usage: git-worktree create [-r <root>] [-p <project>] [-b <base-branch>] [-n <new-branch>] <worktree-dir>" >&2
+        return 1
+    fi
+
+    local bareDir
+    bareDir="$(resolve_bare_dir "$root" "$project")" || return 1
+
+    # Default the base branch to the project's detected trunk.
+    if [ -z "$baseBranch" ]; then
+        baseBranch="$(trunk_branch "$bareDir")" \
+            || die "could not determine trunk for $bareDir; pass -b <base-branch>"
+    fi
+
+    # Decide the parent directory for the new worktree based on the cwd.
+    local parentDir toplevel
+    if toplevel=$(git rev-parse --show-toplevel 2>/dev/null); then
+        parentDir="$(dirname "$toplevel")"
+    else
+        parentDir="$(pwd -P)"
+    fi
+
+    local worktreePath="${parentDir}/${worktreeDir}"
+    if [ -e "$worktreePath" ]; then
+        die "$worktreePath: target directory already exists"
+    fi
+
+    if [ -n "$newBranch" ]; then
+        git -C "$bareDir" worktree add -b "$newBranch" "$worktreePath" "$baseBranch"
+    else
+        git -C "$bareDir" worktree add "$worktreePath" "$baseBranch"
+    fi
+}
+
+##
+# delete sub-command: remove a worktree and, with -d, delete its local branch.
+#
+# The worktree is removed first because git refuses to delete a branch that is
+# still checked out in a worktree. Branch deletion is gated by a merge-tree
+# safety check proving the branch is fully absorbed by the base branch; it
+# never touches origin.
+##
+cmd_delete() {
+    local root project baseBranch deleteBranch=0
+    local OPTIND opt
+    while getopts "r:p:b:dh" opt; do
+        case "$opt" in
+            r) root="$OPTARG" ;;
+            p) project="$OPTARG" ;;
+            b) baseBranch="$OPTARG" ;;
+            d) deleteBranch=1 ;;
+            *)
+                echo "usage: git-worktree delete [-r <root>] [-p <project>] [-d] [-b <base-branch>] <worktree-name>" >&2
+                return 1 ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+
+    local worktreeName="$1"
+    if [ -z "$worktreeName" ] || [ "$#" -gt 1 ]; then
+        echo "usage: git-worktree delete [-r <root>] [-p <project>] [-d] [-b <base-branch>] <worktree-name>" >&2
+        return 1
+    fi
+
+    local bareDir
+    bareDir="$(resolve_bare_dir "$root" "$project")" || return 1
+
+    # Capture the worktree's checked-out branch before removal, so we can
+    # optionally delete it afterwards.
+    local branchToDelete=""
+    if [ "$deleteBranch" -eq 1 ]; then
+        branchToDelete="$(worktree_branch "$bareDir" "$worktreeName")" \
+            || die "$worktreeName: cannot determine its branch (is it a worktree of $bareDir?)"
+    fi
+
+    git -C "$bareDir" worktree remove "$worktreeName" || return 1
+
+    [ "$deleteBranch" -eq 1 ] || return 0
+
+    # Default the base branch to the project's detected trunk for the safety check.
+    if [ -z "$baseBranch" ]; then
+        baseBranch="$(trunk_branch "$bareDir")" \
+            || die "could not determine trunk for $bareDir; pass -b <base-branch>"
+    fi
+
+    if [ "$baseBranch" = "$branchToDelete" ]; then
+        die "refusing to delete $branchToDelete: it is the base branch"
+    fi
+
+    delete_branch_if_absorbed "$bareDir" "$baseBranch" "$branchToDelete"
+}
+
+##
+# Echo the short branch name checked out in a named worktree of a bare clone.
+# @param $1 bare clone path
+# @param $2 worktree name (its directory's basename as shown by 'worktree list')
+# @return 0 and echoes the branch, or 1 if not found / detached
+##
+worktree_branch() {
+    local bareDir="$1"
+    local worktreeName="$2"
+
+    # 'worktree list --porcelain' emits stanzas of "worktree <path>" / "branch
+    # refs/heads/<name>". Match the stanza whose path basename is worktreeName.
+    git -C "$bareDir" worktree list --porcelain 2>/dev/null | awk -v target="$worktreeName" '
+        /^worktree / {
+            path = $2
+            n = split(path, parts, "/")
+            isTarget = (parts[n] == target)
+        }
+        isTarget && /^branch / {
+            sub(/^branch refs\/heads\//, "", $0)
+            print
+            exit
+        }
+    '
+}
+
+##
+# Delete a local branch only if merging it into the base branch would produce
+# no tree change (i.e. it is fully absorbed). Refuses otherwise.
+# @param $1 bare clone path
+# @param $2 base branch
+# @param $3 branch to delete
+##
+delete_branch_if_absorbed() {
+    local bareDir="$1"
+    local baseBranch="$2"
+    local branchName="$3"
+
+    local baseTree
+    baseTree="$(git -C "$bareDir" rev-parse "${baseBranch}^{tree}")" || return 1
+
+    local mergedTree
+    mergedTree="$(git -C "$bareDir" merge-tree --write-tree "$baseBranch" "$branchName" 2>/dev/null)"
+    if [ "$?" -ne 0 ] || [ -z "$mergedTree" ]; then
+        die "$branchName: cannot prove branch is cleanly absorbed by $baseBranch; refusing to delete"
+    fi
+
+    if [ "$mergedTree" != "$baseTree" ]; then
+        die "$branchName: merging into $baseBranch would still change the tree; refusing to delete"
+    fi
+
+    echo "$branchName: no tree changes remain relative to $baseBranch ... safe to delete"
+    git -C "$bareDir" branch -D "$branchName"
+}
+
+##
+# diff sub-command: show commits and tree diff of a source branch relative to a
+# base branch. Base defaults to the detected trunk; source defaults to the
+# current branch.
+##
+cmd_diff() {
+    local root project baseBranch
+    local OPTIND opt
+    while getopts "r:p:b:h" opt; do
+        case "$opt" in
+            r) root="$OPTARG" ;;
+            p) project="$OPTARG" ;;
+            b) baseBranch="$OPTARG" ;;
+            *)
+                echo "usage: git-worktree diff [-r <root>] [-p <project>] [-b <base-branch>] [<source-branch>]" >&2
+                return 1 ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+
+    local sourceBranch="$1"
+    if [ "$#" -gt 1 ]; then
+        echo "usage: git-worktree diff [-r <root>] [-p <project>] [-b <base-branch>] [<source-branch>]" >&2
+        return 1
+    fi
+
+    local bareDir
+    bareDir="$(resolve_bare_dir "$root" "$project")" || return 1
+
+    if [ -z "$baseBranch" ]; then
+        baseBranch="$(trunk_branch "$bareDir")" \
+            || die "could not determine trunk for $bareDir; pass -b <base-branch>"
+    fi
+
+    # Default the source branch to the current checkout.
+    if [ -z "$sourceBranch" ]; then
+        sourceBranch="$(git branch --show-current 2>/dev/null)"
+        [ -n "$sourceBranch" ] || die "could not determine current branch; pass <source-branch>"
+    fi
+
+    if [ "$baseBranch" = "$sourceBranch" ]; then
+        die "cannot compare the same branch: $baseBranch === $sourceBranch"
+    fi
+
+    echo "Commits on $sourceBranch not on $baseBranch:"
+    git -C "$bareDir" log --oneline --cherry-pick --right-only "$baseBranch...$sourceBranch"
+
+    echo
+    echo "Tree diff from $baseBranch to $sourceBranch:"
+    git -C "$bareDir" diff --stat "$baseBranch...$sourceBranch"
+}
+
+##
+# list sub-command: show the worktrees of a project, using git's native output
+# (path, sha, branch). Read-only.
+##
+cmd_list() {
+    local root project
+    local OPTIND opt
+    while getopts "r:p:h" opt; do
+        case "$opt" in
+            r) root="$OPTARG" ;;
+            p) project="$OPTARG" ;;
+            *)
+                echo "usage: git-worktree list [-r <root>] [-p <project>]" >&2
+                return 1 ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+
+    if [ "$#" -gt 0 ]; then
+        echo "usage: git-worktree list [-r <root>] [-p <project>]" >&2
+        return 1
+    fi
+
+    local bareDir
+    bareDir="$(resolve_bare_dir "$root" "$project")" || return 1
+
+    git -C "$bareDir" worktree list
+}
+
+##
+# path sub-command: resolve a pattern to exactly one worktree path of a project,
+# matching against the checked-out branch name or the directory basename
+# (case-insensitive substring). Echoes the absolute path on a unique match;
+# dies listing candidates when the match is ambiguous, or when none match.
+#
+# This is the resolver behind the gwtcd shell helper, which cd's to the result.
+##
+cmd_path() {
+    local root project
+    local OPTIND opt
+    while getopts "r:p:h" opt; do
+        case "$opt" in
+            r) root="$OPTARG" ;;
+            p) project="$OPTARG" ;;
+            *)
+                echo "usage: git-worktree path [-r <root>] [-p <project>] <pattern>" >&2
+                return 1 ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+
+    local pattern="$1"
+    if [ -z "$pattern" ] || [ "$#" -gt 1 ]; then
+        echo "usage: git-worktree path [-r <root>] [-p <project>] <pattern>" >&2
+        return 1
+    fi
+
+    local bareDir
+    bareDir="$(resolve_bare_dir "$root" "$project")" || return 1
+
+    # Build "path<TAB>branch" rows from the porcelain stanzas, then filter on a
+    # case-insensitive substring of either the dir basename or the branch. The
+    # bare clone itself has no 'branch' line, so it naturally drops out.
+    local matches
+    matches="$(git -C "$bareDir" worktree list --porcelain 2>/dev/null | awk -v pat="$pattern" '
+        function lower(s) { return tolower(s) }
+        /^worktree / { path = $2; branch = ""; n = split(path, parts, "/"); base = parts[n] }
+        /^branch /   {
+            branch = $2
+            sub(/^refs\/heads\//, "", branch)
+            if (index(lower(base), lower(pat)) || index(lower(branch), lower(pat))) {
+                printf "%s\t%s\n", path, branch
+            }
+        }
+    ')"
+
+    if [ -z "$matches" ]; then
+        die "$pattern: no worktree matches in $(basename "$bareDir")"
+    fi
+
+    local count
+    count="$(printf '%s\n' "$matches" | wc -l | tr -d '[:space:]')"
+    if [ "$count" -gt 1 ]; then
+        {
+            echo "Error: $pattern: ambiguous; matches multiple worktrees:"
+            printf '%s\n' "$matches" | awk -F'\t' '{ printf "  %s  [%s]\n", $1, $2 }'
+        } >&2
+        exit 1
+    fi
+
+    printf '%s\n' "$matches" | cut -f1
+}
+
+##
+# prune sub-command: remove administrative entries for worktrees whose
+# directories no longer exist. With -n, only report what would be pruned.
+##
+cmd_prune() {
+    local root project dryRun=0
+    local OPTIND opt
+    while getopts "r:p:nh" opt; do
+        case "$opt" in
+            r) root="$OPTARG" ;;
+            p) project="$OPTARG" ;;
+            n) dryRun=1 ;;
+            *)
+                echo "usage: git-worktree prune [-r <root>] [-p <project>] [-n]" >&2
+                return 1 ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+
+    if [ "$#" -gt 0 ]; then
+        echo "usage: git-worktree prune [-r <root>] [-p <project>] [-n]" >&2
+        return 1
+    fi
+
+    local bareDir
+    bareDir="$(resolve_bare_dir "$root" "$project")" || return 1
+
+    if [ "$dryRun" -eq 1 ]; then
+        git -C "$bareDir" worktree prune --dry-run --verbose
+    else
+        git -C "$bareDir" worktree prune --verbose
+    fi
+}
+
+##
+# projects sub-command: list the bare clones found under the projects root,
+# echoing each project name with its .git suffix stripped. Independent of any
+# current worktree, so it only honours -r (defaulting to $GIT_PROJECTS_ROOT).
+##
+cmd_projects() {
+    local root
+    local OPTIND opt
+    while getopts "r:h" opt; do
+        case "$opt" in
+            r) root="$OPTARG" ;;
+            *)
+                echo "usage: git-worktree projects [-r <root>]" >&2
+                return 1 ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+
+    if [ "$#" -gt 0 ]; then
+        echo "usage: git-worktree projects [-r <root>]" >&2
+        return 1
+    fi
+
+    [ -n "$root" ] || root="$GIT_PROJECTS_ROOT"
+    [ -n "$root" ] || die "no projects root given and \$GIT_PROJECTS_ROOT is unset (use -r)"
+    [ -d "$root" ] || die "$root: no such directory"
+
+    # A project is any directory under the root that is a git repository.
+    # Strip the .git suffix so the result is usable directly as a -p argument.
+    local entry name found=0
+    for entry in "$root"/*; do
+        [ -d "$entry" ] || continue
+        git -C "$entry" rev-parse --git-dir >/dev/null 2>&1 || continue
+        name="$(basename "$entry")"
+        printf '%s\n' "${name%.git}"
+        found=1
+    done
+
+    [ "$found" -eq 1 ] || die "no git projects found under $root"
+}
+
+##
+# Dispatch on the sub-command and delegate to the matching handler.
+##
+main() {
+    local subcommand="$1"
+    [ "$#" -gt 0 ] && shift
+
+    case "$subcommand" in
+        create)   cmd_create "$@" ;;
+        delete)   cmd_delete "$@" ;;
+        diff)     cmd_diff "$@" ;;
+        list)     cmd_list "$@" ;;
+        path)     cmd_path "$@" ;;
+        prune)    cmd_prune "$@" ;;
+        projects) cmd_projects "$@" ;;
+        help|-h|--help) usage; exit 0 ;;
+        "")     usage; exit 1 ;;
+        *)
+            echo "Error: unknown sub-command: $subcommand" >&2
+            usage
+            exit 1 ;;
+    esac
+}
+
+main "$@"

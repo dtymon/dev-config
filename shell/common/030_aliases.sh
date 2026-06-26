@@ -34,3 +34,13 @@ alias gpusht='_git_checkout_push trunk'
 alias gst='git status'
 alias gstatus='git status'
 alias gfix='_gitfix'
+
+# Git worktree management (standalone git-worktree script)
+alias gwt='git-worktree'
+alias gwtc='git-worktree create'
+alias gwtd='git-worktree diff'
+alias gwtls='git-worktree list'
+alias gwtp='git-worktree projects'
+# gwtrm and gwtcd are functions (see 020_functions.sh): they must run in the
+# current shell so they can change directory — gwtrm to escape a worktree it
+# just deleted, gwtcd to jump into the worktree matching a pattern.
