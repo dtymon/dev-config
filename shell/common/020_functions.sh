@@ -95,6 +95,50 @@ _gitfix() {
 # Git worktree helpers
 # ---------------------------------------------------------------------------
 
+# Bare-clone a project into $GIT_PROJECTS_ROOT ready for worktree use.
+#
+# `git clone --bare` omits the remote fetch refspec, so origin/* tracking refs
+# are never created and `origin/main` can't be resolved. This wires up the
+# standard refspec, fetches to populate origin/*, and pins origin/HEAD — so the
+# bare repo behaves like a normal clone for remote-tracking purposes while still
+# serving worktrees from its own refs/heads/*.
+#
+# usage: git-add-project <clone-url> [project-name]
+#   project-name defaults to the URL's basename (sans .git); the repo lands at
+#   $GIT_PROJECTS_ROOT/<project-name>.git
+git-add-project() {
+    local cloneUrl="$1"
+    local projectName="$2"
+
+    if [ -z "$cloneUrl" ] || [ "$#" -gt 2 ]; then
+        echo "usage: git-add-project <clone-url> [project-name]" >&2
+        return 1
+    fi
+
+    if [ -z "$projectName" ]; then
+        projectName="$(basename "$cloneUrl")"
+        projectName="${projectName%.git}"
+    fi
+
+    local projectDir="$GIT_PROJECTS_ROOT/${projectName}.git"
+
+    if [ -e "$projectDir" ]; then
+        echo "$projectDir: already exists" >&2
+        return 1
+    fi
+
+    git clone --bare "$cloneUrl" "$projectDir" || return 1
+
+    # Bare clones ship without a fetch refspec; add the conventional one so
+    # fetches populate refs/remotes/origin/*.
+    git -C "$projectDir" config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' || return 1
+
+    git -C "$projectDir" fetch origin --prune || return 1
+    git -C "$projectDir" remote set-head origin --auto || return 1
+
+    echo "$projectDir"
+}
+
 git-project-dir() {
     local repoName="$1"
     local projectDir="$GIT_PROJECTS_ROOT/$repoName"
