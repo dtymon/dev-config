@@ -114,7 +114,7 @@ function prompt_tmux_session() {
     time                    # current time
     # =========================[ Line #2 ]=========================
     newline
-    tmux_session
+    # tmux_session
     # ip                    # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
     # proxy                 # system-wide http/https/ftp proxy
