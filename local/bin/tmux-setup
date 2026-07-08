@@ -3,10 +3,10 @@
 function createSession
 {
     local session="$1"; shift
-    local name="$1"; shift
     local dir="$1"; shift
 
-    tmux new-session -d -s "$session" -n "$name" -c "$dir"
+    # tmux new-session -d -s "$session" -n "$session" -t "${session}-group" -c "$dir"
+    tmux new-session -d -s "$session" -n "$session" -c "$dir"
 }
 
 function addWindow
@@ -19,36 +19,29 @@ function addWindow
     tmux new-window -d -t "$session:$numWindows" -n "$name" -c "$dir"
 }
 
-# Payments session
-PAYMENTS_ROOT="$HOME/work/ben/repos/payments"
-createSession payments payments "$PAYMENTS_ROOT"
-addWindow payments npp-core-library "$PAYMENTS_ROOT/npp-core-library"
-addWindow payments npp-enquire-payment "$PAYMENTS_ROOT/npp-enquire-payment"
-addWindow payments npp-institution-resolution "$PAYMENTS_ROOT/npp-institution-resolution"
-addWindow payments npp-make-enquiry-payment "$PAYMENTS_ROOT/npp-make-enquiry-payment"
-addWindow payments npp-make-payment "$PAYMENTS_ROOT/npp-make-payment"
-addWindow payments npp-receive-payment "$PAYMENTS_ROOT/npp-receive-payment"
-addWindow payments npp-service-availability "$PAYMENTS_ROOT/npp-service-availability"
-addWindow payments payid-maintenance "$PAYMENTS_ROOT/payid-maintenance"
-addWindow payments payid-resolution "$PAYMENTS_ROOT/payid-resolution"
+# PDC session
+PDC_ROOT="$HOME/work/cba/repos/pdc"
+createSession pdc "$PDC_ROOT"
+addWindow pdc pdc-main "$PDC_ROOT/pdc-main"
 
-# Kelpie session
-KELPIE_ROOT="$HOME/work/ben/repos/kelpie"
-createSession kelpie build "$KELPIE_ROOT/ben-kelpie-build"
-addWindow kelpie 3rd-party "$KELPIE_ROOT/ben-kelpie-3rd-party"
-addWindow kelpie core "$KELPIE_ROOT/ben-kelpie-core"
-addWindow kelpie api "$KELPIE_ROOT/ben-kelpie-api"
-addWindow kelpie db "$KELPIE_ROOT/ben-kelpie-db"
-addWindow kelpie kafka "$KELPIE_ROOT/ben-kelpie-kafka"
-addWindow kelpie auth "$KELPIE_ROOT/ben-kelpie-auth"
-addWindow kelpie aws "$KELPIE_ROOT/ben-kelpie-aws"
-addWindow kelpie apm "$KELPIE_ROOT/ben-kelpie-apm"
-addWindow kelpie express "$KELPIE_ROOT/ben-kelpie-express"
-addWindow kelpie mongodb "$KELPIE_ROOT/ben-kelpie-mongodb"
-addWindow kelpie postgres "$KELPIE_ROOT/ben-kelpie-postgres"
-addWindow kelpie mssql "$KELPIE_ROOT/ben-kelpie-mssql"
+# PJ Listener session
+PJ_ROOT="$HOME/work/cba/repos/pj"
+createSession pj "$PJ_ROOT"
+addWindow pj pj-main "$PJ_ROOT/pj-main"
 
-# Scratch
-createSession scratch emacs "$HOME/.emacs.d"
-addWindow scratch dev "$HOME/dev-env"
-addWindow scratch general "$HOME"
+# Data Assurance
+PDA_ROOT="$HOME/work/cba/repos/pda"
+createSession pda "$PDA_ROOT"
+addWindow pda pda-main "$PDA_ROOT/pda-main"
+
+# Other repos
+REPOS_ROOT="$HOME/work/cba/repos"
+createSession repos "$REPOS_ROOT"
+addWindow repos heeler-main "$REPOS_ROOT/misc/heeler-main"
+
+# Scratch session
+createSession scratch "$HOME"
+addWindow scratch dev-env "$HOME/dev-env"
+addWindow scratch emacs "$HOME/.emacs.d"
+addWindow scratch downloads "$HOME/work/Downloads"
+#addWindow scratch heeler-ai "$PDC_ROOT/payments-data-cloud-pj-listener"
