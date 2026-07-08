@@ -136,6 +136,7 @@ _git-worktree() {
                         '-r[projects root]:root:_files -/' \
                         '-p[project]:project:_git-worktree_projects' \
                         '-d[also delete the local branch]' \
+                        '-f[force removal despite modified/untracked files]' \
                         '-b[base branch to compare against]:base branch:' \
                         '1:worktree name:_git-worktree_worktrees'
                     ;;

@@ -37,7 +37,7 @@ usage() {
     cat >&2 <<'EOF'
 usage:
   git-worktree create   [-r <root>] [-p <project>] [-b <base-branch>] [-n <new-branch>] <worktree-dir>
-  git-worktree delete   [-r <root>] [-p <project>] [-d] [-b <base-branch>] <worktree-name>
+  git-worktree delete   [-r <root>] [-p <project>] [-d] [-f] [-b <base-branch>] <worktree-name>
   git-worktree diff     [-r <root>] [-p <project>] [-b <base-branch>] [<source-branch>]
   git-worktree list     [-r <root>] [-p <project>]
   git-worktree path     [-r <root>] [-p <project>] <pattern>
@@ -196,16 +196,17 @@ cmd_create() {
 # never touches origin.
 ##
 cmd_delete() {
-    local root project baseBranch deleteBranch=0
+    local root project baseBranch deleteBranch=0 force=0
     local OPTIND opt
-    while getopts "r:p:b:dh" opt; do
+    while getopts "r:p:b:dfh" opt; do
         case "$opt" in
             r) root="$OPTARG" ;;
             p) project="$OPTARG" ;;
             b) baseBranch="$OPTARG" ;;
             d) deleteBranch=1 ;;
+            f) force=1 ;;
             *)
-                echo "usage: git-worktree delete [-r <root>] [-p <project>] [-d] [-b <base-branch>] <worktree-name>" >&2
+                echo "usage: git-worktree delete [-r <root>] [-p <project>] [-d] [-f] [-b <base-branch>] <worktree-name>" >&2
                 return 1 ;;
         esac
     done
@@ -213,7 +214,7 @@ cmd_delete() {
 
     local worktreeName="$1"
     if [ -z "$worktreeName" ] || [ "$#" -gt 1 ]; then
-        echo "usage: git-worktree delete [-r <root>] [-p <project>] [-d] [-b <base-branch>] <worktree-name>" >&2
+        echo "usage: git-worktree delete [-r <root>] [-p <project>] [-d] [-f] [-b <base-branch>] <worktree-name>" >&2
         return 1
     fi
 
@@ -228,7 +229,14 @@ cmd_delete() {
             || die "$worktreeName: cannot determine its branch (is it a worktree of $bareDir?)"
     fi
 
-    git -C "$bareDir" worktree remove "$worktreeName" || return 1
+    # -f forces removal of a worktree with modified or untracked files. It only
+    # relaxes the working-tree check; it does NOT relax the -d branch safety gate
+    # below, which concerns committed history and is deliberately independent.
+    if [ "$force" -eq 1 ]; then
+        git -C "$bareDir" worktree remove --force "$worktreeName" || return 1
+    else
+        git -C "$bareDir" worktree remove "$worktreeName" || return 1
+    fi
 
     [ "$deleteBranch" -eq 1 ] || return 0
 
